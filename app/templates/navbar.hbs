@@ -1,0 +1,52 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div>
+    <div class="navbar-header">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#nav-items">
+        <span class="sr-only"> Toggle Navigation
+        <span class="icon-bar">
+        <span class="icon-bar">
+        <span class="icon-bar">
+      </button>
+      {{#link-to 'index' class='navbar-brand'}}November Project{{/link-to}}
+    </div>
+    {{#if user}}
+      <div id="navbar-items" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right">
+          {{#if user.isTribeAdmin}}
+            <li>{{#link-to admin}}Admin{{/link-to}}</li>
+          {{/if}}
+          <li><a href="javascript:;" onclick="openTribeSwitcher();">{{tribe.title}}</a></li>
+          <li>{{#link-to history}}History{{/link-to}}</li>
+          <li>{{#link-to logout}}Logout{{/link-to}}</li>
+        </ul>
+      </div>
+    {{/if}}
+  </div>
+</nav>
+
+{{#if tribes}}
+  <div class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Choose an NP Tribe</h4>
+        </div>
+        <div class="modal-body">
+          <div class="list-group">
+            {{#each tribe in tribes}}
+              {{#if tribe.active}}
+                <a class="list-group-item active" href="javascript:;" data-dismiss="modal">{{tribe.title}}</a>
+              {{else}}
+                <a class="list-group-item" href="javascript:;" data-dismiss="modal" onclick="changeTribe({{tribe.id}})">{{tribe.title}}</a>
+              {{/if}}
+            {{/each}}
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+{{/if}}
