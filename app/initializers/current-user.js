@@ -9,7 +9,7 @@ var CurrentUserInitializer = {
       return this.get('session.currentUser');
     }).property('session.currentUser'), { instantiate: false, singleton: true });
 
-    if (session.get('token')) {
+    if (!session.get('token')) {
       app.deferReadiness();
       session.findCurrentUser().finally( function () {
         app.advanceReadiness();
