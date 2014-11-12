@@ -19,7 +19,13 @@ module.exports = function(environment) {
     },
 
     torii: {
-      sessionServiceName: 'session'
+      sessionServiceName: 'session',
+      providers: {
+        'facebook-connect': {
+          appId: '188733467942113',
+          scope: 'email'
+        }
+      }
     }
   };
 

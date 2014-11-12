@@ -1,5 +1,330 @@
 @import 'bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap';
+@import 'bower_components/BrandButtons/src/brand-buttons-inversed';
 
-html, body {
-  margin: 20px;
+$grid-float-breakpoint: 600px;
+
+@-webkit-viewport{width:device-width}
+@-moz-viewport{width:device-width}
+@-ms-viewport{width:device-width}
+@-o-viewport{width:device-width}
+@viewport{width:device-width}
+
+a, input, button {
+  -ms-touch-action: none !important;
+}
+
+body {
+  padding-top: 50px;
+}
+
+button:focus {
+  outline: none;
+}
+
+.selector {
+  text-align: center;
+  margin-top: 12px;
+}
+
+.selected {
+  background-color: darken($btn-default-bg, 8%);
+}
+
+#time {
+  display: table;
+
+  input {
+      width: 50%;
+      display: inline;
+      text-align: right;
+  }
+  span {
+    padding-left: 5px;
+  }
+  div {
+    width: 50%;
+    display: table-cell;
+  }
+}
+
+textarea {
+  resize: none;
+}
+
+button#cancel {
+  margin-right: 12px;
+}
+
+i.fa-caret-down {
+  padding-left: 5px;
+}
+
+.workout {
+  h1 {
+    font-size: 3rem;
+    line-height: 1;
+    margin-bottom: 0.2rem;
+
+    @media (max-width: 40em) {
+      font-size: 2.5rem;
+    }
+  }
+
+  h2 {
+    font-size: 2.2rem;
+    line-height: 1;
+    margin-top: 0.2rem;
+
+    @media (max-width: 40em) {
+      font-size: 1.8rem;
+    }
+  }
+}
+
+.people {
+  text-align: center;
+
+  &> span {
+    margin-bottom: 4px;
+  }
+
+  hr {
+    margin: 0.25rem 0 0.5rem;
+    border-top: 1px solid #ccc;
+  }
+
+  ul {
+    list-style: none;
+    padding-left: 0px;
+  }
+
+  .person {
+    height: 60px;
+    text-align: left;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: #CCC 1px solid;
+
+    img {
+      float: left;
+    }
+
+    span {
+      margin-left: 8px;
+      line-height: 50px;
+      font-size: 1.2em;
+      overflow-x: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      float: left;
+    }
+
+    button {
+      float: right;
+      margin-top: 10px;
+    }
+  }
+}
+
+#map {
+  width: 100%;
+  height: 200px;
+  margin-bottom: 12px;
+
+  @media (min-height: 600px) {
+    height: 300px;
+  }
+}
+
+form .form-group:last-child {
+  height: 33px
+}
+
+form {
+  margin-top: 8px;
+}
+
+hr.auth-or {
+  border: 0;
+  height: 1px;
+  background: #333;
+  background-image: -webkit-linear-gradient(left, #ccc, #333, #ccc);
+  background-image:    -moz-linear-gradient(left, #ccc, #333, #ccc);
+  background-image:     -ms-linear-gradient(left, #ccc, #333, #ccc);
+  background-image:      -o-linear-gradient(left, #ccc, #333, #ccc);
+  text-align: center;
+
+  &:after {
+    content: "OR";
+    display: inline-block;
+    position: relative;
+    background: white;
+    top: -0.7em;
+    font-size: 1.1em;
+    padding: 0 0.25em;
+  }
+}
+
+p.loading-status {
+  position: relative;
+  top: 75px;
+  text-align: center;
+}
+
+.block-buttons {
+  max-width: 300px;
+  margin: auto;
+}
+
+.no-margin-top {
+  margin-top: 5px;
+}
+
+.container {
+  max-width: 600px;
+
+  &.auth {
+    max-width: 400px;
+  }
+}
+
+.list-group {
+  margin-bottom: 0px;
+
+  .list-group-item {
+    cursor: pointer;
+  }
+}
+
+.modal-footer {
+  margin-top: 0px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.missing-workout {
+  margin-top: 16px;
+
+  h2 {
+    color: $brand-danger;
+    text-align: center;
+  }
+
+  p {
+    text-align: center;
+  }
+}
+
+.form-group.has-error label {
+  color: $brand-danger;
+}
+
+.person {
+  display: table;
+  width: 100%;
+
+  .image {
+    height: 50px;
+    width: 50px;
+    display: table-cell;
+    float: left;
+  }
+
+  .info {
+    display: table-cell;
+    width: 100%;
+
+    div {
+      height: 50px;
+      span {
+        line-height: 50px;
+      }
+
+      &.half {
+        height: 25px;
+        span {
+          line-height: 25px;
+        }
+      }
+
+      &.results {
+        span {
+          font-size: 1em;
+        }
+
+        .time {
+          float: right;
+        }
+      }
+    }
+  }
+
+  .action-btn {
+    height: 50px;
+    margin-left: 8px;
+  }
+}
+
+.workout-list {
+  ul {
+    list-style: none;
+    padding-left: 0px;
+
+  }
+
+  .workout-item {
+    height: 50px;
+    border-bottom: 1px solid #DDD;
+    padding: 5px 5px;
+
+    span {
+      display: block;
+
+      &:first-child {
+        font-size: 1.2em;
+        font-weight: bold;
+      }
+    }
+
+    button {
+      float: right;
+      position: relative;
+      top: -37px;
+    }
+  }
+
+  li span {
+    line-height: 20px;
+  }
+
+  div span {
+    line-height: 40px;
+  }
+}
+
+span.separator {
+  display: block;
+  margin: 5px 0px;
+  text-align: center;
+}
+
+.btn-margin-top {
+  margin-top: 24px;
+}
+
+.new-workout {
+  display: none;
+}
+
+.nonstandard-workout {
+  display: none;
+}
+
+.new-location {
+  display: none;
+}
+
+.rank {
+  display: table-cell;
+  min-width: 20px;
 }

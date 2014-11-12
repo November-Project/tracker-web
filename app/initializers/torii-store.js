@@ -1,5 +1,5 @@
 var ToriiInitializer = {
-  name: 'torii',
+  name: 'torii-store',
   after: 'store',
 
   initialize: function (container, app) {
