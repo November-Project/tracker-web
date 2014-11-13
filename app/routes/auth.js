@@ -7,7 +7,7 @@ export default Ember.Route.extend({
       var controller = this.controllerFor('auth');
 
       this.get('session').open('facebook-connect').then( function () {
-        // route.transitionTo('index');
+        route.transitionTo('index', 0);
       }, function (error) {
         console.log(error);
         controller.set('error', 'Could not sign you in: ' + error.message);

@@ -3,14 +3,23 @@ import config from '../config/environment';
 
 export default Ember.Object.extend({
   open: function (authentication) {
+    var self = this;
     return new Ember.RSVP.Promise( function (resolve, reject) {
-      Ember.$.post(config.API_HOST + '/session/facebook', {
-        token: authentication.accessToken,
-        device_info: navigator.userAgent
+      Ember.$.ajax({
+        url: config.API_HOST + '/session/facebook',
+        type: 'POST',
+        data: JSON.stringify({
+          token: authentication.accessToken,
+          device_info: navigator.userAgent
+        }),
+        dataType: 'json',
+        contentType: 'application/json',
+        processData: false
       }).then( function (data) {
-        this.get('store').find('sessions', data.token).then( function (user) {
+        console.log(data);
+        Ember.$.getJSON(config.API_HOST + '/sessions/' + encodeURIComponent(data.token)).then( function (userData) {
           Ember.run.bind(null, resolve, {
-            currentUser: user,
+            currentUser: userData.user,
             token: data.token
           });
         });
@@ -18,5 +27,10 @@ export default Ember.Object.extend({
         Ember.run.bind(null, reject, { message: error });
       });
     });
+  },
+
+  fetch: function (options) {
+    console.log('fb-fetch');
+    console.log(options);
   }
 });
