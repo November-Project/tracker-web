@@ -6,8 +6,10 @@ export default Ember.Route.extend({
       var route = this;
       var controller = this.controllerFor('auth');
 
-      this.get('session').open('facebook-connect').then( function () {
-        route.transitionTo('index', 0);
+      this.get('torii').open('facebook-connect').then( function (auth) {
+        route.get('session').openWithFacebook(auth).finally( function () {
+          route.transitionTo('index');
+        });
       }, function (error) {
         console.log(error);
         controller.set('error', 'Could not sign you in: ' + error.message);

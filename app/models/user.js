@@ -7,6 +7,7 @@ var User = DS.Model.extend({
   tribe: DS.belongsTo('tribe'),
   gender: DS.attr('string'),
   facebookId: DS.attr('number'),
+  hasAcceptedTerms: DS.attr('boolean'),
   isVerified: DS.attr('boolean', { defaultValue: false }),
   isAdmin: DS.attr('boolean', { defaultValue: false }),
   tribeAdmin: DS.belongsTo('tribe')

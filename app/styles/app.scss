@@ -328,3 +328,9 @@ span.separator {
   display: table-cell;
   min-width: 20px;
 }
+
+span.nowrap {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
