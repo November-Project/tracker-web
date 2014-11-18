@@ -10,24 +10,5 @@ export default Ember.Object.extend({
         currentUser: user
       };
     });
-  },
-
-  fetch: function (options) {
-    console.log('torii fetch');
-    var store = this.get('store');
-    // return store.find('sessions', authorization.sessionToken).then( function (user) {
-    //   return {
-    //     token: authorization.sessionToken,
-    //     currentUser: user
-    //   };
-    // });
-  },
-
-  close: function () {
-    console.log('torii close');
-    var store = this.get('store');
-    // return Ember.$.ajax({
-    //   url: 'sessions'
-    // })
   }
 });

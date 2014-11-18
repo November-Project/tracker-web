@@ -10,7 +10,7 @@ export default Ember.Object.extend({
   },
 
   hasAcceptedTerms: function () {
-    return this.user.accepted_terms;
+    return this.user.get('hasAcceptedTerms');
   },
 
   getToken: function () {
@@ -26,11 +26,8 @@ export default Ember.Object.extend({
 
   fetchUser: function () {
     var self = this;
-    return new Ember.RSVP.Promise( function (resolve, reject) {
-      Ember.$.getJSON(config.API_HOST + '/sessions/' + encodeURIComponent(self.getToken())).then( function (data) {
-        self.user = data.user;
-        Ember.run(resolve);
-      }, reject);
+    return this.store.find('user', 'me').then( function (user) {
+      self.user = user;
     });
   },
 

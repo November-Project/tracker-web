@@ -2,15 +2,15 @@
 <form role="form">
   <div class="form-group">
   {{view Ember.Select content=controllers.tribes
-                      optionValuePath="content.id"
+                      optionValuePath="content"
                       optionLabelPath="content.title"
                       prompt="Select a Tribe"
-                      value=selectedTribe
+                      value=user.tribe
                       class="form-control"}}
   </div>
   <div class="form-group">
     <label class="checkbox">
-      {{#input type="checkbox" id="terms" checked=acceptedTerms}} Accept <a target='_blank' href='http://november-project.com/disclaimer/'>Terms and Conditions</a>{{/input}}
+      {{#input type="checkbox" id="terms" checked=hasAcceptedTerms}} Accept <a target='_blank' href='http://november-project.com/disclaimer/'>Terms and Conditions</a>{{/input}}
     </label>
   </div>
   <div class="form-group">
