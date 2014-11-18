@@ -1,4 +1,4 @@
-var ToriiInitializer = {
+export default {
   name: 'torii-store',
   after: 'store',
 
@@ -6,5 +6,3 @@ var ToriiInitializer = {
     app.inject('torii-adapter', 'store', 'store:main');
   }
 };
-
-export default ToriiInitializer;

@@ -7,7 +7,7 @@ var ApplicationAdapter = DS.ActiveModelAdapter.extend({
     return {
       'AUTHORIZATION': this.get('session').token
     };
-  }.property('App.token')
+  }.property('session.token')
 });
 
 export default ApplicationAdapter;
