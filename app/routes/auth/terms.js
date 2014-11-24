@@ -7,6 +7,7 @@ export default Ember.Route.extend({
 
   setupController: function (controller, model) {
     this._super(controller, model);
+    controller.set('model', model);
     this.controllerFor("tribes").set("content", this.store.find("tribe"));
   }
 });

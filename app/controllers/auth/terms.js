@@ -5,8 +5,9 @@ export default Ember.ObjectController.extend({
 
   actions: {
     submitTerms: function () {
-      console.log(this.model);
+      console.log(this.get('tribe'));
       console.log(this.session.user);
+      console.log(this.get('hasAcceptedTerms'));
     }
   }
 });
