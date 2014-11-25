@@ -8,6 +8,7 @@ export default Ember.ObjectController.extend({
       console.log(this.get('tribe'));
       console.log(this.session.user);
       console.log(this.get('hasAcceptedTerms'));
+      this.model.save();
     }
   }
 });

@@ -1,6 +1,6 @@
 import DS from 'ember-data';
 
-var User = DS.Model.extend({
+export default DS.Model.extend({
   name: DS.attr('string'),
   email: DS.attr('string'),
   password: DS.attr('string'),
@@ -12,5 +12,3 @@ var User = DS.Model.extend({
   isAdmin: DS.attr('boolean', { defaultValue: false }),
   tribeAdmin: DS.belongsTo('tribe')
 });
-
-export default User;
