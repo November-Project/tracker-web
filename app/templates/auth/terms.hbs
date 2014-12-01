@@ -1,17 +1,19 @@
 <h3>Terms and Conditions</h3>
 <form role="form">
-  <div class="form-group">
-  {{view Ember.Select content=controllers.tribes
-                      optionValuePath="content"
-                      optionLabelPath="content.title"
-                      prompt="Select a Tribe"
-                      value=tribe
-                      class="form-control"}}
+  <div class="form-group" {{bind-attr class="tribeError:has-error"}}>
+    {{view Ember.Select content=controllers.tribes
+                        optionValuePath="content"
+                        optionLabelPath="content.title"
+                        prompt="Select a Tribe"
+                        value=tribe
+                        class="form-control"}}
+    <span>{{tribeError}}</span>
   </div>
-  <div class="form-group">
+  <div class="form-group" {{bind-attr class="termsError:has-error"}}>
     <label class="checkbox">
-      {{#input type="checkbox" id="terms" checked=hasAcceptedTerms}} Accept <a target='_blank' href='http://november-project.com/disclaimer/'>Terms and Conditions</a>{{/input}}
+      {{#input type="checkbox" id="terms" checked=acceptedTerms}} Accept <a target='_blank' href='http://november-project.com/disclaimer/'>Terms and Conditions</a>{{/input}}
     </label>
+    <span>{{termsError}}</span>
   </div>
   <div class="form-group">
     <button type="submit" class="btn btn-primary pull-right" {{action 'submitTerms'}}>Save</button>

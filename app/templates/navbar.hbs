@@ -9,15 +9,15 @@
       </button>
       {{#link-to 'index' class='navbar-brand'}}November Project{{/link-to}}
     </div>
-    {{#if user}}
+    {{#if session.user.acceptedTerms}}
       <div id="navbar-items" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
-          {{#if user.isTribeAdmin}}
+          {{#if session.user.isTribeAdmin}}
             <li>{{#link-to admin}}Admin{{/link-to}}</li>
           {{/if}}
-          <li><a href="javascript:;" onclick="openTribeSwitcher();">{{tribe.title}}</a></li>
+          <li><a {{action 'openTribeSwitcher'}}>{{tribe.title}}</a></li>
           <li>{{#link-to history}}History{{/link-to}}</li>
-          <li>{{#link-to logout}}Logout{{/link-to}}</li>
+          <li><a {{action 'logout'}}>Logout</a></li>
         </ul>
       </div>
     {{/if}}

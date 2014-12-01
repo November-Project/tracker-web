@@ -10,7 +10,7 @@ export default Ember.Object.extend({
   },
 
   hasAcceptedTerms: function () {
-    return this.user.get('hasAcceptedTerms');
+    return this.user.get('acceptedTerms');
   },
 
   getToken: function () {
@@ -46,6 +46,22 @@ export default Ember.Object.extend({
         processData: false
       }).then( function (data) {
         self.setToken(data.token);
+        Ember.run(resolve);
+      }, reject);
+    });
+  },
+
+  logout: function () {
+    var self = this;
+    return new Ember.RSVP.Promise( function (resolve, reject) {
+      Ember.$.ajax({
+        url: config.API_HOST + '/sessions',
+        type: 'DELETE',
+        headers: {
+          'AUTHORIZATION': self.token
+        }
+      }).then( function () {
+        self.close();
         Ember.run(resolve);
       }, reject);
     });

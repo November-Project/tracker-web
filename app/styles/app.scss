@@ -215,8 +215,12 @@ p.loading-status {
   }
 }
 
-.form-group.has-error label {
+.form-group.has-error label, span {
   color: $brand-danger;
+}
+
+.form-group.has-error span {
+  font-weight: bold;
 }
 
 .person {

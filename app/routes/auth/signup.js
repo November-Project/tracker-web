@@ -1,15 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  beforeModel: function () {
-    var session = this.get('session');
-    if (session.hasAcceptedTerms()) {
-      this.transitionToRoute('index');
-    }
-  },
-
   model: function () {
-    return this.session.user;
+    return this.store.createRecord('user');
   },
 
   setupController: function (controller, model) {

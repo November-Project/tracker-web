@@ -1,0 +1,44 @@
+<form role="form">
+  <div class="form-group" {{bind-attr class="nameError:has-error"}}>
+    <label for="name">Full Name</label>
+    {{input type="text" id="name" value=name class="form-control" placeholder="Full Name"}}
+  </div>
+  <div class="form-group" {{bind-attr class="emailError:has-error"}}>
+    <label for="email">Email</label>
+    {{input type="email" id="email" value=email class="form-control" placeholder="Email"}}
+  </div>
+  <div class="form-group" {{bind-attr class="passwordError:has-error"}}>
+    <label for="password">Password</label>
+    {{input type="password" id="password" value=password class="form-control" placeholder="Password"}}
+    <p class="text-muted">* minimum 6 characters.
+  </div>
+  <div class="form-group" {{bind-attr class="confirmError:has-error"}}>
+    <label for="confirm">Confirm Password</label>
+    {{input type="password" id="confirm" class="form-control" placeholder="Confirm Password"}}
+  </div>
+  <div class="form-group" {{bind-attr class="genderError:has-error"}}>
+    <label>Gender</label>
+    <div class="btn-group" style="margin-left:16px;">
+      <button class="btn btn-default" id="male" type="button" {{action 'setMale'}}>Male</button>
+      <button class="btn btn-default" id="female" type="button" {{action 'setFemale'}}>Female</button>
+    </div>
+  </div>
+  <div class="form-group" {{bind-attr class="tribeError:has-error"}}>
+    {{view Ember.Select content=controllers.tribes
+                        optionValuePath="content"
+                        optionLabelPath="content.title"
+                        prompt="Select a Tribe"
+                        value=model.tribe
+                        class="form-control"}}
+    <span>{{tribeError}}</span>
+  </div>
+  <div class="form-group" {{bind-attr class="termsError:has-error"}}>
+    <label class="checkbox">
+      {{#input type="checkbox" id="terms" checked=acceptedTerms}} Accept <a target='_blank' href='http://november-project.com/disclaimer/'>Terms and Conditions</a>{{/input}}
+    </label>
+    <span>{{termsError}}</span>
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary pull-right" {{action 'submit'}}>Sign Up</button>
+  </div>
+</form>
