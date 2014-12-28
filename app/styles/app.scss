@@ -1,4 +1,5 @@
 @import 'bower_components/bootstrap-sass-official/assets/stylesheets/_bootstrap';
+@import 'bower_components/bootstrap-social/bootstrap-social';
 
 $grid-float-breakpoint: 600px;
 
@@ -27,6 +28,16 @@ button:focus {
 
 .selected {
   background-color: darken($btn-default-bg, 8%);
+}
+
+ul.nav {
+  li {
+    cursor: pointer;
+  }
+
+  &:last-child {
+    margin-right: 12px;
+  }
 }
 
 #time {
@@ -143,36 +154,10 @@ form {
   margin-top: 8px;
 }
 
-hr.auth-or {
-  border: 0;
-  height: 1px;
-  background: #333;
-  background-image: -webkit-linear-gradient(left, #ccc, #333, #ccc);
-  background-image:    -moz-linear-gradient(left, #ccc, #333, #ccc);
-  background-image:     -ms-linear-gradient(left, #ccc, #333, #ccc);
-  background-image:      -o-linear-gradient(left, #ccc, #333, #ccc);
-  text-align: center;
-
-  &:after {
-    content: "OR";
-    display: inline-block;
-    position: relative;
-    background: white;
-    top: -0.7em;
-    font-size: 1.1em;
-    padding: 0 0.25em;
-  }
-}
-
 p.loading-status {
   position: relative;
   top: 75px;
   text-align: center;
-}
-
-.block-buttons {
-  max-width: 300px;
-  margin: auto;
 }
 
 .no-margin-top {

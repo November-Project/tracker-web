@@ -4,47 +4,17 @@ export default Ember.ObjectController.extend({
   needs: ['tribes'],
 
   validate: function () {
-    if (this.get('name') == null || Ember.$.trim(this.get('name')) === '') {
-      this.set('nameError', 'Name required.');
-    } else {
-      this.set('nameError', null);
-    }
+    var errors = {};
 
-    if (this.get('email') == null || Ember.$.trim(this.get('email')) === '') {
-      this.set('emailError', 'Email required.');
-    } else {
-      this.set('emailError', null);
-    }
+    errors.name = (this.get('name') == null || Ember.$.trim(this.get('name')) === '');
+    errors.email = (this.get('email') == null || Ember.$.trim(this.get('email')) === '');
+    errors.password = (this.get('password') == null || this.get('password').length < 6);
+    errors.confirm = Ember.$('#confirm').val() !== this.get('password');
+    errors.gender = this.get('gender') == null;
+    errors.tribe = this.get('tribe') == null;
+    errors.terms = !this.get('acceptedTerms');
 
-    if (this.get('password') == null || this.get('password').length < 6) {
-      this.set('passwordError', 'Password required.');
-    } else {
-      this.set('passwordError', null);
-    }
-
-    if (Ember.$('#confirm').val() !== this.get('password')) {
-      this.set('confirmError', 'Passwords do not match.');
-    } else {
-      this.set('confirmError', null);
-    }
-
-    if (this.get('gender') == null) {
-      this.set('genderError', 'Gender required.');
-    } else {
-      this.set('genderError', null);
-    }
-
-    if (this.get('tribe') == null) {
-      this.set('tribeError', 'No Tribe selected.');
-    } else {
-      this.set('tribeError', null);
-    }
-
-    if (this.get('acceptedTerms') === false) {
-      this.set('termsError', 'You must accept the terms.');
-    } else {
-      this.set('termsError', null);
-    }
+    this.set('error', errors);
   },
 
   actions: {
@@ -63,10 +33,18 @@ export default Ember.ObjectController.extend({
     submit: function () {
       this.validate();
 
-      if (!this.get('tribeError') && !this.get('termsError')) {
+      var errors = this.get('error');
+      var hasError = Object.keys(errors).reduce( function (accum, item) {
+        return accum || errors[item];
+      }, false);
+
+      if (!hasError) {
+        var self = this;
         this.model.save().then( function () {
-          this.transitionToRoute('index');
-        }).bind(this);
+          self.get('session').openWithEmailAndPassword(self.get('email'), self.get('password')).then( function () {
+            self.transitionToRoute('index');
+          });
+        });
       }
     }
   }
