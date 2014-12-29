@@ -90,6 +90,21 @@ export default Ember.Object.extend({
     });
   },
 
+  changePassword: function (password, token) {
+    return new Ember.RSVP.Promise( function (resolve, reject) {
+      Ember.$.ajax({
+        url: config.API_HOST + '/reset',
+        type: 'POST',
+        data: JSON.stringify({
+          password: password,
+          token: token
+        }),
+        contentType: 'application/json',
+        processData: false
+      }).then(resolve, reject);
+    });
+  },
+
   logout: function () {
     var self = this;
     return new Ember.RSVP.Promise( function (resolve, reject) {

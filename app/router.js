@@ -12,6 +12,7 @@ Router.map(function() {
     this.route('logout');
     this.route('terms');
     this.route('forgot');
+    this.route('reset', { path: 'reset/:token' });
   });
 });
 

@@ -1,0 +1,16 @@
+{{partial "alert"}}
+
+<form role="form">
+  <div class="form-group" {{bind-attr class="error.password:has-error"}}>
+    <label for="password">Password</label>
+    <input type="password" id="password" class="form-control" placeholder="Password">
+    <p class="text-muted">* minimum 6 characters.
+  </div>
+  <div class="form-group" {{bind-attr class="error.confirm:has-error"}}>
+    <label for="confirm">Confirm Password</label>
+    <input type="password" id="confirm" class="form-control" placeholder="Confirm Password">
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary pull-right" {{action 'submit'}} data-loading-text="Saving...">Save</button>
+  </div>
+</form>
