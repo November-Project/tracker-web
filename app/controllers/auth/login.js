@@ -1,19 +1,17 @@
 import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
-  needs: ['tribes'],
-
   validate: function () {
     var errors = {};
 
-    errors.tribe = this.get('tribe') == null;
-    errors.terms = this.get('acceptedTerms') === false;
+    errors.email = Ember.$.trim(Ember.$('#email').val()) === '';
+    errors.password = Ember.$('#password').val() === '';
 
     this.set('error', errors);
   },
 
   actions: {
-    submitTerms: function () {
+    login: function () {
       this.validate();
 
       var errors = this.get('error');
@@ -26,8 +24,10 @@ export default Ember.ObjectController.extend({
         var btn = Ember.$('button');
 
         btn.button('loading');
-        this.model.save().then( function () {
+        this.get('session').openWithEmailAndPassword(Ember.$('#email').val(), Ember.$('#password').val()).then( function () {
           self.transitionToRoute('index');
+        }, function (error) {
+          self.set('error_message', error.responseJSON.message || 'An Unknown Error Occured');
         }).finally( function () { btn.button('reset'); });
       }
     }

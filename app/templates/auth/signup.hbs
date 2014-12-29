@@ -1,3 +1,5 @@
+{{partial "alert"}}
+
 <form role="form">
   <div class="form-group" {{bind-attr class="error.name:has-error"}}>
     <label for="name">Full Name</label>
@@ -30,15 +32,13 @@
                     prompt="Select a Tribe"
                     value=model.tribe
                     class="form-control"}}
-    <span>{{tribeError}}</span>
   </div>
   <div class="form-group" {{bind-attr class="error.terms:has-error"}}>
     <label>
       {{input type="checkbox" id="terms" checked=acceptedTerms}} Accept <a target='_blank' href='http://november-project.com/disclaimer/'>Terms and Conditions</a>
     </label>
-    <span>{{termsError}}</span>
   </div>
   <div class="form-group">
-    <button type="submit" class="btn btn-primary pull-right" {{action 'submit'}}>Sign Up</button>
+    <button type="submit" class="btn btn-primary pull-right" {{action 'submit'}} data-loading-text="Loading...">Sign Up</button>
   </div>
 </form>

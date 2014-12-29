@@ -40,10 +40,17 @@ export default Ember.ObjectController.extend({
 
       if (!hasError) {
         var self = this;
+        var btn = Ember.$('button');
+
+        btn.button('loading');
         this.model.save().then( function () {
           self.get('session').openWithEmailAndPassword(self.get('email'), self.get('password')).then( function () {
             self.transitionToRoute('index');
+            btn.button('reset');
           });
+        }, function (error) {
+          self.set('error_message', error.responseJSON.message || 'An Unknown Error Occured');
+          btn.button('reset');
         });
       }
     }

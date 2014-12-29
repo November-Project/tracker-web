@@ -76,6 +76,20 @@ export default Ember.Object.extend({
     });
   },
 
+  forgotPassword: function (email) {
+    return new Ember.RSVP.Promise( function (resolve, reject) {
+      Ember.$.ajax({
+        url: config.API_HOST + '/forgot',
+        type: 'POST',
+        data: JSON.stringify({
+          email: email
+        }),
+        contentType: 'application/json',
+        processData: false
+      }).then(resolve, reject);
+    });
+  },
+
   logout: function () {
     var self = this;
     return new Ember.RSVP.Promise( function (resolve, reject) {

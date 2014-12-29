@@ -11,6 +11,7 @@ Router.map(function() {
     this.route('signup');
     this.route('logout');
     this.route('terms');
+    this.route('forgot');
   });
 });
 
