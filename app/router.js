@@ -14,6 +14,10 @@ Router.map(function() {
     this.route('forgot');
     this.route('reset', { path: 'reset/:token' });
   });
+
+  this.resource('admin', function () {
+
+  });
 });
 
 export default Router;

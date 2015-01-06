@@ -12,15 +12,29 @@ export default Ember.Object.extend({
   },
 
   getToken: function () {
-    if (!this.token && localStorage && localStorage["token"]) { this.set('token', localStorage["token"]); }
+    if (!this.token && localStorage && localStorage.token) { this.set('token', localStorage.token); }
     return this.get('token');
   },
 
   setToken: function (token) {
     this.close();
     this.set('token', token);
-    if (localStorage) { localStorage["token"] = token; }
+    if (localStorage) { localStorage.token = token; }
     return this.fetchUser();
+  },
+
+  setTribe: function (tribe) {
+    this.set('tribe', tribe);
+    if (localStorage) { localStorage.tribe = tribe.get('id'); }
+  },
+
+  getTribe: function () {
+    var tribe = this.get('tribe');
+    if (!tribe && localStorage && localStorage.tribe) {
+      tribe = this.store.all('tribe').findBy('id', localStorage.tribe);
+      this.setTribe(tribe);
+    }
+    return tribe;
   },
 
   fetchUser: function () {
@@ -30,6 +44,7 @@ export default Ember.Object.extend({
 
       self.store.find('user', 'me').then( function (user) {
         self.set('user', user);
+        if (!self.getTribe()) { console.log('again'); self.setTribe(user.get('tribe')); }
         Ember.run(resolve);
       }, reject);
     });
