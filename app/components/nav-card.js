@@ -4,6 +4,6 @@ export default Ember.Component.extend({
   classNames: ['card'],
 
   click: function () {
-    console.log(this.get('title'));
+    this.sendAction('action', this.get('route'));
   }
 });

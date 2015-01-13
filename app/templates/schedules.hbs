@@ -1,0 +1,9 @@
+<div class="center top-margin">
+  <div class="btn-group" role="group" aria-label="...">
+    {{#each schedule in arrangedContent}}
+      {{#link-to 'schedule' schedule class="btn btn-default" replace=true}}{{schedule.displayDay}}{{/link-to}}
+    {{/each}}
+  </div>
+</div>
+
+{{outlet}}

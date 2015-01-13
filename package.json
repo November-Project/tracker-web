@@ -19,17 +19,19 @@
   "license": "MIT",
   "devDependencies": {
     "body-parser": "*",
-    "broccoli-asset-rev": "^1.1.1",
+    "broccoli-asset-rev": "^2.0.0",
     "ember-cli": "*",
+    "ember-cli-6to5": "0.2.1",
+    "ember-cli-dependency-checker": "0.0.7",
     "ember-cli-htmlbars": "^0.5.1",
     "ember-cli-ic-ajax": "*",
     "ember-cli-inject-live-reload": "*",
+    "ember-cli-moment": "0.0.1",
     "ember-cli-qunit": "^0.1.2",
     "ember-cli-sass": "*",
-    "ember-data": "^1.0.0-beta.12",
+    "ember-data": "1.0.0-beta.14.1",
     "ember-export-application-global": "*",
     "express": "^5.0.0-alpha.1",
-    "glob": "*",
-    "torii": "*"
+    "glob": "*"
   }
 }

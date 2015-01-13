@@ -1,7 +1,7 @@
 import DS from 'ember-data';
 import config from '../config/environment';
 
-var ApplicationAdapter = DS.ActiveModelAdapter.extend({
+export default DS.ActiveModelAdapter.extend({
   host: config.API_HOST,
   headers: function () {
     return {
@@ -9,5 +9,3 @@ var ApplicationAdapter = DS.ActiveModelAdapter.extend({
     };
   }.property('session.token')
 });
-
-export default ApplicationAdapter;

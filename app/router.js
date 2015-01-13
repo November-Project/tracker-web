@@ -16,7 +16,9 @@ Router.map(function() {
   });
 
   this.resource('admin', function () {
-
+    this.resource('schedules', function () {
+      this.resource('schedule', { path: ':schedule_id' });
+    });
   });
 });
 
