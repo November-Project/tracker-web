@@ -19,6 +19,11 @@ Router.map(function() {
     this.resource('schedules', function () {
       this.resource('schedule', { path: ':schedule_id' });
     });
+
+    this.resource('locations', function () {
+      this.route('edit', { path: ':location_id' });
+      this.route('new');
+    });
   });
 });
 

@@ -1,0 +1,21 @@
+<div class="center top-margin">
+  <div class="btn-group" role="group" aria-label="...">
+    <button type="button" {{bind-attr class="filterStandard:active: :btn :btn-default"}} {{action 'showStandard'}}>Standard</button>
+    <button type="button" {{bind-attr class="filterStandard::active :btn :btn-default"}} {{action 'showNonStandard'}}>Non-Standard</button>
+  </div>
+</div>
+
+<div class="top-margin">
+  <div class="list-group">
+  {{#link-to 'locations.new' class="list-group-item"}}
+    <h4 class="list-group-item-heading">Create New Location</h4>
+  {{/link-to}}
+
+  {{#each location in filteredContent}}
+    {{#link-to 'locations.edit' location class="list-group-item"}}
+      <h4 class="list-group-item-heading">{{location.title}}</h4>
+      <p class="list-group-item-text">Latitude: {{location.latitude}}, Longitude: {{location.longitude}}</p>
+    {{/link-to}}
+  {{/each}}
+  </div>
+</div>
