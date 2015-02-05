@@ -24,6 +24,11 @@ Router.map(function() {
       this.route('edit', { path: ':location_id' });
       this.route('new');
     });
+
+    this.resource('workouts', function () {
+      this.route('edit', { path: ':workout_id' });
+      this.route('new');
+    });
   });
 });
 

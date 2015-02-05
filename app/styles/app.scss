@@ -203,12 +203,13 @@ p.loading-status {
   }
 }
 
-.form-group.has-error label, span {
+.form-group.has-error label {
   color: $brand-danger;
 }
 
 .form-group.has-error span {
   font-weight: bold;
+  color: $brand-danger;
 }
 
 .person {
@@ -294,6 +295,25 @@ p.loading-status {
   }
 }
 
+.time-entry {
+  display: table;
+
+  input {
+    width:50%;
+    display:inline;
+    text-align:right;
+  }
+
+  span {
+    padding-left: 5px;
+  }
+
+  div {
+    width:50%;
+    display:table-cell;
+  }
+}
+
 span.separator {
   display: block;
   margin: 5px 0px;
@@ -302,18 +322,6 @@ span.separator {
 
 .btn-margin-top {
   margin-top: 24px;
-}
-
-.new-workout {
-  display: none;
-}
-
-.nonstandard-workout {
-  display: none;
-}
-
-.new-location {
-  display: none;
 }
 
 .rank {

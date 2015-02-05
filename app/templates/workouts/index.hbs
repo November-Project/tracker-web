@@ -1,0 +1,21 @@
+<div class="center top-margin">
+  <div class="btn-group" role="group" aria-label="...">
+    <button type="button" {{bind-attr class="filterStandard:active: :btn :btn-default"}} {{action 'showStandard'}}>Standard</button>
+    <button type="button" {{bind-attr class="filterStandard::active :btn :btn-default"}} {{action 'showNonStandard'}}>Non-Standard</button>
+  </div>
+</div>
+
+<div class="top-margin">
+  <div class="list-group">
+  {{#link-to 'workouts.new' class="list-group-item"}}
+    <h4 class="list-group-item-heading">Create New Workout</h4>
+  {{/link-to}}
+
+  {{#each workout in filteredContent}}
+    {{#link-to 'workouts.edit' workout class="list-group-item"}}
+      <h4 class="list-group-item-heading">{{workout.title}}</h4>
+      <p class="list-group-item-text">{{workout.description}}</p>
+    {{/link-to}}
+  {{/each}}
+  </div>
+</div>
