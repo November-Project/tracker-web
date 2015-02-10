@@ -12,22 +12,21 @@ export default DS.Model.extend({
   tribe: DS.belongsTo('tribe'),
 
   minutes: function (key, value, previousValue) {
-    value = value === '' ? 0 : parseInt(value, 10);
-    if (value || value === 0) {
-      var sec = this.get('time') - previousValue * 60;
-      this.set('time', value * 60 + sec);
+    if (arguments.lenth > 1) {
+      var sec = Math.floor(this.get('time') / previousValue);
+      this.set('time', value + sec);
     }
 
     return Math.floor(this.get('time') / 60);
-  }.property(),
+  }.property('time'),
 
   seconds: function (key, value, previousValue) {
-    value = value === '' ? 0 : parseInt(value, 10);
-    if (value || value === 0) {
+    if (arguments.lenth > 1) {
       var time = this.get('time') - previousValue;
       this.set('time', value + time);
     }
 
-    return this.get('time') - this.get('minutes') * 60;
-  }.property()
+    return this.get('time') - (this.get('minutes') * 60);
+  }.property('time')
 });
+
