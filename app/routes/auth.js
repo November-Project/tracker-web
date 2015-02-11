@@ -8,19 +8,35 @@ export default Ember.Route.extend({
     }
   },
 
+  afterModel: function () {
+    var self = this;
+    return new Ember.RSVP.Promise( function (resolve, reject) {
+      window.fbAsyncInit = function () {
+        FB.init({
+          appId      : '188733467942113',
+          xfbml      : true,
+          version    : 'v2.1'
+        });
+
+        FB.getLoginStatus(function (status) {
+          self.get('session').openWithFacebook(status.authResponse).finally( function () {
+            self.transitionTo('index');
+          });
+        });
+        resolve();
+      }
+      Ember.$.getScript('//connect.facebook.net/en_US/sdk.js').fail(reject);
+    });
+  },
+
   actions: {
     signInWithFacebook: function () {
-      var route = this;
-      var controller = this.controllerFor('auth');
-
-      this.get('torii').open('facebook-connect').then( function (auth) {
-        route.get('session').openWithFacebook(auth).finally( function () {
-          route.transitionTo('index');
+      FB.login(function (status) {
+        var self = this;
+        this.get('session').openWithFacebook(status.authResponse).finally( function () {
+          self.transitionTo('index');
         });
-      }, function (error) {
-        console.log(error);
-        controller.set('error', 'Could not sign you in: ' + error.message);
-      });
+      }, { scope: 'public_profile,email' });
     }
   }
 });

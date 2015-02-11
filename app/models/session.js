@@ -46,7 +46,10 @@ export default Ember.Object.extend({
         self.set('user', user);
         if (!self.getTribe()) { console.log('again'); self.setTribe(user.get('tribe')); }
         Ember.run(resolve);
-      }, reject);
+      }, function () {
+        self.close();
+        Ember.run(reject);
+      });
     });
   },
 
