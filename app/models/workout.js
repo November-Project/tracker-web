@@ -1,8 +1,8 @@
 import DS from 'ember-data';
 
 export default DS.Model.extend({
-  title: DS.attr('string', { defaultValue: '' }),
-  description: DS.attr('string', { defaultValue: '' }),
+  title: DS.attr('string'),
+  description: DS.attr('string'),
   reps: DS.attr('number', { defaultValue: 0 }),
   time: DS.attr('number', { defaultValue: 0 }),
   standard: DS.attr('boolean', { defaultValue: false }),
@@ -12,21 +12,21 @@ export default DS.Model.extend({
   tribe: DS.belongsTo('tribe'),
 
   minutes: function (key, value, previousValue) {
-    if (arguments.lenth > 1) {
-      var sec = Math.floor(this.get('time') / previousValue);
-      this.set('time', value + sec);
+    if (arguments.length > 1) {
+      var sec = this.get('time') - previousValue * 60;
+      this.set('time', value * 60 + sec);
     }
 
     return Math.floor(this.get('time') / 60);
   }.property('time'),
 
   seconds: function (key, value, previousValue) {
-    if (arguments.lenth > 1) {
+    if (arguments.length > 1) {
       var time = this.get('time') - previousValue;
-      this.set('time', value + time);
+      this.set('time', value * 1 + time);
     }
 
-    return this.get('time') - (this.get('minutes') * 60);
+    return this.get('time') % 60;
   }.property('time')
 });
 
