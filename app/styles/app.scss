@@ -386,3 +386,16 @@ span.nowrap {
 .center {
   text-align: center;
 }
+
+#calendar {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.green-day {
+  background-color: #D5F8CF;
+}
+
+a.fc-day-grid-event {
+  cursor: pointer;
+}

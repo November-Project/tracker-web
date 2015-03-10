@@ -18,13 +18,13 @@ export default Ember.Route.extend({
           version    : 'v2.1'
         });
 
-        FB.getLoginStatus(function (status) {
+        FB.getLoginStatus( function (status) {
           self.get('session').openWithFacebook(status.authResponse).finally( function () {
             self.transitionTo('index');
           });
         });
         resolve();
-      }
+      };
       Ember.$.getScript('//connect.facebook.net/en_US/sdk.js').fail(reject);
     });
   },
