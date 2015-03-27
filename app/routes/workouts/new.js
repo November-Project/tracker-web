@@ -11,6 +11,7 @@ export default AdministrationRoute.extend({
   },
 
   setupController: function (controller, model) {
+    // controller.set('attrs.workout', model);
     this.controllerFor('workouts.edit').setProperties({ model: model });
   },
 
