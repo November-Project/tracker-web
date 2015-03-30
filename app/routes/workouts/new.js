@@ -10,11 +10,6 @@ export default AdministrationRoute.extend({
     model.set('tribe', tribe);
   },
 
-  setupController: function (controller, model) {
-    // controller.set('attrs.workout', model);
-    this.controllerFor('workouts.edit').setProperties({ model: model });
-  },
-
   renderTemplate: function () {
     this.render('workouts/edit');
   }
