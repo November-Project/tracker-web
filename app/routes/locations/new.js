@@ -24,10 +24,6 @@ export default AdministrationRoute.extend({
     model.set('tribe', tribe);
   },
 
-  setupController: function (controller, model) {
-    this.controllerFor('locations.edit').setProperties({ model: model });
-  },
-
   renderTemplate: function () {
     this.render('locations/edit');
   }

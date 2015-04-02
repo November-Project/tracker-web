@@ -1,0 +1,23 @@
+<form role="form">
+  <div class="form-group">
+    <label for="title">Title</label>
+    {{input id="title" class="form-control" placeholder="Title" value=model.title}}
+  </div>
+  <div class="form-group">
+    <label for="standard" class="checkbox"></label>
+    {{input type="checkbox" id="standard" checked=model.standard}} Save this location to reuse later?
+  </div>
+  <div class="form-group">
+    <label for="map">Location</label>
+    <div class="input-group">
+      <input type="text" class="form-control" id="searchText" placeholder="Location Search">
+      <span class="input-group-btn">
+        <button id="search" class="btn btn-default" type="button">Search</button>
+      </span>
+    </div>
+    {{google-maps latitude=model.latitude longitude=model.longitude}}
+  </div>
+  <div class="form-group">
+    <button type="button" {{bind-attr class="savable::disabled :btn :btn-primary :pull-right"}} {{action 'save'}}>Save</button>
+  </div>
+</form>
