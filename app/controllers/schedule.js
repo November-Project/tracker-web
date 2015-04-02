@@ -4,7 +4,7 @@ export default Ember.ObjectController.extend({
   needs: ['locations'],
 
   propertiesChanged: function () {
-    this.set('savable', (this.get('_data.location') !== parseInt(this.get('model').get('location').id) || this.get('isDirty')) &&
+    this.set('savable', (this.get('model._data.location') !== parseInt(this.get('model').get('location').id) || this.get('isDirty')) &&
       this.get('model').get('location') !== null &&
       this.get('time') !== null &&
       !this.get('errors.time'));
