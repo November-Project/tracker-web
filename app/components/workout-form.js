@@ -5,7 +5,7 @@ export default Ember.Component.extend({
     return this.get('model.isDirty') && this.get('model.title') !== "" && this.get('model.title') !== undefined;
   }.property('model.title', 'model.isDirty'),
 
-  reps: function (key, value, previousValue) {
+  reps: function (key, value) {
     if (arguments.length > 1) {
       this.set('model.reps', parseFloat(value));
     }
