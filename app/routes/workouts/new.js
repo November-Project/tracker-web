@@ -8,9 +8,5 @@ export default AdministrationRoute.extend({
   afterModel: function (model) {
     var tribe = this.get('session').getTribe();
     model.set('tribe', tribe);
-  },
-
-  renderTemplate: function () {
-    this.render('workouts/edit');
   }
 });
