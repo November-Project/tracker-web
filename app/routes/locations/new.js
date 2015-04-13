@@ -22,9 +22,5 @@ export default AdministrationRoute.extend({
     model.set('latitude', tribe.get('latitude'));
     model.set('longitude', tribe.get('longitude'));
     model.set('tribe', tribe);
-  },
-
-  renderTemplate: function () {
-    this.render('locations/edit');
   }
 });

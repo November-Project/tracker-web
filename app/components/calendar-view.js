@@ -14,13 +14,17 @@ export default Ember.Component.extend({
       },
 
       businessHours: true,
+
       events: (start, end, timezone, callback) => {
         this.sendAction('getEvents', callback, start.toISOString(), end.toISOString());
 
-        this.get('model').forEach( (schedule) => {
-          Ember.$('.fc-' + schedule.get('displayDay').toLowerCase()).addClass('green-day');
+        this.sendAction('getSchedule', (schedule) => {
+          schedule.forEach( (day) => {
+            Ember.$('.fc-' + day).addClass('green-day');
+          });
         });
       },
+
       dayClick: function (date) {
         if (!this.hasClass('green-day')) { return; }
         var id = 'new';
@@ -31,6 +35,7 @@ export default Ember.Component.extend({
         });
         self.sendAction('openEvent', id);
       },
+
       eventClick: (event) => {
         this.sendAction('openEvent', event.id);
       }

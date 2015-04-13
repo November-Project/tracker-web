@@ -7,22 +7,27 @@ export default AdministrationRoute.extend({
 
   actions: {
     openEvent: function (event) {
-      console.log(event);
       this.transitionTo('events', event);
     },
 
     getEvents: function (callback, start_date, end_date) {
       this.get('store').find('event', { start_date, end_date }).then( (events) => {
         callback(events.map( (event) => {
-          var title = "";
-          if (event.get('location')) { title = event.get('location').get('title'); }
-          if (event.get('workout')) { title = event.get('workout').get('title'); }
           return {
             id: event.id,
-            title: title,
+            title: event.title,
             start: event.get('date')
           };
         }));
+      });
+    },
+
+    getSchedule: function (callback) {
+      this.get('store').find('schedule').then( (model) => {
+        var days = model.map( (schedule) => {
+          return schedule.get('displayDay').toLowerCase();
+        });
+        callback(days);
       });
     }
   }
