@@ -32,6 +32,7 @@ Router.map(function() {
 
     this.resource('events', function () {
       this.route('edit', { path: ':event_id' });
+      this.route('new');
     });
   });
 });

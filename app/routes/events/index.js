@@ -7,7 +7,11 @@ export default AdministrationRoute.extend({
 
   actions: {
     openEvent: function (event) {
-      this.transitionTo('events', event);
+      if (event === 'new') {
+        this.transitionTo('events.new');
+      } else {
+        this.transitionTo('events.edit', event);
+      }
     },
 
     getEvents: function (callback, start_date, end_date) {

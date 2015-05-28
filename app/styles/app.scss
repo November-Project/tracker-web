@@ -399,3 +399,18 @@ span.nowrap {
 a.fc-day-grid-event {
   cursor: pointer;
 }
+
+.event-item {
+  display: table;
+  width: 100%
+}
+
+.event-item-select {
+  display: table-cell;
+}
+
+.event-item-buttons {
+  display: table-cell;
+  width: 120px;
+  text-align: center;
+}
