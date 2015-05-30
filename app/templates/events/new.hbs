@@ -1,7 +1,7 @@
 <form role="form">
   <div class="form-group event-item">
     <div class="event-item-select">
-      {{view "select" content=controllers.workouts
+      {{view "select" content=controllers.workouts.model
                 optionValuePath="content"
                 optionLabelPath="content.title"
                 prompt="Select a Workout"
@@ -16,7 +16,7 @@
 
   <div class="form-group event-item">
     <div class="event-item-select">
-      {{view "select" content=controllers.locations
+      {{view "select" content=controllers.locations.model
                 optionValuePath="content"
                 optionLabelPath="content.title"
                 prompt="Select a Location"

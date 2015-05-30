@@ -26,11 +26,11 @@
     </div>
   </div>
   <div class="form-group" {{bind-attr class="error.tribe:has-error"}}>
-    {{view "select" content=controllers.tribes
+    {{view "select" content=controllers.tribes.model
                     optionValuePath="content"
                     optionLabelPath="content.title"
                     prompt="Select a Tribe"
-                    value=model.tribe
+                    value=tribe
                     class="form-control"}}
   </div>
   <div class="form-group" {{bind-attr class="error.terms:has-error"}}>

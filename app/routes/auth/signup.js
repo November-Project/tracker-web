@@ -8,6 +8,6 @@ export default Ember.Route.extend({
   setupController: function (controller, model) {
     this._super(controller, model);
     controller.set('model', model);
-    this.controllerFor('tribes').set('content', this.store.all('tribe'));
+    this.controllerFor('tribes').set('model', this.store.all('tribe'));
   }
 });
