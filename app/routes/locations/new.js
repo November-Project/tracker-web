@@ -3,7 +3,9 @@ import Ember from 'ember';
 
 export default AdministrationRoute.extend({
   model: function () {
-    return this.store.createRecord('location');
+    const tribe = this.get('session').getTribe();
+    const { longitude, latitude } = tribe.getProperties('longitude', 'latitude');
+    return this.store.createRecord('location', { tribe, longitude, latitude });
   },
 
   beforeModel: function () {
@@ -15,12 +17,5 @@ export default AdministrationRoute.extend({
         resolve();
       }
     });
-  },
-
-  afterModel: function (model) {
-    var tribe = this.get('session').getTribe();
-    model.set('latitude', tribe.get('latitude'));
-    model.set('longitude', tribe.get('longitude'));
-    model.set('tribe', tribe);
   }
 });

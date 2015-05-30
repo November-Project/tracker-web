@@ -13,9 +13,23 @@ export default Ember.Component.extend({
     return this.get('model.reps');
   }.property('model.reps'),
 
+  cleanup: function () {
+    const workout = this.get('model');
+
+    if (workout.get('isNew')) {
+      workout.destroyRecord();
+    } else {
+      workout.rollback();
+    }
+  }.on('willDestroyElement'),
+
   actions: {
     save: function () {
       this.sendAction();
+    },
+
+    cancel: function () {
+      this.sendAction('cancel');
     }
   }
 });

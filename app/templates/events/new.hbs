@@ -1,31 +1,37 @@
 <form role="form">
-  <div class="form-group event-item">
-    <div class="event-item-select">
-      {{view "select" content=controllers.workouts.model
-                optionValuePath="content"
-                optionLabelPath="content.title"
-                prompt="Select a Workout"
-                value=workout
-                class="form-control"}}
+  {{#if editingWorkout}}
+    {{workout-form model=workout action='saveWorkout' cancel='cancelWorkout'}}
+  {{else}}
+    <div class="form-group event-item">
+      <div class="event-item-select">
+        {{view "select" content=workouts
+                  optionLabelPath="content.title"
+                  prompt="Select a Workout"
+                  value=workout
+                  class="form-control"}}
+      </div>
+      <div class="event-item-buttons">
+        <button class="btn btn-default" {{action 'editWorkout'}}>Edit</button>
+        <button class="btn btn-default" {{action 'newWorkout'}}>New</button>
+      </div>
     </div>
-    <div class="event-item-buttons">
-      <button class="btn btn-default">Edit</button>
-      <button class="btn btn-default">New</button>
-    </div>
-  </div>
+  {{/if}}
 
-  <div class="form-group event-item">
-    <div class="event-item-select">
-      {{view "select" content=controllers.locations.model
-                optionValuePath="content"
-                optionLabelPath="content.title"
-                prompt="Select a Location"
-                value=location
-                class="form-control"}}
+  {{#if editingLocation}}
+    {{location-form model=location action='saveLocation' cancel='cancelLocation'}}
+  {{else}}
+     <div class="form-group event-item">
+      <div class="event-item-select">
+        {{view "select" content=locations
+                  optionLabelPath="content.title"
+                  prompt="Select a Location"
+                  value=location
+                  class="form-control"}}
+      </div>
+      <div class="event-item-buttons">
+        <button class="btn btn-default" {{action 'editLocation'}}>Edit</button>
+        <button class="btn btn-default" {{action 'newLocation'}}>New</button>
+      </div>
     </div>
-    <div class="event-item-buttons">
-      <button class="btn btn-default">Edit</button>
-      <button class="btn btn-default">New</button>
-    </div>
-  </div>
+  {{/if}}
 </form>
