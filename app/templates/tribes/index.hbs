@@ -1,0 +1,14 @@
+<div class="top-margin">
+  <div class="list-group">
+    {{#link-to 'tribes.new' class="list-group-item"}}
+      <h4 class="list-group-item-heading">Create New Tribe</h4>
+    {{/link-to}}
+
+    {{#each tribe in model}}
+      {{#link-to 'tribes.edit' tribe class="list-group-item"}}
+        <h4 class="list-group-item-heading">{{tribe.title}}</h4>
+        <p class="list-group-item-text">Latitude: {{tribe.latitude}}, Longitude: {{tribe.longitude}}</p>
+      {{/link-to}}
+    {{/each}}
+  </div>
+</div>

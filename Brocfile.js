@@ -19,11 +19,11 @@ var app = new EmberApp();
 app.import('bower_components/bootstrap-sass/assets/javascripts/bootstrap.js');
 app.import('bower_components/fullcalendar/dist/fullcalendar.min.js');
 app.import('bower_components/fullcalendar/dist/fullcalendar.min.css');
-app.import('bower_components/font-awesome/css/font-awesome.css');
-app.import("bower_components/font-awesome/fonts/fontawesome-webfont.eot", { destDir: "fonts" });
-app.import("bower_components/font-awesome/fonts/fontawesome-webfont.svg", { destDir: "fonts" });
-app.import("bower_components/font-awesome/fonts/fontawesome-webfont.ttf", { destDir: "fonts" });
-app.import("bower_components/font-awesome/fonts/fontawesome-webfont.woff", { destDir: "fonts" });
-app.import("bower_components/font-awesome/fonts/FontAwesome.otf", { destDir: "fonts" });
+app.import('bower_components/components-font-awesome/css/font-awesome.css');
+app.import("bower_components/components-font-awesome/fonts/fontawesome-webfont.eot", { destDir: "fonts" });
+app.import("bower_components/components-font-awesome/fonts/fontawesome-webfont.svg", { destDir: "fonts" });
+app.import("bower_components/components-font-awesome/fonts/fontawesome-webfont.ttf", { destDir: "fonts" });
+app.import("bower_components/components-font-awesome/fonts/fontawesome-webfont.woff", { destDir: "fonts" });
+app.import("bower_components/components-font-awesome/fonts/FontAwesome.otf", { destDir: "fonts" });
 
 module.exports = app.toTree();

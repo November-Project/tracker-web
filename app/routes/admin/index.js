@@ -20,8 +20,13 @@ export default AdministrationRoute.extend({
       },
       {
         'title': 'Workouts',
-        'icon': 'fa fa-group fa-4x',
+        'icon': 'fa fa-heartbeat fa-4x',
         'route': 'workouts'
+      },
+      {
+        'title': 'Tribes',
+        'icon': 'fa fa-group fa-4x',
+        'route': 'tribes'
       }
     ];
   },

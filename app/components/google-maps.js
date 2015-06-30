@@ -14,19 +14,23 @@ export default Ember.Component.extend({
       scrollwheel: false
     };
 
-    var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
     var marker = new google.maps.Marker({
-      map: map
+      map: this.map
     });
 
-    marker.bindTo('position', map, 'center');
+    marker.bindTo('position', this.map, 'center');
 
-    var self = this;
-    google.maps.event.addListener(map, 'center_changed', function () {
-      var location = map.getCenter();
-      self.set('latitude', location.lat());
-      self.set('longitude', location.lng());
+    google.maps.event.addListener(this.map, 'center_changed', () => {
+      var location = this.map.getCenter();
+      this.set('latitude', location.lat());
+      this.set('longitude', location.lng());
     });
-  }.on('didInsertElement')
+  }.on('didInsertElement'),
+
+  positionChanged: function () {
+    var latLng = new google.maps.LatLng(parseFloat(this.get('latitude')), parseFloat(this.get('longitude')));
+    this.map.setCenter(latLng);
+  }.observes('latitude', 'longitude')
 });

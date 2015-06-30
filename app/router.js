@@ -34,6 +34,11 @@ Router.map(function() {
       this.route('edit', { path: ':event_id' });
       this.route('new');
     });
+
+    this.resource('tribes', function () {
+      this.route('edit', { path: ':tribe_id' });
+      this.route('new');
+    });
   });
 });
 
