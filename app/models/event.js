@@ -2,6 +2,12 @@ import DS from 'ember-data';
 
 export default DS.Model.extend({
   date: DS.attr('date'),
+  times: DS.attr(),
+  recurring: DS.attr('boolean'),
+  inverseRecurring: DS.attr('boolean'),
+  week: DS.attr('number'),
+  days: DS.attr(),
+  recurringEvent: DS.belongsTo('event'),
   tribe: DS.belongsTo('tribe'),
   location: DS.belongsTo('location'),
   workout: DS.belongsTo('workout'),

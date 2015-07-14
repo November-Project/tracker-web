@@ -1,10 +1,6 @@
 import AdministrationRoute from '../administration';
 
 export default AdministrationRoute.extend({
-  model: function () {
-    return this.get('store').find('schedule');
-  },
-
   actions: {
     openEvent: function (event) {
       if (event === 'new') {
@@ -27,12 +23,19 @@ export default AdministrationRoute.extend({
     },
 
     getSchedule: function (callback) {
-      this.get('store').find('schedule').then( (model) => {
-        var days = model.map( (schedule) => {
-          return schedule.get('displayDay').toLowerCase();
-        });
-        callback(days);
+      const tribe = this.get('session').getTribe();
+      var days = tribe.get('daysOfWeek').map( (day) => {
+        switch (day) {
+          case 0: return 'Sun';
+          case 1: return 'Mon';
+          case 2: return 'Tue';
+          case 3: return 'Wed';
+          case 4: return 'Thu';
+          case 5: return 'Fri';
+          case 6: return 'Sat';
+        }
       });
+      callback(days);
     }
   }
 });
