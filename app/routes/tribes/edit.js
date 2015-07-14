@@ -3,6 +3,7 @@ import Ember from 'ember';
 
 export default SuperAdministrationRoute.extend({
   beforeModel: function () {
+    this._super();
     return new Ember.RSVP.Promise( function (resolve, reject) {
       if (!window.google) {
         window.mapAPILoaded = Ember.run.bind(resolve);

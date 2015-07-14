@@ -3,9 +3,14 @@ import Ember from 'ember';
 import _ from 'lodash';
 
 export default Ember.Component.extend({
+  store: Ember.inject.service('store'),
+
   savable: function () {
-    return this.get('model.isDirty') && this.get('model.title') !== "" && this.get('model.title') !== undefined;
-  }.property('model.title', 'model.isDirty'),
+    return this.get('model.isDirty') &&
+      this.get('model.title') !== "" &&
+      this.get('model.title') !== undefined &&
+      this.get('model.timezone') !== null;
+  }.property('model.title', 'model.isDirty', 'model.timezone'),
 
   cleanup: function () {
     const tribe = this.get('model');
@@ -23,7 +28,10 @@ export default Ember.Component.extend({
 
   mapChanged: function () {
     Ember.run.debounce(this, this.reverseGeocode, 1000);
-  }.observes('model.latitude', 'model.longitude'),
+    this.set('model.timezone', null);
+    console.log('fire');
+    // Ember.run.debounce(this, this.lookupTimezone, 2000);
+  }.observes('model.latitude'),
 
   geocoder: new google.maps.Geocoder(),
 
@@ -31,8 +39,9 @@ export default Ember.Component.extend({
     this.geocoder.geocode({ address: this.get('model.title') }, (results, status) => {
       if (status === google.maps.GeocoderStatus.OK) {
         var latLng = results[0].geometry.location;
-        this.set('model.latitude', latLng.lat());
-        this.set('model.longitude', latLng.lng());
+        this.set('model.latitude', latLng.lat().toFixed(6));
+        this.set('model.longitude', latLng.lng().toFixed(6));
+        Ember.run.debounce(this, this.lookupTimezone, 2000);
       }
     });
   },
@@ -58,6 +67,15 @@ export default Ember.Component.extend({
           this.set('model.title', title);
         }
       }
+    });
+  },
+
+  lookupTimezone: function () {
+    const timestamp = Date.now() / 1000;
+    const lat = this.get('model.latitude');
+    const lng = this.get('model.longitude');
+    Ember.$.getJSON("https://maps.googleapis.com/maps/api/timezone/json?location="+lat+","+lng+"&timestamp="+timestamp+"&key=AIzaSyCYKDmsSlu_GNmW5OHDv_R8VZzhQpHEW9E", (data) => {
+      this.set('model.timezone', data.timeZoneId);
     });
   },
 

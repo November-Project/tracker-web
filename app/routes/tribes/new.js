@@ -3,10 +3,11 @@ import Ember from 'ember';
 
 export default SuperAdministrationRoute.extend({
   model: function () {
-    return this.store.createRecord('tribe', { title: 'Boston, MA', latitude: 0, longitude: 0 });
+    return this.store.createRecord('tribe', { title: '', latitude: 0, longitude: 0 });
   },
 
   beforeModel: function () {
+    this._super();
     return new Ember.RSVP.Promise( function (resolve, reject) {
       if (!window.google) {
         window.mapAPILoaded = Ember.run.bind(resolve);
@@ -15,5 +16,21 @@ export default SuperAdministrationRoute.extend({
         resolve();
       }
     });
+  },
+
+  actions: {
+    save: function () {
+      var model = this.get('controller.model');
+
+      model.save().then( () => {
+        this.transitionTo('tribes.index');
+      }, function (err) {
+        console.log(err);
+      });
+    },
+
+    cancel: function () {
+      this.transitionTo('tribes.index');
+    }
   }
 });

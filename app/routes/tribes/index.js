@@ -1,6 +1,6 @@
-import AdministrationRoute from '../administration';
+import SuperAdministrationRoute from '../super-administration';
 
-export default AdministrationRoute.extend({
+export default SuperAdministrationRoute.extend({
   model: function () {
     return this.get('store').find('tribe');
   }

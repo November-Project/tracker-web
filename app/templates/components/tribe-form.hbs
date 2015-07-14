@@ -4,9 +4,21 @@
     {{input id="tribe-title" class="form-control" placeholder="City" value=model.title}}
   </div>
   <div class="form-group">
-    <label for="tirbe-map">Location</label>
+    <label for="tribe-map">Central Location</label>
     {{google-maps latitude=model.latitude longitude=model.longitude}}
   </div>
+  <!-- <div class="form-group">
+    <label for="tribe-days">Days of Week</label>
+    <div id="tribe-days" class="checkbox-array">
+      {{input type="checkbox" checked=sunday}} Su
+      {{input type="checkbox" checked=monday}} M
+      {{input type="checkbox" checked=tuesday}} T
+      {{input type="checkbox" checked=wednesday}} W
+      {{input type="checkbox" checked=thursday}} Th
+      {{input type="checkbox" checked=friday}} F
+      {{input type="checkbox" checked=saturday}} Sa
+    </div>
+  </div> -->
   <div class="form-group">
     <button type="button" {{bind-attr class="savable::disabled :btn :btn-primary :pull-right"}} {{action 'save'}}>Save</button>
     <button type="button" class="btn btn-default pull-right cancel" {{action 'cancel'}}>Cancel</button>
