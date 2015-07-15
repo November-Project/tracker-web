@@ -24,18 +24,12 @@ export default AdministrationRoute.extend({
 
     getSchedule: function (callback) {
       const tribe = this.get('session').getTribe();
-      var days = tribe.get('daysOfWeek').map( (day) => {
-        switch (day) {
-          case 0: return 'Sun';
-          case 1: return 'Mon';
-          case 2: return 'Tue';
-          case 3: return 'Wed';
-          case 4: return 'Thu';
-          case 5: return 'Fri';
-          case 6: return 'Sat';
-        }
-      });
-      callback(days);
+      callback(tribe.get('daysOfWeek'));
+    },
+
+    isValidDay: function (day, success) {
+      const tribe = this.get('session').getTribe();
+      if (tribe.get('daysOfWeek').contains(day)) { success(); }
     }
   }
 });

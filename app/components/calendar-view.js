@@ -20,20 +20,31 @@ export default Ember.Component.extend({
 
         this.sendAction('getSchedule', (schedule) => {
           schedule.forEach( (day) => {
-            Ember.$('.fc-' + day).addClass('green-day');
+            var d = 'wed';
+            switch (day) {
+              case 0: d = 'sun'; break;
+              case 1: d = 'mon'; break;
+              case 2: d = 'tue'; break;
+              case 3: d = 'wed'; break;
+              case 4: d = 'thu'; break;
+              case 5: d = 'fri'; break;
+              case 6: d = 'sat'; break;
+            }
+            Ember.$('.fc-' + d).addClass('green-day');
           });
         });
       },
 
       dayClick: function (date) {
-        if (!this.hasClass('green-day')) { return; }
-        var id = 'new';
-        Ember.$('#calendar').fullCalendar('clientEvents', (event) => {
-          if (event.start.format().startsWith(date.format())) {
-            id = event.id;
-          }
+        self.sendAction('isValidDay', moment(date).day(), () => {
+          var id = 'new';
+          Ember.$('#calendar').fullCalendar('clientEvents', (event) => {
+            if (event.start.format().startsWith(date.format())) {
+              id = event.id;
+            }
+          });
+          self.sendAction('openEvent', id);
         });
-        self.sendAction('openEvent', id);
       },
 
       eventClick: (event) => {
