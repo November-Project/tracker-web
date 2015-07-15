@@ -24,6 +24,7 @@ app.import("bower_components/components-font-awesome/fonts/fontawesome-webfont.e
 app.import("bower_components/components-font-awesome/fonts/fontawesome-webfont.svg", { destDir: "fonts" });
 app.import("bower_components/components-font-awesome/fonts/fontawesome-webfont.ttf", { destDir: "fonts" });
 app.import("bower_components/components-font-awesome/fonts/fontawesome-webfont.woff", { destDir: "fonts" });
+app.import("bower_components/components-font-awesome/fonts/fontawesome-webfont.woff2", { destDir: "fonts" });
 app.import("bower_components/components-font-awesome/fonts/FontAwesome.otf", { destDir: "fonts" });
 
 module.exports = app.toTree();
