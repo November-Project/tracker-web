@@ -23,13 +23,11 @@ export default AdministrationRoute.extend({
     },
 
     getSchedule: function (callback) {
-      const tribe = this.get('session').getTribe();
-      callback(tribe.get('daysOfWeek'));
+      callback(this.get('session._tribe.daysOfWeek'));
     },
 
     isValidDay: function (day, success) {
-      const tribe = this.get('session').getTribe();
-      if (tribe.get('daysOfWeek').contains(day)) { success(); }
+      if (this.get('session._tribe.daysOfWeek').contains(day)) { success(); }
     }
   }
 });

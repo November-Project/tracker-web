@@ -6,7 +6,7 @@ export default AdministrationRoute.extend({
   },
 
   afterModel: function (model) {
-    var tribe = this.get('session').getTribe();
+    var tribe = this.get('session._tribe');
     model.set('tribe', tribe);
   }
 });

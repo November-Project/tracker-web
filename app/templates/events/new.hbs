@@ -1,4 +1,27 @@
 <form role="form">
+  <div class="form-group">
+    <label for="recurring" class="checkbox"></label>
+    {{input type="checkbox" id="recurring" checked=event.recurring}} Recurring Event
+  </div>
+  {{#if event.recurring}}
+    <div class="well schedule-well">
+      <h4>Schedule</h4>
+      <div class="form-group">
+        <label>Repeat On:</label>
+        {{#each day in daysOfWeek}}
+          {{input type="checkbox" id=day.word checked=day.checked}} {{day.letter}}
+        {{/each}}
+      </div>
+      <div class="form-group">
+        <label>Repeat Every:</label>
+        {{view "select" content=weekOptions
+                  optionLabelPath="content.label"
+                  optionValuePath="content.value"
+                  value=event.value
+                  class="form-control week-select"}}
+      </div>
+    </div>
+  {{/if}}
   {{#if editingWorkout}}
     {{workout-form model=workout action='saveWorkout' cancel='cancelWorkout'}}
   {{else}}

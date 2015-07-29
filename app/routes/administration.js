@@ -6,7 +6,7 @@ export default AuthenticationRoute.extend({
     var session = this.get('session');
     var user = session.get('user');
 
-    if (!user.isLeaderOf(session.getTribe())) {
+    if (!user.isLeaderOf(session.get('_tribe'))) {
       this.transitionTo('index');
     }
   }

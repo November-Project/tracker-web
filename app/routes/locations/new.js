@@ -3,7 +3,7 @@ import Ember from 'ember';
 
 export default AdministrationRoute.extend({
   model: function () {
-    const tribe = this.get('session').getTribe();
+    const tribe = this.get('session._tribe');
     const { longitude, latitude } = tribe.getProperties('longitude', 'latitude');
     return this.store.createRecord('location', { tribe, longitude, latitude });
   },
