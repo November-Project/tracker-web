@@ -17,8 +17,8 @@ export default Ember.Controller.extend({
     { label: '4th Week', value: 4 },
     { label: 'Last Week', value: -1 },
     { label: '2nd to Last Week', value: -2 },
-    { label: '3nd to Last Week', value: -3 },
-    { label: '4nd to Last Week', value: -4 }
+    { label: '3rd to Last Week', value: -3 },
+    { label: '4th to Last Week', value: -4 }
   ],
 
   editingWorkout: false,
@@ -48,6 +48,24 @@ export default Ember.Controller.extend({
   }.observes('daysOfWeek.@each.checked'),
 
   actions: {
+    removeTime: function (index) {
+      this.get('event.times').removeAt(index);
+    },
+
+    validateTime: function (newValue, callback) {
+      const isValid = moment(newValue, ['h:mma', 'h:mm a', 'H:mm'], true).isValid();
+      if (!isValid && newValue !== '') {
+        Ember.$('#times').parent().addClass('has-error');
+      } else {
+        Ember.$('#times').parent().removeClass('has-error');
+      }
+      if (isValid && callback) { callback(); }
+    },
+
+    addTime: function (newTime) {
+      this.get('event.times').addObject(newTime);
+    },
+
     editWorkout: function () {
       this.set('editingWorkout', true);
     },

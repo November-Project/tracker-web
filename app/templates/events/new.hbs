@@ -1,10 +1,10 @@
-<form role="form">
+<form role="form" onsubmit='return false;'>
   <div class="form-group">
     <label for="recurring" class="checkbox"></label>
     {{input type="checkbox" id="recurring" checked=event.recurring}} Recurring Event
   </div>
   {{#if event.recurring}}
-    <div class="well schedule-well">
+    <div class="well well-sm schedule-well">
       <h4>Schedule</h4>
       <div class="form-group">
         <label>Repeat On:</label>
@@ -22,20 +22,28 @@
       </div>
     </div>
   {{/if}}
+  <div class="form-group">
+    <label for="times">Times:</label>
+    {{tag-control id="times" model=event.times remove='removeTime' validate='validateTime' add='addTime'}}
+  </div>
   {{#if editingWorkout}}
     {{workout-form model=workout action='saveWorkout' cancel='cancelWorkout'}}
   {{else}}
-    <div class="form-group event-item">
-      <div class="event-item-select">
-        {{view "select" content=workouts
-                  optionLabelPath="content.title"
-                  prompt="Select a Workout"
-                  value=workout
-                  class="form-control"}}
-      </div>
-      <div class="event-item-buttons">
-        <button class="btn btn-default" {{action 'editWorkout'}}>Edit</button>
-        <button class="btn btn-default" {{action 'newWorkout'}}>New</button>
+    <div class="form-group">
+      <label for="workout-select">Workout:</label>
+      <div class="event-item">
+        <div class="event-item-select">
+          {{view "select" content=workouts
+                    optionLabelPath="content.title"
+                    prompt="Select a Workout"
+                    value=workout
+                    id="workout-select"
+                    class="form-control"}}
+        </div>
+        <div class="event-item-buttons">
+          <button type="button" class="btn btn-default" {{action 'editWorkout'}}>Edit</button>
+          <button type="button" class="btn btn-default" {{action 'newWorkout'}}>New</button>
+        </div>
       </div>
     </div>
   {{/if}}
@@ -43,17 +51,21 @@
   {{#if editingLocation}}
     {{location-form model=location action='saveLocation' cancel='cancelLocation'}}
   {{else}}
-     <div class="form-group event-item">
-      <div class="event-item-select">
-        {{view "select" content=locations
-                  optionLabelPath="content.title"
-                  prompt="Select a Location"
-                  value=location
-                  class="form-control"}}
-      </div>
-      <div class="event-item-buttons">
-        <button class="btn btn-default" {{action 'editLocation'}}>Edit</button>
-        <button class="btn btn-default" {{action 'newLocation'}}>New</button>
+    <div class="form-group">
+      <label for="location-select">Location:</label>
+      <div class="event-item">
+        <div class="event-item-select">
+          {{view "select" content=locations
+                    optionLabelPath="content.title"
+                    prompt="Select a Location"
+                    value=location
+                    id="location-select"
+                    class="form-control"}}
+        </div>
+        <div class="event-item-buttons">
+          <button type="button" class="btn btn-default" {{action 'editLocation'}}>Edit</button>
+          <button type="button" class="btn btn-default" {{action 'newLocation'}}>New</button>
+        </div>
       </div>
     </div>
   {{/if}}

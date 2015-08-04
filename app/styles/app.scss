@@ -432,3 +432,41 @@ a.fc-day-grid-event {
   padding-top: 0px;
   padding-bottom: 0px;
 }
+
+.form-group.has-error {
+  .tag-control span {
+    color: white;
+  }
+}
+
+.tag-control {
+  input {
+    border: none;
+    box-shadow: none;
+    outline: none;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+  }
+
+  .tag {
+    margin-right: 6px;
+    font-size: 0.9em;
+
+    button {
+      border: none;
+      background: transparent;
+      box-shadow: none;
+      outline: none;
+      padding: 0;
+      margin: 0;
+      margin-left: 8px;
+      // cursor: pointer;
+
+      // &:after {
+      //   content: "x";
+      //   padding: 0px 2px;
+      // }
+    }
+  }
+}

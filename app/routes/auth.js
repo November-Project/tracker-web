@@ -32,10 +32,9 @@ export default Ember.Route.extend({
 
   actions: {
     signInWithFacebook: function () {
-      FB.login(function (status) {
-        var self = this;
-        this.get('session').openWithFacebook(status.authResponse).finally( function () {
-          self.transitionTo('index');
+      FB.login( (status) => {
+        this.get('session').openWithFacebook(status.authResponse).finally( () => {
+          this.transitionTo('index');
         });
       }, { scope: 'public_profile,email' });
     }

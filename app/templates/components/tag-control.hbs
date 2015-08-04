@@ -1,0 +1,6 @@
+{{#each model as |item index|}}
+  <span class="tag label label-info">{{item}}
+    <button type="button" {{action 'remove' index}}>x</button>
+  </span>
+{{/each}}
+{{input value=newValue insert-newline='enterPressed' autocomplete='off'}}
