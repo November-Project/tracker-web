@@ -27,7 +27,9 @@
     {{tag-control id="times" model=event.times remove='removeTime' validate='validateTime' add='addTime'}}
   </div>
   {{#if editingWorkout}}
-    {{workout-form model=workout action='saveWorkout' cancel='cancelWorkout'}}
+    <div class="well well-sm">
+      {{workout-form model=workout action='saveWorkout' cancel='cancelWorkout'}}
+    </div>
   {{else}}
     <div class="form-group">
       <label for="workout-select">Workout:</label>
@@ -49,7 +51,9 @@
   {{/if}}
 
   {{#if editingLocation}}
-    {{location-form model=location action='saveLocation' cancel='cancelLocation'}}
+    <div class="well well-sm">
+      {{location-form model=location action='saveLocation' cancel='cancelLocation'}}
+    </div>
   {{else}}
     <div class="form-group">
       <label for="location-select">Location:</label>
@@ -69,4 +73,8 @@
       </div>
     </div>
   {{/if}}
+  <div class="form-group">
+    <button type="button" {{bind-attr class="savable::disabled :btn :btn-primary :pull-right"}} {{action 'save'}}>Save</button>
+    <button type="button" class="btn btn-default pull-right cancel" {{action 'cancel'}}>Cancel</button>
+  </div>
 </form>

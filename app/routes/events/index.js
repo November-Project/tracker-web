@@ -2,9 +2,13 @@ import AdministrationRoute from '../administration';
 
 export default AdministrationRoute.extend({
   actions: {
-    openEvent: function (event) {
+    openEvent: function (event, date) {
       if (event === 'new') {
-        this.transitionTo('events.new');
+        this.transitionTo('events.new').then( (newRoute) => {
+          // debugger;
+          newRoute.currentModel.event.set('date', date);
+          newRoute.currentModel.event.set('tribe', this.get('session._tribe'));
+        });
       } else {
         this.transitionTo('events.edit', event);
       }

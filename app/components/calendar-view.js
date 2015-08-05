@@ -31,7 +31,7 @@ export default Ember.Component.extend({
               id = event.id;
             }
           });
-          this.sendAction('openEvent', id);
+          this.sendAction('openEvent', id, date.format());
         });
       },
 

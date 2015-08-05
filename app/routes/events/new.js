@@ -16,7 +16,6 @@ export default AdministrationRoute.extend({
         window.mapAPILoaded = Ember.run.bind(resolve);
         Ember.$.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyCYKDmsSlu_GNmW5OHDv_R8VZzhQpHEW9E&sensor=false&callback=mapAPILoaded').fail(reject);
       } else {
-        this.set('model.event.times', ['5:30', '6:30']);
         resolve();
       }
     });
@@ -24,5 +23,17 @@ export default AdministrationRoute.extend({
 
   cleanupController: function () {
     this.controller.cleanup();
-  }.on('deactivate')
+  }.on('deactivate'),
+
+  actions: {
+    save: function () {
+      var model = this.get('controller.event');
+
+      model.save().then( () => {
+        this.replaceWith('events.index');
+      }, function (err) {
+        console.log(err);
+      });
+    }
+  }
 });
