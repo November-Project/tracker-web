@@ -5,7 +5,6 @@ export default AdministrationRoute.extend({
     openEvent: function (event, date) {
       if (event === 'new') {
         this.transitionTo('events.new').then( (newRoute) => {
-          // debugger;
           newRoute.currentModel.event.set('date', date);
           newRoute.currentModel.event.set('tribe', this.get('session._tribe'));
         });

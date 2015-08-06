@@ -71,7 +71,10 @@ export default Ember.Controller.extend({
     },
 
     addTime: function (newTime) {
-      this.get('event.times').addObject(newTime);
+      const military = moment(newTime, ['H:mm'], true);
+      const twelveHour = moment(newTime, ['h:mma', 'h:mm a'], true);
+      const time = military.isValid() ? military.format('H:mm') : twelveHour.format('h:mm A');
+      this.get('event.times').addObject(time);
     },
 
     editWorkout: function () {
