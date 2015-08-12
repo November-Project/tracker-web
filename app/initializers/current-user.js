@@ -2,10 +2,10 @@ export default {
   name: 'currentUser',
   after: 'store',
 
-  initialize: function (container, app) {
-    var session = container.lookup('session:main');
+  initialize: function (instance, app) {
+    var session = instance.container.lookup('session:main');
 
-    if (session.getToken()) {
+    if (session.get('_token')) {
       app.deferReadiness();
       session.fetchUser().finally( function () {
         app.advanceReadiness();

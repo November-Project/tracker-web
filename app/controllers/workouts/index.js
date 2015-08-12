@@ -6,13 +6,14 @@ export default Ember.ArrayController.extend({
 
   filterStandard: true,
 
-  filteredContent: function () {
-    var workouts = this.get('arrangedContent');
-    var self = this;
-    return workouts.filter( function (workout) {
-      return workout.get('standard') === self.get('filterStandard');
-    });
-  }.property('filterStandard'),
+  filteredContent: Ember.computed('filterStandard', {
+    get: function () {
+      var workouts = this.get('arrangedContent');
+      return workouts.filter( (workout) => {
+        return workout.get('standard') === this.get('filterStandard');
+      });
+    }
+  }),
 
   actions: {
     showStandard: function () {

@@ -23,18 +23,20 @@ export default Ember.Object.extend({
     return this.fetchUser();
   },
 
-  _tribe: function (key, value) {
-    if (arguments.length > 1) {
+  _tribe: Ember.computed('tribe', {
+    get: function () {
+      var tribe = this.get('tribe');
+      if (!tribe && localStorage && localStorage.tribe) {
+        tribe = this.store.peekAll('tribe').findBy('id', localStorage.tribe);
+        this.set('tribe', tribe);
+      }
+      return tribe;
+    },
+    set: function (key, value) {
       if (localStorage) { localStorage.tribe = value.get('id'); }
+      return value;
     }
-
-    var tribe = this.get('tribe');
-    if (!tribe && localStorage && localStorage.tribe) {
-      tribe = this.store.peekAll('tribe').findBy('id', localStorage.tribe);
-      this.set('tribe', tribe);
-    }
-    return tribe;
-  }.property('tribe'),
+  }),
 
   fetchUser: function () {
     var self = this;

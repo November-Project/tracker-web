@@ -34,7 +34,7 @@
         </div>
         <div class="modal-body">
           <div class="list-group">
-            {{#each tribe in tribes}}
+            {{#each tribes as |tribe|}}
               {{#if tribe.active}}
                 <a class="list-group-item active" href="javascript:;" data-dismiss="modal">{{tribe.title}}</a>
               {{else}}

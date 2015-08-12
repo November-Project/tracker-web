@@ -4,8 +4,8 @@ export default {
   name: 'session',
   before: 'currentUser',
 
-  initialize: function (container, app) {
-    var store = container.lookup('service:store');
+  initialize: function (instance, app) {
+    var store = instance.container.lookup('service:store');
 
     Session.reopen({
       store: store

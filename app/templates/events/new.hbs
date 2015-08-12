@@ -8,7 +8,7 @@
       <h4>Schedule</h4>
       <div class="form-group">
         <label>Repeat On:</label>
-        {{#each day in daysOfWeek}}
+        {{#each daysOfWeek as |day|}}
           {{input type="checkbox" id=day.word checked=day.checked}} {{day.letter}}
         {{/each}}
       </div>

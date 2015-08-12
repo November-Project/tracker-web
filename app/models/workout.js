@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import DS from 'ember-data';
 
 export default DS.Model.extend({
@@ -11,22 +12,25 @@ export default DS.Model.extend({
   allowUserPR: DS.attr('boolean', { defaultValue: false }),
   tribe: DS.belongsTo('tribe'),
 
-  minutes: function (key, value, previousValue) {
-    if (arguments.length > 1) {
+  minutes: Ember.computed('time', {
+    get: function () {
+      return Math.floor(this.get('time') / 60);
+    },
+    set: function (key, value, previousValue) {
       var sec = this.get('time') - previousValue * 60;
       this.set('time', value * 60 + sec);
+      return Math.floor(this.get('time') / 60);
     }
+  }),
 
-    return Math.floor(this.get('time') / 60);
-  }.property('time'),
-
-  seconds: function (key, value, previousValue) {
-    if (arguments.length > 1) {
+  seconds: Ember.computed('time', {
+    get: function () {
+      return this.get('time') % 60;
+    },
+    set: function (key, value, previousValue) {
       var time = this.get('time') - previousValue;
       this.set('time', value * 1 + time);
+      return this.get('time') % 60;
     }
-
-    return this.get('time') % 60;
-  }.property('time')
+  })
 });
-

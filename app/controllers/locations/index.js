@@ -6,13 +6,14 @@ export default Ember.ArrayController.extend({
 
   filterStandard: true,
 
-  filteredContent: function () {
-    var locations = this.get('arrangedContent');
-    var self = this;
-    return locations.filter( function (location) {
-      return location.get('standard') === self.get('filterStandard');
-    });
-  }.property('filterStandard'),
+  filteredContent: Ember.computed('filterStandard', {
+    get: function () {
+      var locations = this.get('arrangedContent');
+      return locations.filter( (location) => {
+        return location.get('standard') === this.get('filterStandard');
+      });
+    }
+  }),
 
   actions: {
     showStandard: function () {

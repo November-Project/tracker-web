@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import DS from 'ember-data';
 
 export default DS.Model.extend({
@@ -11,11 +12,11 @@ export default DS.Model.extend({
   location: DS.belongsTo('location'),
   workout: DS.belongsTo('workout'),
 
-  title: function () {
-    if (arguments.length > 1) {}
-
-    if (this.get('workout')) { return this.get('workout').get('title'); }
-    if (this.get('location')) { return this.get('location').get('title'); }
-    return '';
-  }.property('workout', 'location')
+  title: Ember.computed('workout', 'location', {
+    get: function () {
+      if (this.get('workout')) { return this.get('workout').get('title'); }
+      if (this.get('location')) { return this.get('location').get('title'); }
+      return '';
+    }
+  })
 });

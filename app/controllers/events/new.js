@@ -31,13 +31,15 @@ export default Ember.Controller.extend({
     });
   },
 
-  savable: function () {
-    return this.get('event.isDirty') &&
-      Ember.isPresent(this.get('event.title')) &&
-      Ember.isPresent(this.get('workout')) &&
-      Ember.isPresent(this.get('location')) &&
-      Ember.isPresent(this.get('event.times'));
-  }.property('event.title', 'event.isDirty', 'workout', 'location', 'event.times'),
+  savable: Ember.computed('event.title', 'event.isDirty', 'workout', 'location', 'event.times', {
+    get: function () {
+      return this.get('event.isDirty') &&
+        Ember.isPresent(this.get('event.title')) &&
+        Ember.isPresent(this.get('workout')) &&
+        Ember.isPresent(this.get('location')) &&
+        Ember.isPresent(this.get('event.times'));
+    }
+  }),
 
   daysOfWeek: Ember.computed.map('session._tribe.daysOfWeek', function (day) {
     const letterForDay = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
