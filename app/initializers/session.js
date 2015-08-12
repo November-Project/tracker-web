@@ -5,7 +5,7 @@ export default {
   before: 'currentUser',
 
   initialize: function (container, app) {
-    var store = container.lookup('store:main');
+    var store = container.lookup('service:store');
 
     Session.reopen({
       store: store

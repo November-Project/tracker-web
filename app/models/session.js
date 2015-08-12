@@ -30,7 +30,7 @@ export default Ember.Object.extend({
 
     var tribe = this.get('tribe');
     if (!tribe && localStorage && localStorage.tribe) {
-      tribe = this.store.all('tribe').findBy('id', localStorage.tribe);
+      tribe = this.store.peekAll('tribe').findBy('id', localStorage.tribe);
       this.set('tribe', tribe);
     }
     return tribe;
@@ -41,7 +41,7 @@ export default Ember.Object.extend({
     return new Ember.RSVP.Promise( function (resolve, reject) {
       if (self.get('user')) { Ember.run(resolve); }
 
-      self.store.find('user', 'me').then( function (user) {
+      self.store.findRecord('user', 'me').then( function (user) {
         self.set('user', user);
         if (!self.get('_tribe')) { console.log('again'); self.set('tribe', user.get('tribe')); }
         Ember.run(resolve);

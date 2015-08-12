@@ -4,6 +4,6 @@ export default {
   after: 'store',
 
   initialize: function (container) {
-    return container.lookup('store:main').find('tribe');
+    return container.lookup('service:store').findAll('tribe');
   }
 };

@@ -2,6 +2,6 @@ import AdministrationRoute from '../administration';
 
 export default AdministrationRoute.extend({
   model: function () {
-    return this.get('store').find('workout');
+    return this.get('store').findAll('workout');
   }
 });

@@ -3,7 +3,7 @@ import AdministrationRoute from '../administration';
 
 export default AdministrationRoute.extend({
   model: function(params) {
-    return this.store.find('location', params.location_id);
+    return this.store.findRecord('location', params.location_id);
   },
 
   beforeModel: function () {

@@ -14,7 +14,7 @@ export default AdministrationRoute.extend({
     },
 
     getEvents: function (callback, start_date, end_date) {
-      this.get('store').find('event', { start_date, end_date }).then( (events) => {
+      this.get('store').findAll('event', { start_date, end_date }).then( (events) => {
         callback(events.map( (event) => {
           return {
             id: event.id,

@@ -5,8 +5,8 @@ export default AdministrationRoute.extend({
   model: function () {
     return Ember.RSVP.hash({
       event: this.store.createRecord('event'),
-      workouts: this.store.find('workout'),
-      locations: this.store.find('location'),
+      workouts: this.store.findAll('workout'),
+      locations: this.store.findAll('location'),
     });
   },
 
