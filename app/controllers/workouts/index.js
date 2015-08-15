@@ -1,15 +1,13 @@
 import Ember from 'ember';
 
-export default Ember.ArrayController.extend({
-  sortProperties: ['title'],
-  sortAscending: true,
+export default Ember.Controller.extend({
+  sorted: Ember.computed.sort('model', ['title']),
 
   filterStandard: true,
 
   filteredContent: Ember.computed('filterStandard', {
     get: function () {
-      var workouts = this.get('arrangedContent');
-      return workouts.filter( (workout) => {
+      return this.get('sorted').filter( (workout) => {
         return workout.get('standard') === this.get('filterStandard');
       });
     }

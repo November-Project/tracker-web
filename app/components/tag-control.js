@@ -3,9 +3,9 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   classNames: ['form-control', 'tag-control'],
 
-  newValueChange: function () {
+  newValueChange: Ember.observer('newValue', () => {
     this.sendAction('validate', this.get('newValue'));
-  }.observes('newValue'),
+  }),
 
   actions: {
     remove: function (index) {

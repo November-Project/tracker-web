@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   savable: Ember.computed('model.title', 'model.isDirty', {
     get: function () {
-      return this.get('model.isDirty') && this.get('model.title') !== "" && this.get('model.title') !== undefined;
+      return this.get('model.isDirty') && Ember.isPresent(this.get('model.title'));
     }
   }),
 

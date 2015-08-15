@@ -8,9 +8,8 @@ export default Ember.Component.extend({
   savable: Ember.computed('model.title', 'model.isDirty', 'model.timezone', {
     get: function () {
       return this.get('model.isDirty') &&
-        this.get('model.title') !== "" &&
-        this.get('model.title') !== undefined &&
-        this.get('model.timezone') !== null;
+        Ember.isPresent(this.get('model.title')) &&
+        Ember.isPresent(this.get('model.timezone'));
     }
   }),
 

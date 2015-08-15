@@ -1,8 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  needs: ['locations', 'workouts'],
-
   event: Ember.computed.alias('model.event'),
   workouts: Ember.computed.alias('model.workouts'),
   workout: Ember.computed.alias('model.event.workout'),
@@ -52,10 +50,10 @@ export default Ember.Controller.extend({
     });
   }),
 
-  daysChanged: function () {
+  daysChanged: Ember.observer('daysOfWeek.@each.checked', () => {
     const days = this.get('daysOfWeek').filterBy('checked', true).mapBy('value');
     this.set('event.days', days);
-  }.observes('daysOfWeek.@each.checked'),
+  }),
 
   actions: {
     removeTime: function (index) {
@@ -85,8 +83,7 @@ export default Ember.Controller.extend({
     },
 
     saveWorkout: function () {
-      console.log('saved');
-      this.get('workout').save().then(() => {
+      this.get('workout').save().then( () => {
         this.set('editingWorkout', false);
       });
     },
@@ -110,8 +107,9 @@ export default Ember.Controller.extend({
     },
 
     saveLocation: function () {
-      console.log('saved');
-      this.set('editingLocation', false);
+      this.get('location').save().then( () => {
+        this.set('editingLocation', false);
+      })
     },
 
     cancelLocation: function () {

@@ -6,7 +6,7 @@ export default Ember.Component.extend({
   id: 'map',
 
   insertMap: function () {
-    var mapOptions = {
+    const mapOptions = {
       center: { lat: parseFloat(this.get('latitude')), lng: parseFloat(this.get('longitude')) },
       zoom: 14,
       mapTypeControl: false,
@@ -23,14 +23,14 @@ export default Ember.Component.extend({
     marker.bindTo('position', this.map, 'center');
 
     google.maps.event.addListener(this.map, 'center_changed', () => {
-      var location = this.map.getCenter();
+      const location = this.map.getCenter();
       this.set('latitude', location.lat());
       this.set('longitude', location.lng());
     });
   }.on('didInsertElement'),
 
-  positionChanged: function () {
-    var latLng = new google.maps.LatLng(parseFloat(this.get('latitude')), parseFloat(this.get('longitude')));
+  positionChanged: Ember.observer('latitude', 'longitude', () => {
+    const latLng = new google.maps.LatLng(parseFloat(this.get('latitude')), parseFloat(this.get('longitude')));
     this.map.setCenter(latLng);
-  }.observes('latitude', 'longitude')
+  })
 });
