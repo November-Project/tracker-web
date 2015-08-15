@@ -1,7 +1,7 @@
 <div class="center top-margin">
   <div class="btn-group" role="group" aria-label="...">
-    <button type="button" {{bind-attr class="filterStandard:active: :btn :btn-default"}} {{action 'showStandard'}}>Standard</button>
-    <button type="button" {{bind-attr class="filterStandard::active :btn :btn-default"}} {{action 'showNonStandard'}}>Non-Standard</button>
+    <button type="button" class="{{if filterStandard 'active'}} btn btn-default" {{action 'showStandard'}}>Standard</button>
+    <button type="button" class="{{unless filterStandard 'active'}} btn btn-default" {{action 'showNonStandard'}}>Non-Standard</button>
   </div>
 </div>
 

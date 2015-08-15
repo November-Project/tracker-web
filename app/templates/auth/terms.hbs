@@ -1,6 +1,6 @@
 <h3>Terms and Conditions</h3>
 <form role="form">
-  <div class="form-group" {{bind-attr class="error.tribe:has-error"}}>
+  <div class="form-group" class={{if error.tribe 'has-error'}}>
     {{view "select" content=controllers.tribes.model
                     optionValuePath="content"
                     optionLabelPath="content.title"
@@ -8,7 +8,7 @@
                     value=tribe
                     class="form-control"}}
   </div>
-  <div class="form-group" {{bind-attr class="error.terms:has-error"}}>
+  <div class="form-group" class={{if error.terms 'has-error'}}>
     <label class="checkbox">
       {{input type="checkbox" id="terms" checked=acceptedTerms}} Accept <a target='_blank' href='http://november-project.com/disclaimer/'>Terms and Conditions</a>
     </label>

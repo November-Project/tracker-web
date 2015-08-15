@@ -1,11 +1,11 @@
 {{partial "alert"}}
 
 <form role="form">
-  <div class="form-group" {{bind-attr class="error.email:has-error"}}>
+  <div class="form-group" class={{if error.email 'has-error'}}>
     <label for="email">Email</label>
     <input type="email" id="email" class="form-control" placeholder="Email">
   </div>
-  <div class="form-group" {{bind-attr class="error.password:has-error"}}>
+  <div class="form-group" class={{if error.password 'has-error'}}>
     <label for="password">Password</label>
     <input type="password" id="password" class="form-control" placeholder="Password">
   </div>
