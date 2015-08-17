@@ -29,7 +29,7 @@ export default Ember.Component.extend({
     });
   }.on('didInsertElement'),
 
-  positionChanged: Ember.observer('latitude', 'longitude', () => {
+  positionChanged: Ember.observer('latitude', 'longitude', function () {
     const latLng = new google.maps.LatLng(parseFloat(this.get('latitude')), parseFloat(this.get('longitude')));
     this.map.setCenter(latLng);
   })

@@ -6,7 +6,7 @@ export default AdministrationRoute.extend({
       if (event === 'new') {
         this.transitionTo('events.new').then( (newRoute) => {
           newRoute.currentModel.event.set('date', date);
-          newRoute.currentModel.event.set('tribe', this.get('session._tribe'));
+          newRoute.currentModel.event.set('tribe', this.get('session.tribe'));
         });
       } else {
         this.transitionTo('events.edit', event);
@@ -26,11 +26,11 @@ export default AdministrationRoute.extend({
     },
 
     getSchedule: function (callback) {
-      callback(this.get('session._tribe.daysOfWeek'));
+      callback(this.get('session.tribe.daysOfWeek'));
     },
 
     isValidDay: function (day, success) {
-      if (this.get('session._tribe.daysOfWeek').contains(day)) { success(); }
+      if (this.get('session.tribe.daysOfWeek').contains(day)) { success(); }
     }
   }
 });

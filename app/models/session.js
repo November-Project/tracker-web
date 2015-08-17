@@ -3,7 +3,7 @@ import config from '../config/environment';
 
 export default Ember.Object.extend({
   isAuthenticated: function () {
-    return !!this.getToken();
+    return Ember.isPresent(this.get('token'));
   },
 
   hasAcceptedTerms: function () {
@@ -11,52 +11,51 @@ export default Ember.Object.extend({
     return this.get('user').get('acceptedTerms');
   },
 
-  getToken: function () {
-    if (!this.token && localStorage && localStorage.token) { this.set('token', localStorage.token); }
-    return this.get('token');
-  },
-
-  setToken: function (token) {
-    this.close();
-    this.set('token', token);
-    if (localStorage) { localStorage.token = token; }
-    return this.fetchUser();
-  },
-
-  _tribe: Ember.computed('tribe', {
+  token: Ember.computed({
     get: function () {
-      var tribe = this.get('tribe');
-      if (!tribe && localStorage && localStorage.tribe) {
-        tribe = this.store.peekAll('tribe').findBy('id', localStorage.tribe);
-        this.set('tribe', tribe);
+      if (Ember.isEmpty(this.get('_token'))) {
+        this.set('_token', localStorage ? localStorage.token : null);
       }
-      return tribe;
+      return this.get('_token');
     },
     set: function (key, value) {
+      this.set('_token', value);
+      if (localStorage) { localStorage.token = value; }
+      return value;
+    }
+  }),
+
+  tribe: Ember.computed({
+    get: function () {
+      if (Ember.isEmpty(this.get('_tribe')) && localStorage && localStorage.tribe) {
+        this.set('_tribe', this.get('store').peekAll('tribe').findBy('id', localStorage.tribe));
+      }
+      return this.get('_tribe');
+    },
+    set: function (key, value) {
+      this.set('_tribe', value);
       if (localStorage) { localStorage.tribe = value.get('id'); }
       return value;
     }
   }),
 
   fetchUser: function () {
-    var self = this;
-    return new Ember.RSVP.Promise( function (resolve, reject) {
-      if (self.get('user')) { Ember.run(resolve); }
+    return new Ember.RSVP.Promise( (resolve, reject) => {
+      if (this.get('user')) { Ember.run(resolve); }
 
-      self.store.findRecord('user', 'me').then( function (user) {
-        self.set('user', user);
-        if (!self.get('_tribe')) { console.log('again'); self.set('tribe', user.get('tribe')); }
+      this.get('store').findRecord('user', 'me').then( (user) => {
+        this.set('user', user);
+        if (!this.get('tribe')) { console.log('again'); this.set('tribe', user.get('tribe')); }
         Ember.run(resolve);
-      }, function () {
-        self.close();
+      }, () => {
+        this.close();
         Ember.run(reject);
       });
     });
   },
 
   openWithFacebook: function (auth) {
-    var self = this;
-    return new Ember.RSVP.Promise( function (resolve, reject) {
+    return new Ember.RSVP.Promise( (resolve, reject) => {
       Ember.$.ajax({
         url: config.API_HOST + '/session/facebook',
         type: 'POST',
@@ -67,16 +66,15 @@ export default Ember.Object.extend({
         dataType: 'json',
         contentType: 'application/json',
         processData: false
-      }).then( function (data) {
-        self.setToken(data.token);
+      }).then( (data) => {
+        this.set('token', data.token);
         Ember.run(resolve);
       }, reject);
     });
   },
 
   openWithEmailAndPassword: function (email, password) {
-    var self = this;
-    return new Ember.RSVP.Promise( function (resolve, reject) {
+    return new Ember.RSVP.Promise( (resolve, reject) => {
       Ember.$.ajax({
         url: config.API_HOST + '/session/email',
         type: 'POST',
@@ -88,15 +86,15 @@ export default Ember.Object.extend({
         dataType: 'json',
         contentType: 'application/json',
         processData: false
-      }).then( function (data) {
-        self.setToken(data.token);
+      }).then( (data) => {
+        this.set('token', data.token);
         Ember.run(resolve);
       }, reject);
     });
   },
 
   forgotPassword: function (email) {
-    return new Ember.RSVP.Promise( function (resolve, reject) {
+    return new Ember.RSVP.Promise( (resolve, reject) => {
       Ember.$.ajax({
         url: config.API_HOST + '/forgot',
         type: 'POST',
@@ -110,7 +108,7 @@ export default Ember.Object.extend({
   },
 
   changePassword: function (password, token) {
-    return new Ember.RSVP.Promise( function (resolve, reject) {
+    return new Ember.RSVP.Promise( (resolve, reject) => {
       Ember.$.ajax({
         url: config.API_HOST + '/reset',
         type: 'POST',
@@ -125,16 +123,15 @@ export default Ember.Object.extend({
   },
 
   logout: function () {
-    var self = this;
-    return new Ember.RSVP.Promise( function (resolve, reject) {
+    return new Ember.RSVP.Promise( (resolve, reject) => {
       Ember.$.ajax({
         url: config.API_HOST + '/sessions',
         type: 'DELETE',
         headers: {
-          'AUTHORIZATION': self.token
+          'AUTHORIZATION': this.get('token')
         }
-      }).then( function () {
-        self.close();
+      }).then( () => {
+        this.close();
         Ember.run(resolve);
       }, reject);
     });

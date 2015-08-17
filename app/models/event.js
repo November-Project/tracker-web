@@ -9,8 +9,8 @@ export default DS.Model.extend({
   days: DS.attr({ defaultValue: [] }),
   recurringEvent: DS.belongsTo('event'),
   tribe: DS.belongsTo('tribe'),
-  location: DS.belongsTo('location'),
-  workout: DS.belongsTo('workout'),
+  location: DS.belongsTo('location', { async: false }),
+  workout: DS.belongsTo('workout', { async: false }),
 
   title: Ember.computed('workout', 'location', {
     get: function () {

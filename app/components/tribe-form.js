@@ -5,9 +5,9 @@ import _ from 'lodash';
 export default Ember.Component.extend({
   store: Ember.inject.service('store'),
 
-  savable: Ember.computed('model.title', 'model.isDirty', 'model.timezone', {
+  savable: Ember.computed('model.title', 'model.hasDirtyAttributes', 'model.timezone', {
     get: function () {
-      return this.get('model.isDirty') &&
+      return this.get('model.hasDirtyAttributes') &&
         Ember.isPresent(this.get('model.title')) &&
         Ember.isPresent(this.get('model.timezone'));
     }

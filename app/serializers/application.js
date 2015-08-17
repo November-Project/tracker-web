@@ -1,7 +1,7 @@
 import Ember from 'ember';
-import DS from 'ember-data';
+import { ActiveModelSerializer } from 'active-model-adapter';
 
-export default DS.ActiveModelSerializer.extend({
+export default ActiveModelSerializer.extend({
   isNewSerializerAPI: true,
 
   serializeIntoHash: function (hash, type, record, options) {
@@ -11,7 +11,7 @@ export default DS.ActiveModelSerializer.extend({
   serializeBelongsTo: function (record, json, relationship) {
     var key = relationship.key;
     var belongsTo = record.get(key);
-    key = this.keyForRelationship ? this.keyForRelationship(key, "belongsTo") : key;
+    key = this.keyForRelationship ? this.keyForRelationship(key, 'belongsTo') : key;
     json[key] = Ember.isNone(belongsTo) ? belongsTo : parseInt(belongsTo.id);
   }
 });

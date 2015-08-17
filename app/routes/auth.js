@@ -10,18 +10,17 @@ export default Ember.Route.extend({
   },
 
   afterModel: function () {
-    var self = this;
-    return new Ember.RSVP.Promise( function (resolve, reject) {
-      window.fbAsyncInit = function () {
+    return new Ember.RSVP.Promise( (resolve, reject) => {
+      window.fbAsyncInit = () => {
         FB.init({
           appId      : '188733467942113',
           xfbml      : true,
           version    : 'v2.1'
         });
 
-        FB.getLoginStatus( function (status) {
-          self.get('session').openWithFacebook(status.authResponse).finally( function () {
-            self.transitionTo('index');
+        FB.getLoginStatus( (status) => {
+          this.get('session').openWithFacebook(status.authResponse).finally( () => {
+            this.transitionTo('index');
           });
         });
         resolve();

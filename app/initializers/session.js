@@ -6,6 +6,7 @@ export function initialize (container, app) {
   app.inject('adapter', 'session', 'session:main');
   app.inject('route', 'session', 'session:main');
   app.inject('controller', 'session', 'session:main');
+  app.inject('session:main', 'store', 'service:store');
 }
 
 export default {

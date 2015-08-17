@@ -1,9 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  savable: Ember.computed('model.title', 'model.isDirty', {
+  savable: Ember.computed('model.title', 'model.hasDirtyAttributes', {
     get: function () {
-      return this.get('model.isDirty') && Ember.isPresent(this.get('model.title'));
+      return this.get('model.hasDirtyAttributes') && Ember.isPresent(this.get('model.title'));
     }
   }),
 

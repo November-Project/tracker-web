@@ -29,9 +29,9 @@ export default Ember.Controller.extend({
     });
   },
 
-  savable: Ember.computed('event.title', 'event.isDirty', 'workout', 'location', 'event.times', {
+  savable: Ember.computed('event.title', 'event.hasDirtyAttributes', 'workout', 'location', 'event.times', {
     get: function () {
-      return this.get('event.isDirty') &&
+      return this.get('event.hasDirtyAttributes') &&
         Ember.isPresent(this.get('event.title')) &&
         Ember.isPresent(this.get('workout')) &&
         Ember.isPresent(this.get('location')) &&
@@ -39,7 +39,7 @@ export default Ember.Controller.extend({
     }
   }),
 
-  daysOfWeek: Ember.computed.map('session._tribe.daysOfWeek', function (day) {
+  daysOfWeek: Ember.computed.map('session.tribe.daysOfWeek', function (day) {
     const letterForDay = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
     const wordForDay = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
     return Ember.Object.create({
@@ -50,7 +50,7 @@ export default Ember.Controller.extend({
     });
   }),
 
-  daysChanged: Ember.observer('daysOfWeek.@each.checked', () => {
+  daysChanged: Ember.observer('daysOfWeek.@each.checked', function () {
     const days = this.get('daysOfWeek').filterBy('checked', true).mapBy('value');
     this.set('event.days', days);
   }),
@@ -93,7 +93,7 @@ export default Ember.Controller.extend({
     },
 
     newWorkout: function () {
-      const tribe = this.get('session._tribe');
+      const tribe = this.get('session.tribe');
       const newWorkout = this.store.createRecord('workout', { tribe });
       Ember.run.next(() => {
         this.set('workout', newWorkout);
@@ -117,7 +117,7 @@ export default Ember.Controller.extend({
     },
 
     newLocation: function () {
-      const tribe = this.get('session._tribe');
+      const tribe = this.get('session.tribe');
       const { longitude, latitude } = tribe.getProperties('longitude', 'latitude');
       const newLocation = this.store.createRecord('location', { tribe, longitude, latitude });
       Ember.run.next(() => {
