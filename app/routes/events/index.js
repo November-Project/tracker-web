@@ -14,11 +14,11 @@ export default AdministrationRoute.extend({
     },
 
     getEvents: function (callback, start_date, end_date) {
-      this.get('store').findAll('event', { start_date, end_date }).then( (events) => {
+      this.get('store').query('event', { start_date, end_date }).then( (events) => {
         callback(events.map( (event) => {
           return {
             id: event.id,
-            title: event.title,
+            title: event.get('title'),
             start: event.get('date')
           };
         }));
