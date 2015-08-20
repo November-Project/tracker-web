@@ -109,7 +109,7 @@ export default Ember.Controller.extend({
     saveLocation: function () {
       this.get('location').save().then( () => {
         this.set('editingLocation', false);
-      })
+      });
     },
 
     cancelLocation: function () {

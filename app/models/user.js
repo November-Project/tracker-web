@@ -10,17 +10,17 @@ export default DS.Model.extend({
   acceptedTerms: DS.attr('boolean', { defaultValue: false }),
   isVerified: DS.attr('boolean', { defaultValue: false }),
   isAdmin: DS.attr('boolean', { defaultValue: false }),
-  tribe_admin: DS.belongsTo('tribe'),
+  tribeAdmin: DS.belongsTo('tribe'),
 
   isSuperAdmin: function () {
     return this.get('isAdmin');
   },
 
   isLeader: function () {
-    return this.isSuperAdmin() || !!this.get('tribe_admin');
+    return this.isSuperAdmin() || !!this.get('tribeAdmin');
   },
 
   isLeaderOf: function (tribe) {
-    return this.isSuperAdmin() || (this.isLeader() && this.get('tribe_admin').get('id') === tribe.get('id'));
+    return this.isSuperAdmin() || (this.isLeader() && this.get('tribeAdmin').get('id') === tribe.get('id'));
   }
 });

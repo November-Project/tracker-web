@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import Session from '../models/session';
 
 export default Ember.Route.extend({
   beforeModel: function () {
