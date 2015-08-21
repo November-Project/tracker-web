@@ -1,8 +1,8 @@
 import Ember from 'ember';
-import ActiveModelAdapter from 'active-model-adapter';
+import DS from 'ember-data';
 import config from '../config/environment';
 
-export default ActiveModelAdapter.extend({
+export default DS.RESTAdapter.extend({
   host: config.API_HOST,
 
   shouldReloadAll: function () {

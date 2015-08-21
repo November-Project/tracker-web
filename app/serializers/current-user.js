@@ -1,6 +1,6 @@
-import { ActiveModelSerializer } from 'active-model-adapter';
+import ApplicationSerializer from './application';
 
-export default ActiveModelSerializer.extend({
+export default ApplicationSerializer.extend({
   isNewSerializerAPI: true,
 
   typeForRoot: function () {

@@ -7,7 +7,7 @@ export default Ember.Controller.extend({
   locations: Ember.computed.alias('model.locations'),
   location: Ember.computed.alias('model.event.location'),
 
-  weekOptions: [
+  _weekOptions: [
     { label: 'Week', value: 0 },
     { label: 'First Week', value: 1 },
     { label: '2nd Week', value: 2 },
@@ -18,6 +18,10 @@ export default Ember.Controller.extend({
     { label: '3rd to Last Week', value: -3 },
     { label: '4th to Last Week', value: -4 }
   ],
+
+  weekOptions: Ember.computed.map('_weekOptions', function (weekOption) {
+    return Ember.Object.create({ label: weekOption.label, value: weekOption.value });
+  }),
 
   editingWorkout: false,
   editingLocation: false,
