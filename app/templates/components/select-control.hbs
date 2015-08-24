@@ -1,4 +1,4 @@
-<option>{{prompt}}</option>
+{{#if prompt}}<option>{{prompt}}</option>{{/if}}
 {{#each optionModels as |option index|}}
 <option value={{index}}>{{option}}</option>
 {{/each}}

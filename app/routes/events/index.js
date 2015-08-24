@@ -16,9 +16,6 @@ export default AdministrationRoute.extend({
     getEvents: function (callback, start_date, end_date) {
       this.get('store').query('event', { start_date, end_date }).then( (events) => {
         callback(events.map( (event) => {
-          console.log(event.get('tribe'));
-          console.log(event.get('workout'));
-          console.log(event.get('location'));
           return {
             id: event.id,
             title: event.get('title'),

@@ -17,15 +17,14 @@
           {{select-control options=weekOptions
             optionTitlePath="label"
             optionValuePath="value"
-            prompt="Select a Location"
-            value=event.value
+            value=event.week
             classes="form-control week-select"}}
       </div>
     </div>
   {{/if}}
   <div class="form-group">
     <label for="times">Times:</label>
-    {{tag-control id="times" model=event.times remove='removeTime' validate='validateTime' add='addTime'}}
+    {{tag-control id="times" model=event.timesArray remove='removeTime' validate='validateTime' add='addTime'}}
   </div>
   {{#if editingWorkout}}
     <div class="well well-sm">

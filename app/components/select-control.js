@@ -15,5 +15,12 @@ export default Ember.Component.extend({
     const valueKey = this.get('optionValuePath');
     const value = this.get('options').objectAt(Ember.$(e.target).val());
     this.set('value', valueKey ? value.get(valueKey) : value);
-  }.on('change')
+  }.on('change'),
+
+  setup: function () {
+    const valueKey = this.get('optionValuePath');
+    const value = valueKey ? this.get('options').findBy(valueKey, this.get('value')) : this.get('value');
+    const index = this.get('options').indexOf(value);
+    this.$().val(index);
+  }.on('didInsertElement')
 });

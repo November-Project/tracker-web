@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import _ from 'lodash';
 
 export default Ember.Controller.extend({
   event: Ember.computed.alias('model.event'),
@@ -27,41 +28,48 @@ export default Ember.Controller.extend({
   editingLocation: false,
 
   cleanup: function () {
+    this.get('event').rollbackAttributes();
     this.setProperties({
       editingWorkout: false,
       editingLocation: false
     });
   },
 
-  savable: Ember.computed('event.title', 'event.hasDirtyAttributes', 'workout', 'location', 'event.times', {
-    get: function () {
-      return this.get('event.hasDirtyAttributes') &&
-        Ember.isPresent(this.get('event.title')) &&
-        Ember.isPresent(this.get('workout')) &&
-        Ember.isPresent(this.get('location')) &&
-        Ember.isPresent(this.get('event.times'));
-    }
+  savable: Ember.computed('event.hasDirtyAttributes', 'event.times', 'event.recurring', 'event.days', 'event.week', 'workout', 'location', function () {
+    return (this.get('event.hasDirtyAttributes') &&
+      Ember.isPresent(this.get('event.times')) &&
+      ((this.get('event.recurring') &&
+        Ember.isPresent(this.get('event.days')) &&
+        Ember.isPresent(this.get('event.week'))) ||
+       !this.get('event.recurring')
+     )) || this.hasDirtyRelationships();
   }),
 
+  hasDirtyRelationships: function () {
+    return this.get('event._internalModel._relationships.initializedRelationships.workout.canonicalState.id') !== this.get('workout.id') ||
+      this.get('event._internalModel._relationships.initializedRelationships.location.canonicalState.id') !== this.get('location.id');
+  },
+
   daysOfWeek: Ember.computed.map('session.tribe.daysOfWeek', function (day) {
-    const letterForDay = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+    const letterForDay = ['S', 'M', 'Tu', 'W', 'Th', 'F', 'S'];
     const wordForDay = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
     return Ember.Object.create({
       value: day,
       letter: letterForDay[day],
       word: wordForDay[day],
-      checked: false
+      checked: _.contains(this.get('event.daysArray'), day)
     });
   }),
 
   daysChanged: Ember.observer('daysOfWeek.@each.checked', function () {
     const days = this.get('daysOfWeek').filterBy('checked', true).mapBy('value');
-    this.set('event.days', days);
+    this.set('event.daysArray', days);
   }),
 
   actions: {
     removeTime: function (index) {
-      this.get('event.times').removeAt(index);
+      const times = this.get('event.timesArray').removeAt(index);
+      this.set('event.timesArray', times);
     },
 
     validateTime: function (newValue, callback) {
@@ -78,7 +86,8 @@ export default Ember.Controller.extend({
       const military = moment(newTime, ['H:mm'], true);
       const twelveHour = moment(newTime, ['h:mma', 'h:mm a'], true);
       const time = military.isValid() ? military.format('H:mm') : twelveHour.format('h:mm A');
-      this.get('event.times').addObject(time);
+      const times = this.get('event.timesArray').addObject(time);
+      this.set('event.timesArray', times);
     },
 
     editWorkout: function () {
@@ -94,6 +103,7 @@ export default Ember.Controller.extend({
 
     cancelWorkout: function () {
       this.set('editingWorkout', false);
+      this.get('workout').rollbackAttributes();
     },
 
     newWorkout: function () {
@@ -118,6 +128,7 @@ export default Ember.Controller.extend({
 
     cancelLocation: function () {
       this.set('editingLocation', false);
+      this.get('location').rollbackAttributes();
     },
 
     newLocation: function () {

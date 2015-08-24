@@ -30,10 +30,15 @@ export default AdministrationRoute.extend({
       var model = this.get('controller.event');
 
       model.save().then( () => {
-        this.replaceWith('events.index');
+        this.transitionTo('events.index');
       }, function (err) {
         console.log(err);
       });
+    },
+
+    cancel: function () {
+      if (window.history.length > 0) { window.history.back(); }
+      else { this.transitionTo('events.index'); }
     }
   }
 });
