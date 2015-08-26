@@ -19,7 +19,7 @@ export default Ember.Component.extend({
     if (tribe.get('isNew')) {
       tribe.destroyRecord();
     } else {
-      tribe.rollback();
+      tribe.rollbackAttributes();
     }
   }.on('willDestroyElement'),
 

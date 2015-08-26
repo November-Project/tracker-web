@@ -23,7 +23,7 @@ export default Ember.Component.extend({
     if (workout.get('isNew')) {
       workout.destroyRecord();
     } else {
-      workout.rollback();
+      workout.rollbackAttributes();
     }
   }.on('willDestroyElement'),
 

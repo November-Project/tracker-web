@@ -13,7 +13,7 @@ export default Ember.Component.extend({
     if (location.get('isNew')) {
       location.destroyRecord();
     } else {
-      location.rollback();
+      location.rollbackAttributes();
     }
   }.on('willDestroyElement'),
 
