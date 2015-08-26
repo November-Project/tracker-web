@@ -17,5 +17,22 @@ export default AdministrationRoute.extend({
         resolve();
       }
     });
+  },
+
+  actions: {
+    save: function () {
+      var model = this.get('controller.model');
+      model.set('latitude', model.get('latitude').toFixed(6));
+      model.set('longitude', model.get('longitude').toFixed(6))
+
+      model.save().then( () => {
+        this.transitionTo('locations.index');
+      });
+    },
+
+    cancel: function () {
+      if (window.history.length > 0) { window.history.back(); }
+      else { this.transitionTo('locations'); }
+    }
   }
 });

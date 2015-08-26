@@ -1,7 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  sorted: Ember.computed.sort('model', ['title']),
+  titleSorting: ['title'],
+  sorted: Ember.computed.sort('model', 'titleSorting'),
 
   filterStandard: true,
 
