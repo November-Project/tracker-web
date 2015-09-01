@@ -26,6 +26,10 @@
     <label for="times">Times:</label>
     {{tag-control id="times" model=event.timesArray remove='removeTime' validate='validateTime' add='addTime'}}
   </div>
+  <div class="form-group">
+    <label for="hide-workout" class="checkbox"></label>
+    {{input type="checkbox" id="hide-workout" checked=event.hideWorkout}} Hide workout till after event?
+  </div>
   {{#if editingWorkout}}
     <div class="well well-sm">
       {{workout-form model=workout action='saveWorkout' cancel='cancelWorkout'}}
