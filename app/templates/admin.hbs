@@ -1,0 +1,9 @@
+<div class="card-container center">
+  {{#each model as |obj|}}
+    {{nav-card title=obj.title icon=obj.icon route=obj.route action="transition" selected=obj.selected}}
+  {{/each}}
+</div>
+
+<hr />
+
+{{outlet}}

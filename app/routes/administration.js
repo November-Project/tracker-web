@@ -9,5 +9,11 @@ export default AuthenticationRoute.extend({
     if (!user.isLeaderOf(session.get('tribe'))) {
       this.transitionTo('index');
     }
+  },
+
+  actions: {
+    didTransition: function () {
+      this.send('setAdminNavActive', this.routeName);
+    }
   }
 });
