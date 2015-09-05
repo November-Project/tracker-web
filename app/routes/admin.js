@@ -3,7 +3,7 @@ import AdministrationRoute from './administration';
 
 export default AdministrationRoute.extend({
   model: function () {
-    return [
+    var navItems = [
       {
         'title': 'Events',
         'icon': 'fa fa-calendar',
@@ -18,13 +18,25 @@ export default AdministrationRoute.extend({
         'title': 'Workouts',
         'icon': 'fa fa-heartbeat',
         'route': 'workouts'
-      },
-      {
-        'title': 'Tribes',
-        'icon': 'fa fa-group',
-        'route': 'tribes'
       }
-    ].map( (item) => {
+    ];
+
+    if (this.get('session.user').isSuperAdmin()) {
+      navItems.pushObjects([
+        {
+          'title': 'Tribes',
+          'icon': 'fa fa-group',
+          'route': 'tribes'
+        },
+        {
+          'title': 'Leaders',
+          'icon': 'fa fa-user',
+          'route': 'leaders'
+        }
+      ]);
+    }
+
+    return navItems.map( (item) => {
       return Ember.Object.create(item);
     });
   },
