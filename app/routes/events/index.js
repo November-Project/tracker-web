@@ -1,6 +1,12 @@
 import AdministrationRoute from '../administration';
 
 export default AdministrationRoute.extend({
+  daysArray: Ember.computed({
+    get: function () {
+      return _.map(this.get('session.tribe.daysOfWeek').split(','), function (v) { return parseInt(v); });
+    }
+  }),
+
   actions: {
     openEvent: function (event, date) {
       if (event === 'new') {
@@ -26,11 +32,11 @@ export default AdministrationRoute.extend({
     },
 
     getSchedule: function (callback) {
-      callback(this.get('session.tribe.daysOfWeek'));
+      callback(this.get('daysArray'));
     },
 
     isValidDay: function (day, success) {
-      if (this.get('session.tribe.daysOfWeek').contains(day)) { success(); }
+      if (this.get('daysArray').contains(day)) { success(); }
     }
   }
 });

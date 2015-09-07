@@ -12,8 +12,8 @@
     {{#if session.user.acceptedTerms }}
       <div id="navbar-items" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
-          {{#if session.user.isTribeAdmin}}
-            <li>{{#link-to admin}}Admin{{/link-to}}</li>
+          {{#if isAdmin}}
+            <li>{{#link-to 'admin'}}Admin{{/link-to}}</li>
           {{/if}}
           <li><a {{action 'openTribeSwitcher'}}>{{currentTribeTitle}}</a></li>
           <li>{{#link-to history}}History{{/link-to}}</li>
