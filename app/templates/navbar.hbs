@@ -15,8 +15,7 @@
           {{#if isAdmin}}
             <li>{{#link-to 'admin'}}Admin{{/link-to}}</li>
           {{/if}}
-          <li><a {{action 'openTribeSwitcher'}}>{{currentTribeTitle}}</a></li>
-          <li>{{#link-to history}}History{{/link-to}}</li>
+          <li><a data-toggle="modal" data-target="#tribe-modal">{{currentTribeTitle}}</a></li>
           <li><a {{action 'logout'}}>Logout</a></li>
         </ul>
       </div>
@@ -24,29 +23,27 @@
   </div>
 </nav>
 
-{{#if tribes}}
-  <div class="modal fade">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title">Choose an NP Tribe</h4>
+<div class="modal fade" id="tribe-modal">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" type="button" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Choose an NP Tribe</h4>
+      </div>
+      <div class="modal-body">
+        <div class="list-group">
+          {{#each sorted as |tribe|}}
+            {{#if tribe.active}}
+              <a class="list-group-item active" href="javascript:;" data-dismiss="modal">{{tribe.title}}</a>
+            {{else}}
+              <a class="list-group-item" href="javascript:;" data-dismiss="modal" {{action 'changeTribe' tribe}}>{{tribe.title}}</a>
+            {{/if}}
+          {{/each}}
         </div>
-        <div class="modal-body">
-          <div class="list-group">
-            {{#each tribes as |tribe|}}
-              {{#if tribe.active}}
-                <a class="list-group-item active" href="javascript:;" data-dismiss="modal">{{tribe.title}}</a>
-              {{else}}
-                <a class="list-group-item" href="javascript:;" data-dismiss="modal" onclick="changeTribe({{tribe.id}})">{{tribe.title}}</a>
-              {{/if}}
-            {{/each}}
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
-        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
-{{/if}}
+</div>

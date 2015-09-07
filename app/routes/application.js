@@ -12,5 +12,12 @@ export default Ember.Route.extend({
 
   model: function () {
     return this.get('store').peekAll('tribe');
+  },
+
+  actions: {
+    changeTribe: function (tribe) {
+      this.set('session.tribe', tribe);
+      window.location.reload(true);
+    }
   }
 });
