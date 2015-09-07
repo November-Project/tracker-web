@@ -23,14 +23,15 @@ export default SuperAdministrationRoute.extend({
       var model = this.get('controller.model');
 
       model.save().then( () => {
-        this.transitionTo('tribes.index');
+        this.transitionTo('tribes');
       }, function (err) {
         console.log(err);
       });
     },
 
     cancel: function () {
-      this.transitionTo('tribes.index');
+      if (window.history.length > 0) { window.history.back(); }
+      else { this.transitionTo('tribes'); }
     }
   }
 });

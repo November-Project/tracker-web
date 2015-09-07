@@ -15,7 +15,7 @@
           {{#if session.user.isTribeAdmin}}
             <li>{{#link-to admin}}Admin{{/link-to}}</li>
           {{/if}}
-          <li><a {{action 'openTribeSwitcher'}}>{{tribe.title}}</a></li>
+          <li><a {{action 'openTribeSwitcher'}}>{{currentTribeTitle}}</a></li>
           <li>{{#link-to history}}History{{/link-to}}</li>
           <li><a {{action 'logout'}}>Logout</a></li>
         </ul>
