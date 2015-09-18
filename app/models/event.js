@@ -3,7 +3,7 @@ import DS from 'ember-data';
 import _ from 'lodash';
 
 export default DS.Model.extend({
-  date: DS.attr(),
+  date: DS.attr('moment-date'),
   times: DS.attr('string-array', { defaultValue: "" }),
   recurring: DS.attr('boolean', { defaultValue: false }),
   week: DS.attr('number', { defaultValue: 0 }),

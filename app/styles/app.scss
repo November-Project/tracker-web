@@ -456,12 +456,99 @@ a.fc-day-grid-event {
       padding: 0;
       margin: 0;
       margin-left: 8px;
-      // cursor: pointer;
+    }
+  }
+}
 
-      // &:after {
-      //   content: "x";
-      //   padding: 0px 2px;
-      // }
+.week-calendar {
+  width: 100%;
+  border: 1pt solid #CCC;
+
+  .header {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+
+    div {
+      display: table-cell;
+      padding: 3pt 0pt;
+      border-bottom: 1pt solid #CCC;
+      text-align: center;
+      vertical-align: middle;
+
+      &:first-child {
+        text-align: left;
+      }
+
+      &:last-child {
+        text-align: right;
+      }
+
+      button {
+        padding: 0pt 6pt;
+      }
+
+      span.month {
+        font-size: 1.3em;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .week {
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    cursor: pointer;
+
+    .day {
+      display: table-cell;
+      padding: 6pt 0pt;
+      border-right: 1pt solid #CCC;
+
+      &:last-child {
+        border-right: 0;
+      }
+
+      &.secondary {
+        color: #AAAAAA;
+      }
+
+      &.today {
+        background-color: #FFF9C4;
+      }
+
+      &.has-event {
+        color: #1E88E5;
+
+        &.secondary {
+          color: #90CAF9;
+        }
+      }
+
+      &.selected, &:active {
+        background-color: #E0E0E0;
+      }
+
+      &:hover {
+        background-color: #EEEEEE;
+      }
+
+      span {
+        display: block;
+        text-align: center;
+
+        &.day-of-week {
+        }
+
+        &.day-of-month {
+          font-weight: bold;
+          font-size: 2em;
+          @media screen and (max-width: 580px) {
+            font-size: 5vw;
+          }
+        }
+      }
     }
   }
 }
