@@ -42,14 +42,18 @@ export default Ember.Component.extend({
     get: function () {
       const currentSunday = this.get('currentDate').startOf('week');
       const validDays = this.get('validDays');
-      debugger;
       const selectedDate = this.get('selected');
 
       return this.calculateSecondaries(_.range(7).map( (day) => {
         const date = currentSunday.clone().add(day, 'd');
+        var selected = false;
+        if (!Ember.isEmpty(selectedDate)) {
+          selected = date.format('L') === selectedDate.format('L');
+        }
 
         return Ember.Object.create({
           date: date,
+          event: this.get('events').objectAt(validDays.indexOf(day)),
           dayOfWeek: date.format('ddd'),
           dayOfMonth: date.format('D'),
           month: date.format('MMMM'),
@@ -57,22 +61,20 @@ export default Ember.Component.extend({
           secondary: false,
           today: date.format('L') === moment().format('L'),
           hasEvent: _.contains(validDays, day),
-          selected: date.format('L') === selectedDate.format('L')
+          selected: selected
         });
       }));
     }
   }),
 
-  deb: function () {
-    debugger;
-  }.on('didRender'),
-
   selected: Ember.computed('_selected', 'validDays', {
     get: function () {
       if (!Ember.isPresent(this.get('_selected'))) {
+        const validDays = this.get('validDays');
+        if (Ember.isEmpty(validDays)) { return; }
+
         const defaultDay = moment();
         const day = parseInt(defaultDay.format('e'), 10);
-        const validDays = this.get('validDays');
 
         if (!_.contains(validDays, day)) {
           if (day > validDays[validDays.length - 1]) {
@@ -91,7 +93,7 @@ export default Ember.Component.extend({
             }
           }
         }
-        return defaultDay;
+        this.set('_selected', defaultDay);
       }
       return this.get('_selected');
     }
@@ -114,6 +116,14 @@ export default Ember.Component.extend({
       this.set('events', events);
     });
   },
+
+  updateEvent: Ember.observer('_selected', function () {
+    if (Ember.isEmpty(this.get('selected'))) { return; }
+    const day = this.get('weekDays').find( (day) => {
+      return day.get('date').format('L') === this.get('selected').format('L')
+    });
+    this.sendAction('eventSelected', day.get('event'));
+  }),
 
   onWeekChange: Ember.observer('currentDate', function () {
     this.updateEvents();
