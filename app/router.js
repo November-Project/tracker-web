@@ -35,5 +35,7 @@ export default Router.map(function() {
       this.route('edit', { path: ':tribe_id' });
       this.route('new');
     });
+
+    this.resource('leaders');
   });
 });
