@@ -1,7 +1,3 @@
-{{week-calendar getEvents="getEvents" eventSelected="eventSelected"}}
+{{week-calendar getEvents="getEvents" eventSelected="eventSelected" selectedDate=date}}
 
-{{#if isEventSelected}}
-  
-{{else}}
-  {{partial "no-event"}}
-{{/if}}
+{{event-view event=event}}

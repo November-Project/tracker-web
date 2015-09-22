@@ -70,6 +70,16 @@ export default Ember.Component.extend({
   selected: Ember.computed('_selected', 'validDays', {
     get: function () {
       if (!Ember.isPresent(this.get('_selected'))) {
+        if (Ember.isPresent(this.get('selectedDate'))) {
+          const selectedDate = moment(this.get('selectedDate'), 'YYYY-MM-DD');
+          const currentDate = this.get('currentDate');
+          const dayDiff = selectedDate.diff(currentDate, 'd');
+          const selectedWeek = currentDate.clone().add(dayDiff).startOf('week');
+
+          this.set('_weekOffset', selectedWeek.diff(currentDate, 'w'));
+          this.set('_selected', selectedDate);
+          return this.get('_selected');
+        }
         const validDays = this.get('validDays');
         if (Ember.isEmpty(validDays)) { return; }
 
@@ -117,12 +127,13 @@ export default Ember.Component.extend({
     });
   },
 
-  updateEvent: Ember.observer('_selected', function () {
-    if (Ember.isEmpty(this.get('selected'))) { return; }
-    const day = this.get('weekDays').find( (day) => {
-      return day.get('date').format('L') === this.get('selected').format('L')
+  updateEvent: Ember.observer('_selected', 'events', function () {
+    if (Ember.isEmpty(this.get('_selected'))) { return; }
+    const selectedDate = this.get('_selected');
+    const event = this.get('events').find( function (event) {
+      return event.get('date').format('L') === selectedDate.format('L');
     });
-    this.sendAction('eventSelected', day.get('event'));
+    this.sendAction('eventSelected', event, selectedDate.format('YYYY-MM-DD'));
   }),
 
   onWeekChange: Ember.observer('currentDate', function () {

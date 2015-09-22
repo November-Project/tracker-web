@@ -1,0 +1,8 @@
+{{#unless isEventPresent}}
+  {{partial "no-event"}}
+{{else}}
+  <h1>{{displayDate}}</h1>
+  <h2>{{displayTitle}}</h2>
+  <a class="btn-link" href={{mapLink}} target="_blank">View location</a>
+  <h3>@ {{displayTimes}}</h3>
+{{/unless}}

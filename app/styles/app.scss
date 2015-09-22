@@ -87,10 +87,21 @@ i.fa-caret-down {
   h2 {
     font-size: 2.2rem;
     line-height: 1;
-    margin-top: 0.2rem;
+    margin-top: 0.4rem;
 
     @media (max-width: 40em) {
       font-size: 1.8rem;
+    }
+  }
+
+  h3 {
+    font-size: 1.6rem;
+    line-height: 1;
+    margin-top: 0.2rem;
+    display: inline;
+
+    @media (max-width: 40em) {
+      font-size: 1.2rem;
     }
   }
 }
