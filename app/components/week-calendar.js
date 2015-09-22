@@ -73,7 +73,7 @@ export default Ember.Component.extend({
         const validDays = this.get('validDays');
         if (Ember.isEmpty(validDays)) { return; }
 
-        const defaultDay = moment();
+        var defaultDay = moment();
         const day = parseInt(defaultDay.format('e'), 10);
 
         if (!_.contains(validDays, day)) {
