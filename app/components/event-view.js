@@ -35,5 +35,16 @@ export default Ember.Component.extend({
       const lng = this.get('event.location.longitude');
       return 'http://maps.google.com/?q=loc:' + lat + ',' + lng + '&z=14&t=h';
     }
+  }),
+
+  showVerbals: Ember.computed({
+    get: function () {
+      const date = this.get('event.date').format('YYYY-MM-DD');
+      return Ember.isPresent(this.get('event.times').split(',').map( function (time) {
+        return moment(date + ' ' + time, 'YYYY-MM-DD H:mm');
+      }).find( function (dateTime) {
+        return dateTime.diff(moment()) > 0;
+      }));
+    }
   })
 });

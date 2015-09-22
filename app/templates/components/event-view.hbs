@@ -5,4 +5,10 @@
   <h2>{{displayTitle}}</h2>
   <a class="btn-link" href={{mapLink}} target="_blank">View location</a>
   <h3>@ {{displayTimes}}</h3>
+
+  {{#if showVerbals}}
+    <h1>VERBALS</h1>
+  {{else}}
+    <h1>RESULTS</h1>
+  {{/if}}
 {{/unless}}
