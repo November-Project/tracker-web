@@ -1,0 +1,37 @@
+<div class="list-group">
+  {{#each model as |leader|}}
+    <div class="list-group-item">
+      <div class="split">
+        <h4 class="list-group-item-heading">{{leader.name}}</h4>
+        <p class="list-group-item-text">{{leader.email}}</p>
+      </div>
+      <div class="split">
+        <button class="btn btn-danger" {{action 'remove' leader}}>Remove</button>
+      </div>
+    </div>
+  {{/each}}
+</div>
+
+<div class="top-margin">
+  <h2>Add Leaders</h2>
+  <div class="input-group">
+    {{input class="form-control" placeholder="Search by Name or Email" value=searchText}}
+    <span class="input-group-btn">
+      <button class="btn btn-default" type="button" {{action 'search'}}>Search</button>
+    </span>
+  </div>
+
+  <div class="list-group">
+    {{#each nonLeaders as |user|}}
+      <div class="list-group-item">
+        <div class="split">
+          <h4 class="list-group-item-heading">{{user.name}}</h4>
+          <p class="list-group-item-text">{{user.email}}</p>
+        </div>
+        <div class="split">
+          <button class="btn btn-primary" {{action 'add' user}}>Add</button>
+        </div>
+      </div>
+    {{/each}}
+  </div>
+</div>

@@ -192,6 +192,17 @@ p.loading-status {
 
   .list-group-item {
     cursor: pointer;
+    display: table;
+    width: 100%;
+
+    .split {
+      display: table-cell;
+      vertical-align: middle;
+
+      &:last-child {
+        text-align: right;
+      }
+    }
   }
 }
 
