@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   users: [],
 
-  nonLeaders: Ember.computed('users', 'users.@each', {
+  nonLeaders: Ember.computed('users', 'users.[]', {
     get: function () {
       return this.get('users').filter( (user) => {
         return Ember.isBlank(user.get('tribeAdmin.id'));

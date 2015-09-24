@@ -37,5 +37,6 @@ export default Router.map(function() {
     });
 
     this.resource('leaders');
+    this.resource('plan');
   });
 });

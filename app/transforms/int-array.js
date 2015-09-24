@@ -1,4 +1,5 @@
 import DS from 'ember-data';
+import Ember from 'ember';
 import _ from 'lodash';
 
 export default DS.Transform.extend({
@@ -7,6 +8,6 @@ export default DS.Transform.extend({
   },
 
   serialize: function (deserialized) {
-    return _.map(deserialized.split(','), function (v) { return parseInt(v); });
+    return _.map(deserialized.split(',').filter(Ember.isPresent), function (v) { return parseInt(v); });
   }
 });

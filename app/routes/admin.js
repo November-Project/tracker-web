@@ -18,6 +18,16 @@ export default AdministrationRoute.extend({
         'title': 'Workouts',
         'icon': 'fa fa-heartbeat',
         'route': 'workouts'
+      },
+      {
+        'title': 'Leaders',
+        'icon': 'fa fa-user',
+        'route': 'leaders'
+      },
+      {
+        'title': 'Plan',
+        'icon': 'fa fa-map',
+        'route': 'plan'
       }
     ];
 
@@ -27,11 +37,6 @@ export default AdministrationRoute.extend({
           'title': 'Tribes',
           'icon': 'fa fa-group',
           'route': 'tribes'
-        },
-        {
-          'title': 'Leaders',
-          'icon': 'fa fa-user',
-          'route': 'leaders'
         }
       ]);
     }

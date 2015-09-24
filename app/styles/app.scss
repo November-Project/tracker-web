@@ -158,6 +158,18 @@ i.fa-caret-down {
 
   @media (min-height: 600px) {
     height: 300px;
+
+    &.big-map {
+      height: auto;
+    }
+  }
+
+  &.big-map {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    height: auto;
   }
 }
 

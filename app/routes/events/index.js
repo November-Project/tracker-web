@@ -3,7 +3,7 @@ import AdministrationRoute from '../administration';
 export default AdministrationRoute.extend({
   daysArray: Ember.computed({
     get: function () {
-      return _.map(this.get('session.tribe.daysOfWeek').split(','), function (v) { return parseInt(v); });
+      return _.map(this.get('session.tribe.daysOfWeek').split(',').filter(Ember.isPresent), function (v) { return parseInt(v); });
     }
   }),
 

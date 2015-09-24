@@ -24,7 +24,7 @@ export default DS.Model.extend({
 
   timesArray: Ember.computed({
     get: function () {
-      return this.get('times').split(',');
+      return this.get('times').split(',').filter(Ember.isPresent);
     },
     set: function (key, value) {
       this.set('times', value.join(','));
@@ -34,7 +34,7 @@ export default DS.Model.extend({
 
   daysArray: Ember.computed({
     get: function () {
-      return _.map(this.get('days').split(','), function (v) { return parseInt(v); });
+      return _.map(this.get('days').split(',').filter(Ember.isPresent), function (v) { return parseInt(v); });
     },
     set: function (key, value) {
       this.set('days', value.join(','));

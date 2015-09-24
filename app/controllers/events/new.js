@@ -50,7 +50,7 @@ export default Ember.Controller.extend({
       this.get('event._internalModel._relationships.initializedRelationships.location.canonicalState.id') !== this.get('location.id');
   },
 
-  daysOfWeek: Ember.computed.map('session.tribe.daysOfWeek', function (day) {
+  daysOfWeek: Ember.computed.map('session.tribe.daysOfWeekArray', function (day) {
     const letterForDay = ['S', 'M', 'Tu', 'W', 'Th', 'F', 'S'];
     const wordForDay = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
     return Ember.Object.create({
