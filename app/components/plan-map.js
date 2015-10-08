@@ -7,7 +7,7 @@ export default Ember.Component.extend({
   id: 'map',
 
   insertMap: function () {
-    Ember.$('#map').css('top', (Ember.$('hr').offset().top + 20) + 'px');
+    Ember.$('#map').css('top', (Ember.$('.inputs').offset().top + 30) + 'px');
 
     const mapOptions = {
       center: { lat: parseFloat(this.get('latitude')), lng: parseFloat(this.get('longitude')) },
@@ -19,12 +19,16 @@ export default Ember.Component.extend({
 
     this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-    var heatmap = new google.maps.visualization.HeatmapLayer({
+    this.heatmap = new google.maps.visualization.HeatmapLayer({
       data: this.get('locations'),
       radius: 30,
       opacity: 0.6,
       maxIntensity: 2
     });
-    heatmap.setMap(this.map);
-  }.on('didInsertElement')
+    this.heatmap.setMap(this.map);
+  }.on('didInsertElement'),
+
+  locationsChanged: Ember.observer('locations', function () {
+    this.heatmap.set('data', this.get('locations'));
+  })
 });

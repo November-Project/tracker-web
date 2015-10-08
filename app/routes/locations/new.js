@@ -23,7 +23,7 @@ export default AdministrationRoute.extend({
     save: function () {
       var model = this.get('controller.model');
       model.set('latitude', model.get('latitude').toFixed(6));
-      model.set('longitude', model.get('longitude').toFixed(6))
+      model.set('longitude', model.get('longitude').toFixed(6));
 
       model.save().then( () => {
         this.transitionTo('locations.index');

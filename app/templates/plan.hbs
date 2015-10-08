@@ -1,1 +1,9 @@
+<div class="inputs">
+  <div class="form-group">
+    <label>Days:</label>
+    {{#each daysOfWeek as |day|}}
+      {{input type="checkbox" checked=day.checked}} {{day.letter}}
+    {{/each}}
+  </div>
+</div>
 {{plan-map latitude=latitude longitude=longitude locations=locations}}

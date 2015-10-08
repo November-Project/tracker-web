@@ -123,7 +123,7 @@ export default Ember.Controller.extend({
     saveLocation: function () {
       var location = this.get('location');
       location.set('latitude', location.get('latitude').toFixed(6));
-      location.set('longitude', location.get('longitude').toFixed(6))
+      location.set('longitude', location.get('longitude').toFixed(6));
 
       location.save().then( () => {
         this.set('editingLocation', false);
