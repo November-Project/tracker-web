@@ -13,6 +13,8 @@ export default DS.Model.extend({
   tribe: DS.belongsTo('tribe', { async: false }),
   location: DS.belongsTo('location', { async: false }),
   workout: DS.belongsTo('workout', { async: false }),
+  verbalCount: DS.attr('number'),
+  resultCount: DS.attr('number'),
 
   title: Ember.computed('workout', 'location', {
     get: function () {
