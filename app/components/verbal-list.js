@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  disableActions: false,
+
   canGiveVerbal: Ember.computed('verbals', 'verbals.[]', {
     get: function () {
       if (Ember.isNone(this.get('verbals'))) { return false; }

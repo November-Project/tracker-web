@@ -1,14 +1,17 @@
 <span>{{verbals.length}} Verbal(s) Given</span>
-<hr style="margin-top: 10px; margin-bottom: 10px;" />
 
-{{#if canGiveVerbal}}
-  <button type="button" class="btn btn-primary btn-block btn-lg" {{action "giveVerbal"}}>Give a Verbal</button>
-  <p style="text-align:center;font-size:.9em;">*Note: You cannot take back a verbal 8 hours before the workout.</p>
-  <hr style="margin-top: 10px; margin-bottom: 0px;" />
-{{else if canTakeBackVerbal}}
-  <button type="button" class="btn btn-danger btn-block btn-lg" {{action "takeBackVerbal"}}>Take Back Verbal</button>
-  <hr style="margin-top: 10px; margin-bottom: 0px;" />
-{{/if}}
+{{#unless disableActions}}
+  {{#if canGiveVerbal}}
+    <hr style="margin-top: 10px; margin-bottom: 10px;" />
+    <button type="button" class="btn btn-primary btn-block btn-lg" {{action "giveVerbal"}}>Give a Verbal</button>
+    <p style="text-align:center;font-size:.9em;">*Note: You cannot take back a verbal 8 hours before the workout.</p>
+  {{else if canTakeBackVerbal}}
+    <hr style="margin-top: 10px; margin-bottom: 10px;" />
+    <button type="button" class="btn btn-danger btn-block btn-lg" {{action "takeBackVerbal"}}>Take Back Verbal</button>
+  {{/if}}
+{{/unless}}
+
+<hr style="margin-top: 10px; margin-bottom: 0px;" />
 
 <div class="people">
   {{#each verbals as |verbal|}}
