@@ -1,0 +1,24 @@
+<form role="form">
+  {{#if allowReps}}
+    <div class="form-group">
+      <label for="reps">Reps</label>
+      {{input value=model.reps type="number" class="form-control" id="reps" placeholder="Reps" min="0" step="0.01"}}
+    </div>
+  {{/if}}
+
+  {{#if allowTime}}
+    <div class="form-group">
+      <label for="workout-time">Time</label>
+      <div id="workout-time">
+        <div>
+          {{input value=min type="number" class="form-control" placeholder="min" min="0" pattern="\d*"}}
+          <span>Minutes</span>
+        </div>
+        <div>
+          {{input value=sec type="number" class="form-control" placeholder="sec" min="0" pattern="\d*"}}
+          <span>Seconds</span>
+        </div>
+      </div>
+    </div>
+  {{/if}}
+</form>

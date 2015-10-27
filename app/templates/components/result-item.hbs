@@ -1,0 +1,23 @@
+<div class="person">
+  <div class="rank">
+    <span>{{rank}}</span>
+  </div>
+  <div class="image">
+    <img class="img-circle img-responsive" src={{photoURL}} />
+  </div>
+  <div class="info">
+    <div class={{if shouldSplit 'half' 'whole'}}>
+      <span>{{model.userName}}</span>
+    </div>
+    {{#if shouldSplit}}
+      <div class="results half">
+        {{#if shouldDisplayTime}}
+          <span class="time">Time: {{displayTime}}</span>
+        {{/if}}
+        {{#if shouldDisplayReps}}
+          <span class="amount">Reps: {{displayReps}}</span>
+        {{/if}}
+      </div>
+    {{/if}}
+  </div>
+</div>

@@ -15,6 +15,11 @@ export default Router.map(function() {
     this.route('reset', { path: 'reset/:token' });
   });
 
+  this.resource('results', function () {
+    this.route('edit', { path: ':result_id' });
+    this.route('new');
+  });
+
   this.resource('admin', function () {
     this.resource('locations', function () {
       this.route('edit', { path: ':location_id' });

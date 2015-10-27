@@ -38,7 +38,7 @@ export default Ember.Controller.extend({
     }
   }),
 
-  showVerbals: Ember.computed({
+  isFutureEvent: Ember.computed({
     get: function () {
       const date = this.get('model.date').format('YYYY-MM-DD');
       return Ember.isPresent(this.get('model.times').split(',').map( function (time) {
@@ -50,9 +50,16 @@ export default Ember.Controller.extend({
   }),
 
   refreshVerbals: Ember.observer('model', function () {
-    if (!this.get('isEventPresent')) { return; }
+    if (!this.get('isEventPresent')) { this.set('verbals', []); return; }
     this.store.query('verbal', { eventId: this.get('model').id }).then( (verbals) => {
       this.set('verbals', verbals);
+    });
+  }),
+
+  refreshResults: Ember.observer('model', function () {
+    if (!this.get('isEventPresent') || this.get('isFutureEvent')) { this.set('results', []); return; }
+    this.store.query('result', { eventId: this.get('model').id }).then( (results) => {
+      this.set('results', results);
     });
   }),
 
