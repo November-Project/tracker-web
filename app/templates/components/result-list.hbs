@@ -1,8 +1,8 @@
 {{#each resultTimes as |result|}}
   {{#if result.submitted}}
-    {{#link-to 'results.edit' result.model class="btn btn-primary btn-block btn-lg"}}Edit your {{result.time}} Result{{/link-to}}
+    {{#link-to 'events.view.results.edit' result.model class="btn btn-primary btn-block btn-lg"}}Edit your {{result.time}} Result{{/link-to}}
   {{else}}
-    {{#link-to 'results.new' class="btn btn-primary btn-block btn-lg"}}Record a {{result.time}} Result{{/link-to}}
+    {{#link-to 'events.view.results.new' class="btn btn-primary btn-block btn-lg"}}Record a {{result.time}} Result{{/link-to}}
   {{/if}}
 {{/each}}
 

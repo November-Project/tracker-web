@@ -127,14 +127,14 @@ export default Ember.Component.extend({
     });
   },
 
-  updateEvent: Ember.observer('_selected', 'events', function () {
-    if (Ember.isEmpty(this.get('_selected'))) { return; }
-    const selectedDate = this.get('_selected');
-    const event = this.get('events').find( function (event) {
-      return event.get('date').format('L') === selectedDate.format('L');
-    });
-    this.sendAction('eventSelected', event, selectedDate.format('YYYY-MM-DD'));
-  }),
+  // updateEvent: Ember.observer('_selected', 'events', function () {
+  //   if (Ember.isEmpty(this.get('_selected'))) { return; }
+  //   const selectedDate = this.get('_selected');
+  //   const event = this.get('events').find( function (event) {
+  //     return event.get('date').format('L') === selectedDate.format('L');
+  //   });
+  //   this.sendAction('eventSelected', event, selectedDate.format('YYYY-MM-DD'));
+  // }),
 
   onWeekChange: Ember.observer('currentDate', function () {
     this.updateEvents();
@@ -163,8 +163,9 @@ export default Ember.Component.extend({
       this.set('_weekOffset', 0);
     },
 
-    selected: function (date) {
-      this.set('_selected', date);
+    selected: function (day) {
+      this.set('_selected', day.date);
+      this.sendAction('eventSelected', day.event);
     }
   }
 });

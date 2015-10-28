@@ -16,12 +16,14 @@ export default Router.map(function() {
   });
 
   this.route('events', function () {
+    this.route('no_event', { path: '/' });
 
-  });
-
-  this.route('results', function () {
-    this.route('edit', { path: ':result_id' });
-    this.route('new');
+    this.route('view', { path: ':event_id' }, function () {
+      this.route('results', function () {
+        this.route('edit', { path: ':result_id' });
+        this.route('new');
+      });
+    });
   });
 
   this.route('admin', function () {

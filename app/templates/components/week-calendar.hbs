@@ -14,7 +14,7 @@
 
 <div class="week">
   {{#each weekDays as |day|}}
-  <div class="day {{if day.today 'today'}} {{if day.hasEvent 'has-event'}} {{if day.selected 'selected'}} {{if day.secondary 'secondary'}}" {{action 'selected' day.date}}>
+  <div class="day {{if day.today 'today'}} {{if day.hasEvent 'has-event'}} {{if day.selected 'selected'}} {{if day.secondary 'secondary'}}" {{action 'selected' day}}>
     <span class="day-of-week">{{day.dayOfWeek}}</span>
     <span class="day-of-month">{{day.dayOfMonth}}</span>
   </div>
