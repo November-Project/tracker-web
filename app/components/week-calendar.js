@@ -71,12 +71,12 @@ export default Ember.Component.extend({
     get: function () {
       if (!Ember.isPresent(this.get('_selected'))) {
         if (Ember.isPresent(this.get('selectedDate'))) {
-          const selectedDate = moment(this.get('selectedDate'), 'YYYY-MM-DD');
           const currentDate = this.get('currentDate');
-          const dayDiff = selectedDate.diff(currentDate, 'd');
-          const selectedWeek = currentDate.clone().add(dayDiff).startOf('week');
+          const selectedDate = moment(this.get('selectedDate'), 'YYYY-MM-DD');
+          const selectedWeek = selectedDate.clone().startOf('week');
+          const weekDiff = selectedWeek.diff(currentDate, 'w');
 
-          this.set('_weekOffset', selectedWeek.diff(currentDate, 'w'));
+          this.set('_weekOffset', weekDiff);
           this.set('_selected', selectedDate);
           return this.get('_selected');
         }
@@ -109,6 +109,10 @@ export default Ember.Component.extend({
     }
   }),
 
+  onSelectedDate: Ember.observer('selectedDate', function () {
+    this.set('_selected', this.get('selectedDate'));
+  }),
+
   events: [],
 
   initialSetup: function () {
@@ -126,15 +130,6 @@ export default Ember.Component.extend({
       this.set('events', events);
     });
   },
-
-  // updateEvent: Ember.observer('_selected', 'events', function () {
-  //   if (Ember.isEmpty(this.get('_selected'))) { return; }
-  //   const selectedDate = this.get('_selected');
-  //   const event = this.get('events').find( function (event) {
-  //     return event.get('date').format('L') === selectedDate.format('L');
-  //   });
-  //   this.sendAction('eventSelected', event, selectedDate.format('YYYY-MM-DD'));
-  // }),
 
   onWeekChange: Ember.observer('currentDate', function () {
     this.updateEvents();
