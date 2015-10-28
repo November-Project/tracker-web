@@ -7,12 +7,12 @@
 
 <div class="top-margin">
   <div class="list-group">
-  {{#link-to 'workouts.new' class="list-group-item"}}
+  {{#link-to 'admin.workouts.new' class="list-group-item"}}
     <h4 class="list-group-item-heading">Create New Workout</h4>
   {{/link-to}}
 
   {{#each filteredContent as |workout|}}
-    {{#link-to 'workouts.edit' workout class="list-group-item"}}
+    {{#link-to 'admin.workouts.edit' workout class="list-group-item"}}
       <h4 class="list-group-item-heading">{{workout.title}}</h4>
       <p class="list-group-item-text">{{workout.description}}</p>
     {{/link-to}}

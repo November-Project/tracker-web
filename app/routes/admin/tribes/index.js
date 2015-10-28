@@ -1,4 +1,4 @@
-import SuperAdministrationRoute from '../super-administration';
+import SuperAdministrationRoute from '../../super-administration';
 
 export default SuperAdministrationRoute.extend({
   model: function () {

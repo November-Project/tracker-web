@@ -1,4 +1,4 @@
-import AdministrationRoute from './administration';
+import AdministrationRoute from '../administration';
 
 export default AdministrationRoute.extend({
   model: function () {

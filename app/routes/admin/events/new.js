@@ -1,14 +1,16 @@
-import AdministrationRoute from '../administration';
 import Ember from 'ember';
+import AdministrationRoute from '../../administration';
 
 export default AdministrationRoute.extend({
   model: function () {
-    const tribe = this.get('session.tribe');
-    const { longitude, latitude } = tribe.getProperties('longitude', 'latitude');
-    return this.store.createRecord('location', { tribe, longitude, latitude });
+    return Ember.RSVP.hash({
+      event: this.store.createRecord('event'),
+      workouts: this.store.findAll('workout'),
+      locations: this.store.findAll('location'),
+    });
   },
 
-  beforeModel: function () {
+  afterModel: function () {
     return new Ember.RSVP.Promise( function (resolve, reject) {
       if (!window.google) {
         window.mapAPILoaded = Ember.run.bind(resolve);
@@ -19,20 +21,24 @@ export default AdministrationRoute.extend({
     });
   },
 
+  cleanupController: function () {
+    this.controller.cleanup();
+  }.on('deactivate'),
+
   actions: {
     save: function () {
-      var model = this.get('controller.model');
-      model.set('latitude', model.get('latitude').toFixed(6));
-      model.set('longitude', model.get('longitude').toFixed(6));
+      var model = this.get('controller.event');
 
       model.save().then( () => {
-        this.transitionTo('locations.index');
+        this.transitionTo('events.index');
+      }, function (err) {
+        console.log(err);
       });
     },
 
     cancel: function () {
       if (window.history.length > 0) { window.history.back(); }
-      else { this.transitionTo('locations'); }
+      else { this.transitionTo('events.index'); }
     }
   }
 });

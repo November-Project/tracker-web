@@ -7,27 +7,27 @@ export default AdministrationRoute.extend({
       {
         'title': 'Events',
         'icon': 'fa fa-calendar',
-        'route': 'events'
+        'route': 'admin.events'
       },
       {
         'title': 'Locations',
         'icon': 'fa fa-map-marker',
-        'route': 'locations'
+        'route': 'admin.locations'
       },
       {
         'title': 'Workouts',
         'icon': 'fa fa-heartbeat',
-        'route': 'workouts'
+        'route': 'admin.workouts'
       },
       {
         'title': 'Leaders',
         'icon': 'fa fa-user',
-        'route': 'leaders'
+        'route': 'admin.leaders'
       },
       {
         'title': 'Plan',
         'icon': 'fa fa-map',
-        'route': 'plan'
+        'route': 'admin.plan'
       }
     ];
 
@@ -36,7 +36,7 @@ export default AdministrationRoute.extend({
         {
           'title': 'Tribes',
           'icon': 'fa fa-group',
-          'route': 'tribes'
+          'route': 'admin.tribes'
         }
       ]);
     }

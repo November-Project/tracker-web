@@ -1,4 +1,4 @@
-import SuperAdministrationRoute from '../super-administration';
+import SuperAdministrationRoute from '../../super-administration';
 import Ember from 'ember';
 
 export default SuperAdministrationRoute.extend({
