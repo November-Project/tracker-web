@@ -41,22 +41,6 @@ export default Ember.Controller.extend({
     }
   }),
 
-  verbals: [],
-  results: [],
-
-  refreshVerbals: Ember.observer('model', function () {
-    this.store.query('verbal', { eventId: this.get('model').id }).then( (verbals) => {
-      this.set('verbals', verbals);
-    });
-  }),
-
-  refreshResults: Ember.observer('model', function () {
-    if (this.get('isFutureEvent')) { this.set('results', []); return; }
-    this.store.query('result', { eventId: this.get('model').id }).then( (results) => {
-      this.set('results', results);
-    });
-  }),
-
   actions: {
     takeBackVerbal: function (verbal) {
       verbal.destroyRecord();
@@ -68,7 +52,7 @@ export default Ember.Controller.extend({
         userId: user.id,
         userName: user.get('name'),
         userPhotoUrl: user.get('photoUrl'),
-        eventId: this.get('model.id')
+        event: this.get('model')
       }).save().then( () => {
         this.get('verbals').pushObject(verbal);
       });

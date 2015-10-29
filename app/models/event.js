@@ -15,6 +15,8 @@ export default DS.Model.extend({
   workout: DS.belongsTo('workout', { async: false }),
   verbalCount: DS.attr('number'),
   resultCount: DS.attr('number'),
+  results: DS.hasMany('result', { async: true }),
+  verbals: DS.hasMany('verbal', { async: true }),
 
   title: Ember.computed('workout', 'location', {
     get: function () {
