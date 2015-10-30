@@ -30,7 +30,7 @@ export default AdministrationRoute.extend({
       var model = this.get('controller.event');
 
       model.save().then( () => {
-        this.transitionTo('events.index');
+        this.transitionTo('admin.events.index');
       }, function (err) {
         console.log(err);
       });
@@ -38,7 +38,7 @@ export default AdministrationRoute.extend({
 
     cancel: function () {
       if (window.history.length > 0) { window.history.back(); }
-      else { this.transitionTo('events.index'); }
+      else { this.transitionTo('admin.events.index'); }
     }
   }
 });

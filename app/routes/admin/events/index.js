@@ -12,12 +12,12 @@ export default AdministrationRoute.extend({
   actions: {
     openEvent: function (event, date) {
       if (event === 'new') {
-        this.transitionTo('events.new').then( (newRoute) => {
+        this.transitionTo('admin.events.new').then( (newRoute) => {
           newRoute.currentModel.event.set('date', date);
           newRoute.currentModel.event.set('tribe', this.get('session.tribe'));
         });
       } else {
-        this.transitionTo('events.edit', event);
+        this.transitionTo('admin.events.edit', event);
       }
     },
 

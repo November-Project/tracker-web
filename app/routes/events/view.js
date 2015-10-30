@@ -15,5 +15,13 @@ export default AuthenticationRoute.extend({
   setupController: function (controller, model) {
     this._super(controller, model);
     this.controllerFor('events').set('date', model.get('date'));
+  },
+
+  actions: {
+    newResult: function (time) {
+      this.transitionTo('events.view.results.new').then( (route) => {
+        route.currentModel.set('eventTime', time);
+      });
+    }
   }
 });

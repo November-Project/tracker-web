@@ -51,6 +51,10 @@ export default Ember.Component.extend({
   actions: {
     changeTime: function (time) {
       this.set('_selectedTime', time);
+    },
+
+    newResult: function (time) {
+      this.sendAction('newResult', time);
     }
   }
 });

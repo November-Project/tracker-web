@@ -2,14 +2,14 @@
   {{#if result.submitted}}
     {{#link-to 'events.view.results.edit' result.model class="btn btn-primary btn-block btn-lg"}}Edit your {{result.time}} Result{{/link-to}}
   {{else}}
-    {{#link-to 'events.view.results.new' class="btn btn-primary btn-block btn-lg"}}Record a {{result.time}} Result{{/link-to}}
+    <button type="button" {{action 'newResult' result.time}} class="btn btn-primary btn-block btn-lg">Record a {{result.time}} Result</button>
   {{/if}}
 {{/each}}
 
 {{#if multiTime}}
   <hr style="margin-top: 10px; margin-bottom: 10px;">
 
-  <div style="text-align:center;width:100%;">
+  <div class="center">
     <div class="btn-group" role="group">
       {{#each times as |time index|}}
         <button type="button" class="btn btn-default {{unless index 'active'}}" data-time={{time}} {{action 'changeTime' time}}>{{time}}</button>

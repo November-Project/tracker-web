@@ -16,7 +16,7 @@
         {{verbal-list verbals=model.verbals currentUser=session.user disableActions=true}}
       </div>
       <div role="tabpanel" class="tab-pane" id="results">
-        {{result-list results=model.results currentUser=session.user times=model.timesArray workout=model.workout}}
+        {{result-list results=model.results currentUser=session.user times=model.timesArray workout=model.workout newResult="newResult"}}
       </div>
     </div>
   {{/if}}

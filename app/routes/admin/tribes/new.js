@@ -23,7 +23,7 @@ export default SuperAdministrationRoute.extend({
       var model = this.get('controller.model');
 
       model.save().then( () => {
-        this.transitionTo('tribes');
+        this.transitionTo('admin.tribes');
       }, function (err) {
         console.log(err);
       });
@@ -31,7 +31,7 @@ export default SuperAdministrationRoute.extend({
 
     cancel: function () {
       if (window.history.length > 0) { window.history.back(); }
-      else { this.transitionTo('tribes'); }
+      else { this.transitionTo('admin.tribes'); }
     }
   }
 });

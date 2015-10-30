@@ -8,17 +8,32 @@
 
   {{#if allowTime}}
     <div class="form-group">
-      <label for="workout-time">Time</label>
-      <div id="workout-time">
+      <label for="time">Time</label>
+      <div id="time" class="time-entry">
         <div>
-          {{input value=min type="number" class="form-control" placeholder="min" min="0" pattern="\d*"}}
+          {{input value=model.minutes type="number" class="form-control" placeholder="min" min="0" pattern="\d*"}}
           <span>Minutes</span>
         </div>
         <div>
-          {{input value=sec type="number" class="form-control" placeholder="sec" min="0" pattern="\d*"}}
+          {{input value=model.seconds type="number" class="form-control" placeholder="sec" min="0" pattern="\d*"}}
           <span>Seconds</span>
         </div>
       </div>
     </div>
   {{/if}}
+
+  {{#if allowPR}}
+    <div class="form-group">
+      <label for="pr" class="checkbox"></label>
+      {{input type="checkbox" id="pr" checked=model.pr}} This is a PR!
+    </div>
+  {{/if}}
+
+  <div class="form-group">
+    <button type="button" class="{{unless savable 'disabled'}} btn btn-primary pull-right" {{action 'save'}}>Save</button>
+    <button type="button" class="btn btn-default pull-right cancel" {{action 'cancel'}}>Cancel</button>
+    {{#if isEditing}}
+      <button type="button" class="btn btn-danger pull-right cancel" {{action 'delete'}}>Delete</button>
+    {{/if}}
+  </div>
 </form>

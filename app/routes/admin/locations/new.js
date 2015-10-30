@@ -26,13 +26,13 @@ export default AdministrationRoute.extend({
       model.set('longitude', model.get('longitude').toFixed(6));
 
       model.save().then( () => {
-        this.transitionTo('locations.index');
+        this.transitionTo('admin.locations.index');
       });
     },
 
     cancel: function () {
       if (window.history.length > 0) { window.history.back(); }
-      else { this.transitionTo('locations'); }
+      else { this.transitionTo('admin.locations'); }
     }
   }
 });

@@ -54,16 +54,16 @@ export default Ember.Component.extend({
     get: function () {
       const workout = this.get('workout');
       if (workout.get('allowUserTime')) {
-        return this.calcTime(this.get('model.time'));
+        return this.calcTime(this.get('model'));
       } else {
-        return this.calcTime(workout.get('time'));
+        return this.calcTime(workout);
       }
     }
   }),
 
-  calcTime: function (time) {
-    const mins = Math.floor(time / 60.0);
-    const secs = time % 60;
+  calcTime: function (model) {
+    const mins = model.get('minutes');
+    const secs = model.get('seconds');
 
     if (secs < 10) {
       return mins + ':0' + secs;

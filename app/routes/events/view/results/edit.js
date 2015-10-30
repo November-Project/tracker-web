@@ -1,7 +1,7 @@
 import NewResultsRoute from './new';
 
 export default NewResultsRoute.extend({
-  renderTemplate: function () {
-    this.render('events.view.results.edit', { into: 'application' });
+  model: function (params) {
+    return this.store.findRecord('result', params.result_id);
   }
 });
