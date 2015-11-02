@@ -1,29 +1,39 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  workout: Ember.computed.alias('model.event.workout'),
+
+  attended: false,
+
   allowReps: Ember.computed({
     get: function () {
-      return true;
+      return this.get('workout.allowUserReps');
     }
   }),
 
   allowTime: Ember.computed({
     get: function () {
-      return true;
+      return this.get('workout.allowUserTime');
     }
   }),
 
   allowPR: Ember.computed({
     get: function () {
-      return true;
+      return this.get('workout.allowUserPR');
     }
   }),
 
-  isEditing: Ember.computed({
+  isNotTracked: Ember.computed({
     get: function () {
-      return !this.get('model.isNew');
+      return !this.get('allowReps') && !this.get('allowTime')
     }
   }),
+
+  // isEditing: Ember.computed({
+  //   get: function () {
+  //     return !this.get('model.isNew');
+  //   }
+  // }),
 
   cleanup: function () {
     const result = this.get('model');
