@@ -70,16 +70,6 @@ export default Ember.Component.extend({
   selected: Ember.computed('_selected', 'validDays', {
     get: function () {
       if (!Ember.isPresent(this.get('_selected'))) {
-        if (Ember.isPresent(this.get('selectedDate'))) {
-          const currentDate = this.get('currentDate');
-          const selectedDate = moment(this.get('selectedDate'), 'YYYY-MM-DD');
-          const selectedWeek = selectedDate.clone().startOf('week');
-          const weekDiff = selectedWeek.diff(currentDate, 'w');
-
-          this.set('_weekOffset', weekDiff);
-          this.set('_selected', selectedDate);
-          return this.get('_selected');
-        }
         const validDays = this.get('validDays');
         if (Ember.isEmpty(validDays)) { return; }
 
@@ -109,11 +99,22 @@ export default Ember.Component.extend({
     }
   }),
 
-  onSelectedDate: Ember.observer('selectedDate', function () {
-    this.set('_selected', this.get('selectedDate'));
-  }),
+  selectInitialDate: function () {
+    this.sendAction('getSelectedDate', (selectedDate) => {
+      const currentDate = this.get('currentDate');
+      const selectedWeek = selectedDate.clone().startOf('week');
+      const weekDiff = selectedWeek.diff(currentDate, 'w');
+
+      this.set('_weekOffset', weekDiff);
+      this.set('_selected', selectedDate);
+    });
+  },
 
   events: [],
+
+  didInsertElement: function () {
+    this.selectInitialDate();
+  },
 
   initialSetup: function () {
     this.updateEvents();
