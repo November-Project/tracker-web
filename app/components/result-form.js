@@ -3,7 +3,18 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   workout: Ember.computed.alias('model.event.workout'),
 
-  attended: false,
+  attended: Ember.computed({
+    get: function () {
+      if (Ember.isEmpty(this.get('_attended'))) {
+        this.set('_attended', !this.get('model.isNew'));
+      }
+      return this.get('_attended');
+    },
+    set: function (key, value) {
+      this.set('_attended', value);
+      return value;
+    }
+  }),
 
   allowReps: Ember.computed({
     get: function () {
