@@ -113,7 +113,7 @@ export default Ember.Component.extend({
   events: [],
 
   didInsertElement: function () {
-    this.selectInitialDate();
+    Ember.run.scheduleOnce('afterRender', this, 'selectInitialDate');
   },
 
   initialSetup: function () {
