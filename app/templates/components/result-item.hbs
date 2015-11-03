@@ -8,6 +8,11 @@
   <div class="info">
     <div class={{if shouldSplit 'half' 'whole'}}>
       <span>{{model.userName}}</span>
+      {{#if model.pr}}
+        <div class="result-pr">
+          <i class="fa fa-trophy fa-lg"></i>
+        </div>
+      {{/if}}
     </div>
     {{#if shouldSplit}}
       <div class="results half">
