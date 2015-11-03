@@ -29,11 +29,21 @@ export default Ember.Component.extend({
     }
   }),
 
-  // isEditing: Ember.computed({
-  //   get: function () {
-  //     return !this.get('model.isNew');
-  //   }
-  // }),
+  reps: Ember.computed('model.reps', {
+    get: function () {
+      return this.get('model.reps');
+    },
+    set: function (key, value) {
+      this.set('model.reps', parseFloat(value));
+      return this.get('model.reps');
+    }
+  }),
+
+  savable: Ember.computed('model.hasDirtyAttributes', 'attended', {
+    get: function () {
+      return this.get('model.hasDirtyAttributes') || this.get('isNotTracked');
+    }
+  }),
 
   cleanup: function () {
     const result = this.get('model');
@@ -47,7 +57,19 @@ export default Ember.Component.extend({
 
   actions: {
     save: function () {
-      this.sendAction();
+      if (this.get('isNotTracked')) {
+        if (this.get('attended')) {
+          this.sendAction();
+        } else {
+          if (this.get('model.isNew')) {
+            this.sendAction('cancel');
+          } else {
+            this.sendAction('delete');
+          }
+        }
+      } else {
+        this.sendAction();
+      }
     },
 
     cancel: function () {

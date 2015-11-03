@@ -7,6 +7,6 @@ export default TimeModel.extend({
   userPhotoUrl: DS.attr('string'),
   event: DS.belongsTo('event', { async: true }),
   eventTime: DS.attr('string'),
-  reps: DS.attr('number'),
+  reps: DS.attr('number', { defaultValue: 0 }),
   pr: DS.attr('boolean')
 });

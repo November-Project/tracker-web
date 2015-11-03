@@ -3,7 +3,7 @@
     {{#if allowReps}}
       <div class="form-group">
         <label for="reps">Reps</label>
-        {{input value=model.reps type="number" class="form-control" id="reps" placeholder="Reps" min="0" step="0.01"}}
+        {{input value=reps type="number" class="form-control" id="reps" placeholder="Reps" min="0" step="0.01"}}
       </div>
     {{/if}}
 
@@ -40,8 +40,8 @@
   <div class="form-group">
     <button type="button" class="{{unless savable 'disabled'}} btn btn-primary pull-right" {{action 'save'}}>Save</button>
     <button type="button" class="btn btn-default pull-right cancel" {{action 'cancel'}}>Cancel</button>
-    {{#if isEditing}}
+    {{#unless model.isNew}}
       <button type="button" class="btn btn-danger pull-right cancel" {{action 'delete'}}>Delete</button>
-    {{/if}}
+    {{/unless}}
   </div>
 </form>

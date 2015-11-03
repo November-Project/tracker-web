@@ -3,7 +3,8 @@ import AuthenticationRoute from '../../../authentication';
 export default AuthenticationRoute.extend({
   model: function () {
     const event = this.modelFor('events.view');
-    return this.store.createRecord('result', { event });
+    const userId = this.get('session.user.id');
+    return this.store.createRecord('result', { event, userId });
   },
 
   renderTemplate: function () {
@@ -30,7 +31,9 @@ export default AuthenticationRoute.extend({
     delete: function () {
       this.get('controller.model').destroyRecord().then( () => {
         const event = this.modelFor('events.view');
-        this.transitionTo('events.view', event);
+        event.get('results').reload().then( () => {
+          this.transitionTo('events.view', event);
+        });
       });
     }
   }

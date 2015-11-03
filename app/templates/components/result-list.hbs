@@ -2,7 +2,7 @@
   {{#if result.submitted}}
     {{#link-to 'events.view.results.edit' result.model class="btn btn-primary btn-block btn-lg"}}Edit your {{result.time}} Result{{/link-to}}
   {{else}}
-    <button type="button" {{action 'newResult' result.time}} class="btn btn-primary btn-block btn-lg">Record a {{result.time}} Result</button>
+    {{#link-to 'events.view.results.new' (query-params time=result.time) class="btn btn-primary btn-block btn-lg"}}Record a {{result.time}} Result{{/link-to}}
   {{/if}}
 {{/each}}
 
