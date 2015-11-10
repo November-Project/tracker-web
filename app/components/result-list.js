@@ -1,23 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  resultTimes: Ember.computed('results', 'times', {
-    get: function () {
-      return this.get('times').map( (time) => {
-        const result = this.get('results').find( (result) => {
-          return result.get('userId') === parseInt(this.get('currentUser.id'), 10)
-            && result.get('eventTime') === time;
-        });
-
-        return Ember.Object.create({
-          model: result,
-          submitted: Ember.isPresent(result),
-          time: time
-        });
-      });
-    }
-  }),
-
   multiTime: Ember.computed('times', {
     get: function () {
       return this.get('times').length > 1;
@@ -39,6 +22,19 @@ export default Ember.Component.extend({
     get: function () {
       const selectedTime = this.get('selectedTime');
       return this.get('results').filterBy('eventTime', selectedTime);
+    }
+  }),
+
+  submittedResult: Ember.computed('filteredResults', {
+    get: function () {
+      const currentUserId = parseInt(this.get('currentUser.id'), 10);
+      return this.get('filteredResults').filterBy('userId', currentUserId).objectAt(0);
+    }
+  }),
+
+  userHasSubmitted: Ember.computed('submittedResult', {
+    get: function () {
+      return Ember.isPresent(this.get('submittedResult'));
     }
   }),
 

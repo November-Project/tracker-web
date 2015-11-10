@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  editable: false,
+
   rank: Ember.computed('index', {
     get: function () {
       return parseInt(this.get('index'), 10) + 1;

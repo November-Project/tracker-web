@@ -284,6 +284,12 @@ p.loading-status {
         }
       }
 
+      &.edit-button {
+        float: left;
+        margin-left: 5px;
+        height: 100%;
+      }
+
       .result-pr {
         float: right;
         color: #F1D114;

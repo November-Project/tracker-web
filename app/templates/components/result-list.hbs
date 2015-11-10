@@ -1,11 +1,3 @@
-{{#each resultTimes as |result|}}
-  {{#if result.submitted}}
-    {{#link-to 'events.view.results.edit' result.model class="btn btn-primary btn-block btn-lg"}}Edit your {{result.time}} Result{{/link-to}}
-  {{else}}
-    {{#link-to 'events.view.results.new' (query-params time=result.time) class="btn btn-primary btn-block btn-lg"}}Record a {{result.time}} Result{{/link-to}}
-  {{/if}}
-{{/each}}
-
 {{#if multiTime}}
   <hr style="margin-top: 10px; margin-bottom: 10px;">
 
@@ -16,6 +8,16 @@
       {{/each}}
     </div>
   </div>
+{{/if}}
+
+<hr style="margin-top: 10px; margin-bottom: 10px;">
+
+{{#if userHasSubmitted}}
+  <div class="people">
+    {{result-item model=submittedResult index=null workout=workout editable=true}}
+  </div>
+{{else}}
+  {{#link-to 'events.view.results.new' (query-params time=selectedTime) class="btn btn-primary btn-block btn-lg"}}Record a {{selectedTime}} Result{{/link-to}}
 {{/if}}
 
 <span style="display:block;margin-top:10px;">{{filteredResults.length}} Result(s) Submitted</span>

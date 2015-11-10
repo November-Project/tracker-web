@@ -1,13 +1,20 @@
 <div class="person">
-  <div class="rank">
-    <span>{{rank}}</span>
-  </div>
+  {{#if rank}}
+    <div class="rank">
+      <span>{{rank}}</span>
+    </div>
+  {{/if}}
   <div class="image">
     <img class="img-circle img-responsive" src={{photoURL}} />
   </div>
   <div class="info">
     <div class={{if shouldSplit 'half' 'whole'}}>
       <span>{{model.userName}}</span>
+      {{#if editable}}
+        <div class="edit-button">
+          {{#link-to 'events.view.results.edit' model class="btn btn-default btn-xs"}}Edit{{/link-to}}
+        </div>
+      {{/if}}
       {{#if model.pr}}
         <div class="result-pr">
           <i class="fa fa-trophy fa-lg"></i>
