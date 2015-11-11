@@ -1,35 +1,34 @@
 <div class="person">
-  {{#if rank}}
-    <div class="rank">
-      <span>{{rank}}</span>
-    </div>
-  {{/if}}
-  <div class="image">
-    <img class="img-circle img-responsive" src={{photoURL}} />
-  </div>
-  <div class="info">
-    <div class={{if shouldSplit 'half' 'whole'}}>
-      <span>{{model.userName}}</span>
-      {{#if editable}}
-        <div class="edit-button">
-          {{#link-to 'events.view.results.edit' model class="btn btn-default btn-xs"}}Edit{{/link-to}}
-        </div>
-      {{/if}}
+  <div class="left">
+    {{#if rank}}
+      <div class="rank">
+        <span>{{rank}}</span>
+      </div>
+    {{/if}}
+    <div class="image">
+      <img class="img-circle img-responsive" src={{photoURL}} />
       {{#if model.pr}}
         <div class="result-pr">
           <i class="fa fa-trophy fa-lg"></i>
         </div>
       {{/if}}
     </div>
-    {{#if shouldSplit}}
-      <div class="results half">
-        {{#if shouldDisplayTime}}
-          <span class="time">Time: {{displayTime}}</span>
-        {{/if}}
-        {{#if shouldDisplayReps}}
-          <span class="amount">Reps: {{displayReps}}</span>
-        {{/if}}
-      </div>
+    <div class="info">
+      <span class="name">{{model.userName}}</span>
+      {{#if editable}}
+        <div class="actions">
+          {{#link-to 'events.view.results.edit' model class="btn btn-default btn-xs"}}Edit{{/link-to}}
+          <button type="button" class="btn btn-default btn-xs">Share</button>
+        </div>
+      {{/if}}
+    </div>
+  </div>
+  <div class="results">
+    {{#if shouldDisplayTime}}
+      <span class="time"><i class="fa fa-clock-o"></i> {{displayTime}}</span>
+    {{/if}}
+    {{#if shouldDisplayReps}}
+      <span class="amount">Reps: {{displayReps}}</span>
     {{/if}}
   </div>
 </div>

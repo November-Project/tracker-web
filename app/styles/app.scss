@@ -106,51 +106,6 @@ i.fa-caret-down {
   }
 }
 
-.people {
-  text-align: center;
-
-  &> span {
-    margin-bottom: 4px;
-  }
-
-  hr {
-    margin: 0.25rem 0 0.5rem;
-    border-top: 1px solid #ccc;
-  }
-
-  ul {
-    list-style: none;
-    padding-left: 0px;
-  }
-
-  .person {
-    height: 60px;
-    text-align: left;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    border-bottom: #CCC 1px solid;
-
-    img {
-      float: left;
-    }
-
-    span {
-      margin-left: 8px;
-      line-height: 50px;
-      font-size: 1.2em;
-      overflow-x: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      float: left;
-    }
-
-    button {
-      float: right;
-      margin-top: 10px;
-    }
-  }
-}
-
 #map {
   width: 100%;
   height: 200px;
@@ -247,61 +202,69 @@ p.loading-status {
 }
 
 .person {
-  display: table;
-  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-bottom: #CCC 1px solid;
 
-  .image {
-    height: 50px;
-    width: 50px;
-    display: table-cell;
-    float: left;
+  .left {
+    display: flex;
+    align-items: center;
+    flex: 0 1 auto;
+    overflow-x: hidden;
   }
 
-  .info {
-    display: table-cell;
-    width: 100%;
+  .rank {
+    margin-right: 6px;
+  }
 
-    div {
-      height: 50px;
-      span {
-        line-height: 50px;
-      }
+  .image {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    flex-shrink: 0;
 
-      &.half {
-        height: 25px;
-        span {
-          line-height: 25px;
-        }
-      }
+    img {
+      position: absolute;
+    }
 
-      &.results {
-        span {
-          font-size: 1em;
-        }
-
-        .time {
-          float: right;
-        }
-      }
-
-      &.edit-button {
-        float: left;
-        margin-left: 5px;
-        height: 100%;
-      }
-
-      .result-pr {
-        float: right;
-        color: #F1D114;
-        height: 100%;
-        padding: 4px 0;
-      }
+    .result-pr {
+      position: absolute;
+      background-color: white;
+      color: #F1D114;
+      bottom: 0;
+      right: 0;
+      border-radius: 11px;
+      padding: 2px 2px 2px 3px;
     }
   }
 
-  .action-btn {
-    height: 50px;
-    margin-left: 8px;
+  .info {
+    display: flex;
+    flex-direction: column;
+    margin: 0 3px;
+    overflow-x: hidden;
+    white-space: nowrap;
+
+    .name {
+      font-size: 1.2em;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-around;
+    }
+  }
+
+  .results {
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
   }
 }
 
@@ -369,11 +332,6 @@ span.separator {
 
 .btn-margin-top {
   margin-top: 24px;
-}
-
-.rank {
-  display: table-cell;
-  min-width: 20px;
 }
 
 span.nowrap {

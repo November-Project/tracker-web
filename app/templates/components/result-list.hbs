@@ -10,12 +10,10 @@
   </div>
 {{/if}}
 
-<hr style="margin-top: 10px; margin-bottom: 10px;">
+<hr style="margin-top: 10px; margin-bottom: 0px;">
 
 {{#if userHasSubmitted}}
-  <div class="people">
-    {{result-item model=submittedResult index=null workout=workout editable=true}}
-  </div>
+  {{result-item model=submittedResult index=null workout=workout editable=true}}
 {{else}}
   {{#link-to 'events.view.results.new' (query-params time=selectedTime) class="btn btn-primary btn-block btn-lg"}}Record a {{selectedTime}} Result{{/link-to}}
 {{/if}}
@@ -24,8 +22,6 @@
 
 <hr style="margin-top: 10px; margin-bottom: 0px;">
 
-<div class="people">
-  {{#each filteredResults as |result index|}}
-    {{result-item model=result index=index workout=workout}}
-  {{/each}}
-</div>
+{{#each filteredResults as |result index|}}
+  {{result-item model=result index=index workout=workout}}
+{{/each}}
