@@ -71,12 +71,10 @@ export default Ember.Component.extend({
     get: function () {
       if (!Ember.isPresent(this.get('_selected'))) {
         const validDays = this.get('validDays');
-        if (Ember.isEmpty(validDays)) { return; }
-
         var defaultDay = moment();
         const day = parseInt(defaultDay.format('e'), 10);
 
-        if (!_.contains(validDays, day)) {
+        if (Ember.isPresent(validDays) && !_.contains(validDays, day)) {
           if (day > validDays[validDays.length - 1]) {
             const diff = validDays[validDays.length - 1] - day;
             defaultDay.add(diff, 'd');
@@ -100,6 +98,7 @@ export default Ember.Component.extend({
   }),
 
   selectInitialDate: function () {
+    this.set('reset', false);
     this.sendAction('getSelectedDate', (selectedDate) => {
       const currentDate = this.get('currentDate');
       const selectedWeek = selectedDate.clone().startOf('week');
@@ -109,6 +108,15 @@ export default Ember.Component.extend({
       this.set('_selected', selectedDate);
     });
   },
+
+  reset: false,
+
+  onReset: Ember.observer('reset', function () {
+    if (!this.get('reset')) { return; }
+    this.set('_selected', null);
+    this.set('_weekOffset', 0);
+    this.set('reset', false);
+  }),
 
   events: [],
 

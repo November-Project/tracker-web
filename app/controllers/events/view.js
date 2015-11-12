@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+  active: null,
+
   displayDate: Ember.computed({
     get: function () {
       return this.get('model.date').format('ddd, MMM D YYYY');
@@ -41,6 +43,12 @@ export default Ember.Controller.extend({
     }
   }),
 
+  onActiveTabChange: Ember.observer('active', function () {
+    const tab = this.get('active');
+    Ember.$('a[data-toggle="tab"]').removeClass('active');
+    Ember.$('a[href="#'+tab+'"]').addClass('active');
+  }),
+
   actions: {
     takeBackVerbal: function (verbal) {
       verbal.destroyRecord();
@@ -58,10 +66,8 @@ export default Ember.Controller.extend({
       });
     },
 
-    toggle: function (selected) {
-      if (Ember.$('a[href="#'+selected+'"]').hasClass('active')) { return; }
-      Ember.$('a[data-toggle="tab"]').removeClass('active');
-      Ember.$('a[href="#'+selected+'"]').addClass('active');
+    changeTab: function (tab) {
+      this.set('active', tab);
     }
   }
 });
