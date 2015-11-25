@@ -7,8 +7,7 @@ export default SuperAdministrationRoute.extend({
     return this.store.createRecord('tribe', { title: '', latitude: 0, longitude: 0 });
   },
 
-  beforeModel: function () {
-    this._super();
+  afterModel: function () {
     return MapLoader.loadMapAPI();
   },
 
