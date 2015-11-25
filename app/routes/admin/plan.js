@@ -1,5 +1,6 @@
 import AdministrationRoute from '../administration';
 import Ember from 'ember';
+import MapLoader from '../../helpers/map-loader';
 
 export default AdministrationRoute.extend({
   model: function () {
@@ -9,13 +10,6 @@ export default AdministrationRoute.extend({
   },
 
   afterModel: function () {
-    return new Ember.RSVP.Promise( function (resolve, reject) {
-      if (!window.google) {
-        window.mapAPILoaded = Ember.run.bind(resolve);
-        Ember.$.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyCYKDmsSlu_GNmW5OHDv_R8VZzhQpHEW9E&libraries=visualization&sensor=false&callback=mapAPILoaded').fail(reject);
-      } else {
-        resolve();
-      }
-    });
+    return MapLoader.loadMapAPI();
   }
 });

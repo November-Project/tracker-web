@@ -9,7 +9,7 @@ export default DS.Model.extend({
   week: DS.attr('number', { defaultValue: 0 }),
   days: DS.attr('int-array', { defaultValue: "" }),
   hideWorkout: DS.attr('boolean', { defaultValue: true }),
-  recurringEvent: DS.belongsTo('event'),
+  recurringEvent: DS.attr('number'),
   tribe: DS.belongsTo('tribe', { async: false }),
   location: DS.belongsTo('location', { async: false }),
   workout: DS.belongsTo('workout', { async: false }),

@@ -1,14 +1,7 @@
 import AdministrationRoute from '../../administration';
 import Ember from 'ember';
-import _ from 'lodash';
 
 export default AdministrationRoute.extend({
-  daysArray: Ember.computed({
-    get: function () {
-      return _.map(this.get('session.tribe.daysOfWeek').split(',').filter(Ember.isPresent), function (v) { return parseInt(v); });
-    }
-  }),
-
   actions: {
     openEvent: function (event, date) {
       if (event === 'new') {
@@ -16,8 +9,11 @@ export default AdministrationRoute.extend({
           newRoute.currentModel.event.set('date', date);
           newRoute.currentModel.event.set('tribe', this.get('session.tribe'));
         });
+      } else if (Ember.isPresent(event.get('recurringEvent'))) {
+        this.set('selectedEvent', event);
+        Ember.$('#recurring-event-modal').modal()
       } else {
-        this.transitionTo('admin.events.edit', event);
+        this.transitionTo('admin.events.edit', event.id);
       }
     },
 
@@ -25,7 +21,7 @@ export default AdministrationRoute.extend({
       this.get('store').query('event', { start_date, end_date }).then( (events) => {
         callback(events.map( (event) => {
           return {
-            id: event.id,
+            model: event,
             title: event.get('title'),
             start: event.get('date')
           };
@@ -33,12 +29,14 @@ export default AdministrationRoute.extend({
       });
     },
 
-    getSchedule: function (callback) {
-      callback(this.get('daysArray'));
+    editRecurringEvent: function () {
+      Ember.$('#recurring-event-modal').modal('hide');
+      this.transitionTo('admin.events.edit', this.get('selectedEvent.recurringEvent'));
     },
 
-    isValidDay: function (day, success) {
-      if (this.get('daysArray').contains(day)) { success(); }
+    editThisEvent: function () {
+      Ember.$('#recurring-event-modal').modal('hide');
+      this.transitionTo('admin.events.edit', this.get('selectedEvent.id'));
     }
   }
 });

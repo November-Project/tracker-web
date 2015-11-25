@@ -17,10 +17,15 @@ export default Ember.Component.extend({
     this.set('value', valueKey ? value.get(valueKey) : value);
   }.on('change'),
 
-  setup: function () {
-    const valueKey = this.get('optionValuePath');
-    const value = valueKey ? this.get('options').findBy(valueKey, this.get('value')) : this.get('value');
-    const index = this.get('options').indexOf(value);
-    this.$().val(index);
-  }.on('didInsertElement')
+  didInsertElement: function () {
+    Ember.run.scheduleOnce('afterRender', () => {
+      const options = this.get('options');
+      if (Ember.isPresent(options)) {
+        const valueKey = this.get('optionValuePath');
+        const value = valueKey ? options.findBy(valueKey, this.get('value')) : this.get('value');
+        const index = options.indexOf(value);
+        if (index >= 0) { this.$().val(index); }
+      }
+    });
+  }
 });

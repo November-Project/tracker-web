@@ -2,11 +2,21 @@ import Ember from 'ember';
 import _ from 'lodash';
 
 export default Ember.Controller.extend({
-  event: Ember.computed.alias('model.event'),
-  workouts: Ember.computed.alias('model.workouts'),
-  workout: Ember.computed.alias('model.event.workout'),
-  locations: Ember.computed.alias('model.locations'),
-  location: Ember.computed.alias('model.event.location'),
+  event: Ember.computed.alias('model'),
+  workout: Ember.computed.alias('model.workout'),
+  location: Ember.computed.alias('model.location'),
+
+  workouts: Ember.computed('workouts', {
+    get: function () {
+      return this.store.peekAll('workout');
+    }
+  }),
+
+  locations: Ember.computed('locations', {
+    get: function () {
+      return this.store.peekAll('location');
+    }
+  }),
 
   _weekOptions: [
     { label: 'Week', value: 0 },
@@ -28,7 +38,11 @@ export default Ember.Controller.extend({
   editingLocation: false,
 
   cleanup: function () {
-    this.get('event').rollbackAttributes();
+    const event = this.get('event');
+    if (Ember.isPresent(event)) {
+      event.rollbackAttributes();
+    }
+
     this.setProperties({
       editingWorkout: false,
       editingLocation: false

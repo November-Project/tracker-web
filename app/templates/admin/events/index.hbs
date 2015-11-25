@@ -1,3 +1,25 @@
 <div class="center top-margin">
-  {{calendar-view model=model openEvent="openEvent" getEvents="getEvents" getSchedule="getSchedule" isValidDay="isValidDay"}}
+  {{calendar-view model=model openEvent="openEvent" getEvents="getEvents" greenDays=daysArray}}
+</div>
+
+<div class="modal fade" id="recurring-event-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Edit Recurring Event?</h4>
+      </div>
+      <div class="modal-body">
+        <p>Would you like to edit the recurring event
+          (this will also change all future events linked to this recurring event)
+          or would you like to edit just the event on this date?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" {{action 'editRecurringEvent'}}>Recurring Event</button>
+        <button type="button" class="btn btn-primary" {{action 'editThisEvent'}}>This Event</button>
+      </div>
+    </div>
+  </div>
 </div>

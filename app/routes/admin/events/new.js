@@ -1,24 +1,18 @@
 import Ember from 'ember';
 import AdministrationRoute from '../../administration';
+import MapLoader from '../../../helpers/map-loader';
 
 export default AdministrationRoute.extend({
   model: function () {
-    return Ember.RSVP.hash({
-      event: this.store.createRecord('event'),
-      workouts: this.store.findAll('workout'),
-      locations: this.store.findAll('location'),
-    });
+    return this.store.createRecord('event');
   },
 
-  afterModel: function () {
-    return new Ember.RSVP.Promise( function (resolve, reject) {
-      if (!window.google) {
-        window.mapAPILoaded = Ember.run.bind(resolve);
-        Ember.$.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyCYKDmsSlu_GNmW5OHDv_R8VZzhQpHEW9E&libraries=visualization&sensor=false&callback=mapAPILoaded').fail(reject);
-      } else {
-        resolve();
-      }
-    });
+  afterModel: function (model, transition) {
+    return Ember.RSVP.all([
+      this.store.findAll('workout'),
+      this.store.findAll('location'),
+      MapLoader.loadMapAPI()
+    ]);
   },
 
   cleanupController: function () {
