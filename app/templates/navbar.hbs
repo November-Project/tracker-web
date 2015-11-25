@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
       </button>
       {{#link-to 'index' class='navbar-brand'}}<i class="fa fa-home fa-lg"></i>{{/link-to}}
-      <a class="navbar-brand" style="padding-left:0;" data-toggle="modal" data-target="#tribe-modal">{{currentTribeTitle}}</a>
+      <a class="navbar-brand navbar-brand-title" data-toggle="modal" data-target="#tribe-modal">{{currentTribeTitle}}</a>
     </div>
     {{#if session.user.acceptedTerms }}
       <div id="navbar-items" class="navbar-collapse collapse">

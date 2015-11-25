@@ -1,7 +1,7 @@
+$grid-float-breakpoint: 700px;
+
 @import 'bower_components/bootstrap-sass/assets/stylesheets/bootstrap';
 @import 'bower_components/bootstrap-social/bootstrap-social';
-
-$grid-float-breakpoint: 600px;
 
 @-webkit-viewport{width:device-width}
 @-moz-viewport{width:device-width}
@@ -555,5 +555,13 @@ a.fc-day-grid-event {
         }
       }
     }
+  }
+}
+
+.navbar-brand-title {
+  padding-left: 0px;
+
+  @media (min-width: $grid-float-breakpoint) {
+    padding-left: $navbar-padding-horizontal;
   }
 }
