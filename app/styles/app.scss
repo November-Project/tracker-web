@@ -565,3 +565,12 @@ a.fc-day-grid-event {
     padding-left: $navbar-padding-horizontal;
   }
 }
+
+.navbar-inverse .navbar-toggle {
+  border-color: $gray;
+  color: $navbar-inverse-color;
+
+  &:hover {
+    color: white;
+  }
+}
