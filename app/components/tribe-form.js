@@ -1,6 +1,5 @@
 /* global google */
 import Ember from 'ember';
-import _ from 'lodash';
 
 export default Ember.Component.extend({
   store: Ember.inject.service('store'),

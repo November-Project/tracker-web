@@ -1,6 +1,5 @@
 /* global google */
 import Ember from 'ember';
-import _ from 'lodash';
 
 export default Ember.Controller.extend({
   latitude: Ember.computed.alias('session.tribe.latitude'),

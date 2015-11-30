@@ -1,7 +1,7 @@
 $grid-float-breakpoint: 700px;
 
 @import 'bower_components/bootstrap-sass/assets/stylesheets/bootstrap';
-@import 'bower_components/bootstrap-social/bootstrap-social';
+@import 'bower_components/bootstrap-social/bootstrap-social.scss';
 
 @-webkit-viewport{width:device-width}
 @-moz-viewport{width:device-width}
