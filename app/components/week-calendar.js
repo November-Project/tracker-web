@@ -4,95 +4,92 @@ import _ from 'lodash';
 export default Ember.Component.extend({
   classNames: ['week-calendar'],
 
-  _weekOffset: 0,
+  weekOffset: 0,
 
-  displayMonth: Ember.computed('_weekOffset', {
+  displayMonth: Ember.computed('currentDate', {
     get: function () {
-      return this.get('weekDays').filterBy('secondary', false).objectAt(0).get('month');
+      return this.get('currentDate').clone().startOf('week').add(3, 'd').format('MMMM');
     }
   }),
 
-  displayYear: Ember.computed('_weekOffset', {
+  displayYear: Ember.computed('currentDate', {
     get: function () {
-      return this.get('weekDays').filterBy('secondary', false).objectAt(0).get('year');
+      return this.get('currentDate').clone().startOf('week').add(3, 'd').format('YYYY');
     }
   }),
 
-  currentDate: Ember.computed('_weekOffset', {
+  currentDate: Ember.computed('weekOffset', {
     get: function () {
-      const offset = this.get('_weekOffset');
+      const offset = this.get('weekOffset');
       return moment().add(offset, 'w');
     }
   }),
 
-  calculateSecondaries: function (values) {
-    const justMonths = values.mapBy('month');
-    if (justMonths.length <= 1) { return values; }
-
-    const counts = _.countBy(justMonths);
-    return values.map( function (value) {
-      if (counts[value.get('month')] < 4) {
-        value.set('secondary', true);
-      }
-      return value;
-    });
-  },
-
   weekDays: Ember.computed('currentDate', 'selected', 'validDays', {
     get: function () {
       const currentSunday = this.get('currentDate').startOf('week');
+      const midWeek = currentSunday.clone().add(3, 'd');
       const validDays = this.get('validDays');
       const selectedDate = this.get('selected');
 
-      return this.calculateSecondaries(_.range(7).map( (day) => {
+      return _.range(7).map( (day) => {
         const date = currentSunday.clone().add(day, 'd');
-        var selected = false;
-        if (!Ember.isEmpty(selectedDate)) {
-          selected = date.format('L') === selectedDate.format('L');
-        }
 
         return Ember.Object.create({
           date: date,
           event: this.get('events').objectAt(validDays.indexOf(day)),
           dayOfWeek: date.format('ddd'),
           dayOfMonth: date.format('D'),
-          month: date.format('MMMM'),
-          year: date.format('YYYY'),
-          secondary: false,
+          secondary: date.format('M') !== midWeek.format('M'),
           today: date.format('L') === moment().format('L'),
           hasEvent: _.contains(validDays, day),
-          selected: selected
+          selected: Ember.isPresent(selectedDate) && date.format('L') === selectedDate.format('L')
         });
-      }));
+      });
     }
   }),
 
   selected: Ember.computed('_selected', 'validDays', {
     get: function () {
-      if (!Ember.isPresent(this.get('_selected'))) {
-        const validDays = this.get('validDays');
-        var defaultDay = moment();
-        const day = parseInt(defaultDay.format('e'), 10);
+      var defaultDay = this.get('currentDate').clone();
+      const selected = this.get('_selected');
+      const validDays = this.get('validDays');
 
-        if (Ember.isPresent(validDays) && !_.contains(validDays, day)) {
-          if (day > validDays[validDays.length - 1]) {
-            const diff = validDays[validDays.length - 1] - day;
-            defaultDay.add(diff, 'd');
-          } else if (day < validDays[0]) {
-            const diff = validDays[0] - day;
-            defaultDay.add(diff, 'd');
-          } else {
-            var nextDay = parseInt(defaultDay.format('e'), 10);
-            do {
-              nextDay++;
-            } while (!_.contains(validDays, nextDay) && nextDay < 6);
-            if (_.contains(validDays, nextDay)) {
-              defaultDay.add(nextDay - day);
-            }
+      if (Ember.isEmpty(selected) && Ember.isEmpty(validDays)) {
+        this.sendAction('eventSelected', null);
+        return defaultDay;
+      }
+
+      if (Ember.isPresent(selected)) {
+        return selected
+      }
+
+      const day = parseInt(defaultDay.format('e'), 10);
+
+      if (!_.contains(validDays, day)) {
+        if (day > validDays[validDays.length - 1]) {
+          const diff = validDays[validDays.length - 1] - day;
+          defaultDay.add(diff, 'd');
+        } else if (day < validDays[0]) {
+          const diff = validDays[0] - day;
+          defaultDay.add(diff, 'd');
+        } else {
+          var nextDay = parseInt(defaultDay.format('e'), 10);
+          do {
+            nextDay++;
+          } while (!_.contains(validDays, nextDay) && nextDay < 6);
+          if (_.contains(validDays, nextDay)) {
+            defaultDay.add(nextDay - day);
           }
         }
-        this.set('_selected', defaultDay);
       }
+      this.set('_selected', defaultDay);
+
+      const event = this.get('events').find( (event) => {
+        return event.get('date').format('e') === defaultDay.format('e');
+      });
+      if (Ember.isPresent(event)) { this.sendAction('eventSelected', event); }
+
       return this.get('_selected');
     }
   }),
@@ -104,34 +101,28 @@ export default Ember.Component.extend({
       const selectedWeek = selectedDate.clone().startOf('week');
       const weekDiff = selectedWeek.diff(currentDate, 'w');
 
-      this.set('_weekOffset', weekDiff);
+      this.set('weekOffset', weekDiff);
       this.set('_selected', selectedDate);
     });
   },
 
-  reset: false,
-
-  onReset: Ember.observer('reset', function () {
-    if (!this.get('reset')) { return; }
-    this.set('_selected', null);
-    this.set('_weekOffset', 0);
-    this.set('reset', false);
-  }),
-
   events: [],
 
   didInsertElement: function () {
-    Ember.run.scheduleOnce('afterRender', this, 'selectInitialDate');
+    Ember.run.scheduleOnce('afterRender', this, 'initialSetup');
   },
 
   initialSetup: function () {
     this.updateEvents();
-  }.on('didInitAttrs'),
+    this.selectInitialDate();
+  },
 
   updateEvents: function () {
     const currentDate = this.get('currentDate');
     const startDate = currentDate.clone().startOf('week').format('YYYY-MM-DD');
     const endDate = currentDate.clone().endOf('week').format('YYYY-MM-DD');
+
+    this.set('events', []);
 
     Ember.$('#events-loading').show();
     this.sendAction('getEvents', startDate, endDate, (events) => {
@@ -141,6 +132,7 @@ export default Ember.Component.extend({
   },
 
   onWeekChange: Ember.observer('currentDate', function () {
+    this.set('_selected', null);
     this.updateEvents();
   }),
 
@@ -154,17 +146,17 @@ export default Ember.Component.extend({
 
   actions: {
     prev: function () {
-      const offset = this.get('_weekOffset');
-      this.set('_weekOffset', offset - 1);
+      const offset = this.get('weekOffset');
+      this.set('weekOffset', offset - 1);
     },
 
     next: function () {
-      const offset = this.get('_weekOffset');
-      this.set('_weekOffset', offset + 1);
+      const offset = this.get('weekOffset');
+      this.set('weekOffset', offset + 1);
     },
 
     reset: function () {
-      this.set('_weekOffset', 0);
+      this.set('weekOffset', 0);
     },
 
     selected: function (day) {
