@@ -26,7 +26,7 @@ export default Ember.Component.extend({
 
   weekDays: Ember.computed('currentDate', 'selected', 'validDays', {
     get: function () {
-      const currentSunday = this.get('currentDate').startOf('week');
+      const currentSunday = this.get('currentDate').clone().startOf('week');
       const midWeek = currentSunday.clone().add(3, 'd');
       const validDays = this.get('validDays');
       const selectedDate = this.get('selected');
