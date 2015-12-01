@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+  deletable: false,
   event: Ember.computed.alias('model'),
   workout: Ember.computed.alias('model.workout'),
   location: Ember.computed.alias('model.location'),
