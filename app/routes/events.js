@@ -10,11 +10,13 @@ export default AuthenticationRoute.extend({
     },
 
     eventSelected: function (event) {
-      if (Ember.isEmpty(event)) {
-        this.transitionTo('events.no_event');
-      } else {
-        this.transitionTo('events.view', event);
-      }
+      Ember.run.scheduleOnce('afterRender', this, function () {
+        if (Ember.isEmpty(event)) {
+          this.transitionTo('events.no_event');
+        } else {
+          this.transitionTo('events.view', event);
+        }
+      });
     }
   }
 });
