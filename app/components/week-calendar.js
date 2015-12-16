@@ -1,3 +1,4 @@
+/* global _ */
 import Ember from 'ember';
 
 export default Ember.Component.extend({
@@ -59,7 +60,7 @@ export default Ember.Component.extend({
       }
 
       if (Ember.isPresent(selected)) {
-        return selected
+        return selected;
       }
 
       const day = parseInt(defaultDay.format('e'), 10);
@@ -122,7 +123,7 @@ export default Ember.Component.extend({
       const startDate = currentDate.clone().startOf('week').format('L');
       const endDate = currentDate.clone().endOf('week').format('L');
 
-      if (s.format('L') == startDate && e.format('L') == endDate) {
+      if (s.format('L') === startDate && e.format('L') === endDate) {
         Ember.$('#events-loading').hide();
         this.set('events', events);
       }
