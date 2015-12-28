@@ -1,17 +1,23 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
-      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#navbar-items" aria-expanded="false">
-        <span class="sr-only"> Toggle Navigation </span>
-        <span>Menu</span>
-      </button>
-      {{#link-to 'index' class='navbar-brand'}}<i class="fa fa-home fa-lg"></i>{{/link-to}}
-      <a class="navbar-brand navbar-brand-title" data-toggle="modal" data-target="#tribe-modal">{{currentTribeTitle}}</a>
+      {{#if hasAcceptedTerms }}
+        <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#navbar-items" aria-expanded="false">
+          <span class="sr-only"> Toggle Navigation </span>
+          <span>Menu</span>
+        </button>
+      {{/if}}
+      {{#if isAuthenticated }}
+        {{#link-to 'index' class='navbar-brand'}}<i class="fa fa-home fa-lg"></i>{{/link-to}}
+        <a class="navbar-brand navbar-brand-title" data-toggle="modal" data-target="#tribe-modal">{{currentTribeTitle}}</a>
+      {{else}}
+        {{#link-to 'index' class='navbar-brand'}}November Project{{/link-to}}
+      {{/if}}
     </div>
-    {{#if session.user.acceptedTerms }}
+    {{#if hasAcceptedTerms }}
       <div id="navbar-items" class="navbar-collapse collapse">
         <ul class="nav navbar-nav navbar-right">
-          {{#if isAdmin}}
+          {{#if isAdmin }}
             <li>{{#link-to 'admin'}}Admin{{/link-to}}</li>
           {{/if}}
           <li><a data-toggle="modal" data-target="#tribe-modal">Change City</a></li>

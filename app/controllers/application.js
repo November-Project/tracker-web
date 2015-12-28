@@ -6,6 +6,20 @@ export default Ember.Controller.extend({
 
   currentTribeTitle: Ember.computed.alias('session.tribe.title'),
 
+  isAuthenticated: Ember.computed('session.token', {
+    get: function () {
+      return this.get('session').isAuthenticated();
+    }
+  }),
+
+  hasAcceptedTerms: Ember.computed('isAuthenticated', 'session.user.acceptedTerms', 'currentRouteName', {
+    get: function () {
+      return this.get('isAuthenticated') &&
+        this.get('session.user.acceptedTerms') &&
+        this.currentRouteName !== 'auth.terms';
+    }
+  }),
+
   isAdmin: Ember.computed({
     get: function () {
       return this.get('session.user').isLeaderOf(this.get('session.tribe'));

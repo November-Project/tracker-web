@@ -2,12 +2,11 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   beforeModel: function () {
-    var session = this.get('session');
+    const session = this.get('session');
     if (session.isAuthenticated()) {
-      var self = this;
-      return session.fetchUser().finally( function () {
+      return session.fetchUser().then( () => {
         if (!session.hasAcceptedTerms()) {
-          self.transitionTo('auth.terms');
+          this.transitionTo('auth.terms');
         }
       });
     } else {
@@ -17,9 +16,8 @@ export default Ember.Route.extend({
 
   actions: {
     logout: function () {
-      var self = this;
-      this.get('session').logout().then( function () {
-        self.transitionTo('auth');
+      this.get('session').logout().then( () => {
+        this.transitionTo('auth');
       });
     }
   }

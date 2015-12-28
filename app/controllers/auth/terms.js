@@ -1,13 +1,18 @@
 import Ember from 'ember';
 
-export default Ember.ObjectController.extend({
-  needs: ['tribes'],
+export default Ember.Controller.extend({
+  tribes: Ember.computed({
+    get: function () {
+      return this.store.peekAll('tribe');
+    }
+  }),
 
   validate: function () {
     var errors = {};
 
-    errors.tribe = this.get('tribe') == null;
-    errors.terms = this.get('acceptedTerms') === false;
+    const model = this.get('model');
+    errors.tribe = model.get('tribe').content == null;
+    errors.terms = model.get('acceptedTerms') === false;
 
     this.set('error', errors);
   },
@@ -22,13 +27,15 @@ export default Ember.ObjectController.extend({
       }, false);
 
       if (!hasError) {
-        var self = this;
         var btn = Ember.$('button');
 
         btn.button('loading');
-        this.model.save().then( function () {
-          self.transitionToRoute('index');
-        }).finally( function () { btn.button('reset'); });
+        this.model.save().then( () => {
+          this.transitionToRoute('index');
+        }, (error) => {
+          const message = error.responseJSON && error.responseJSON.message ? error.responseJSON.message : 'An Unknown Error Occured';
+          this.set('error_message', message);
+        }).finally( () => { btn.button('reset'); });
       }
     }
   }

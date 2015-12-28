@@ -1,13 +1,18 @@
 import Ember from 'ember';
 
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend({
   validate: function () {
     var errors = {};
 
-    errors.password = (Ember.$('#password').val() == null || Ember.$('#password').val().length < 6);
-    errors.confirm = Ember.$('#confirm').val() !== Ember.$('#password').val();
+    errors.password = Ember.isBlank(this.get('password')) || this.get('password').length < 6;
+    errors.confirm = this.get('confirm') !== this.get('password');
 
     this.set('error', errors);
+  },
+
+  cleanup: function () {
+    this.set('password', '');
+    this.set('confirm', '');
   },
 
   actions: {
@@ -20,15 +25,19 @@ export default Ember.ObjectController.extend({
       }, false);
 
       if (!hasError) {
-        var self = this;
         var btn = Ember.$('button');
 
         btn.button('loading');
-        this.get('session').changePassword(Ember.$('#password').val(), this.get('reset_token')).then( function () {
-          self.transitionToRoute('index');
-        }, function (error) {
-          self.set('error_message', error.responseJSON.message || 'An Unknown Error Occured');
-        }).finally( function () { btn.button('reset'); });
+        this.get('session').changePassword(this.get('password'), this.get('model.reset_token')).then( () => {
+          this.transitionToRoute('index');
+        }, (error) => {
+          if (error.status === 404) {
+            this.set('error_message', 'Reset token already used.');
+          } else {
+            const message = error.responseJSON && error.responseJSON.message ? error.responseJSON.message : 'An Unknown Error Occured';
+            this.set('error_message', message);
+          }
+        }).finally( () => { btn.button('reset'); });
       }
     }
   }

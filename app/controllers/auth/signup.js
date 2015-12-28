@@ -1,35 +1,47 @@
 import Ember from 'ember';
 
-export default Ember.ObjectController.extend({
-  needs: ['tribes'],
+export default Ember.Controller.extend({
+  tribes: Ember.computed({
+    get: function () {
+      return this.store.peekAll('tribe');
+    }
+  }),
+
+  _genderOptions: ['male', 'female', 'other', "don't specify"],
+
+  genders: Ember.computed.map('_genderOptions', function (option) {
+    return Ember.Object.create({
+      value: option
+    });
+  }),
 
   validate: function () {
     var errors = {};
+    const model = this.get('model');
 
-    errors.name = (this.get('name') == null || Ember.$.trim(this.get('name')) === '');
-    errors.email = (this.get('email') == null || Ember.$.trim(this.get('email')) === '');
-    errors.password = (this.get('password') == null || this.get('password').length < 6);
-    errors.confirm = Ember.$('#confirm').val() !== this.get('password');
-    errors.gender = this.get('gender') == null;
-    errors.tribe = this.get('tribe') == null;
-    errors.terms = !this.get('acceptedTerms');
+    errors.name = Ember.isBlank(model.get('name'));
+    errors.email = Ember.isBlank(model.get('email'));
+    errors.password = (Ember.isBlank(model.get('password')) || model.get('password').length < 6);
+    errors.confirm = this.get('confirm') !== model.get('password');
+    errors.gender = Ember.isNone(model.get('gender'));
+    errors.tribe = Ember.isNone(model.get('tribe.id'));
+    errors.terms = !model.get('acceptedTerms');
 
     this.set('error', errors);
   },
 
+  cleanup: function () {
+    const model = this.get('model');
+    if (Ember.isPresent(model)) {
+      if (model.get('isNew')) {
+        model.destroyRecord();
+      } else {
+        model.rollbackAttributes();
+      }
+    }
+  },
+
   actions: {
-    setMale: function () {
-      this.model.set('gender', 'male');
-      Ember.$('#male').addClass('active');
-      Ember.$('#female').removeClass('active');
-    },
-
-    setFemale: function () {
-      this.model.set('gender', 'female');
-      Ember.$('#female').addClass('active');
-      Ember.$('#male').removeClass('active');
-    },
-
     submit: function () {
       this.validate();
 
@@ -39,17 +51,18 @@ export default Ember.ObjectController.extend({
       }, false);
 
       if (!hasError) {
-        var self = this;
         var btn = Ember.$('button');
+        const model = this.get('model');
 
         btn.button('loading');
-        this.model.save().then( function () {
-          self.get('session').openWithEmailAndPassword(self.get('email'), self.get('password')).then( function () {
-            self.transitionToRoute('index');
+        model.save().then( () => {
+          this.get('session').openWithEmailAndPassword(model.get('email'), model.get('password')).then( () => {
+            model.set('password', null);
+            this.transitionToRoute('index');
             btn.button('reset');
           });
-        }, function (error) {
-          self.set('error_message', error.responseJSON.message || 'An Unknown Error Occured');
+        }, (error) => {
+          this.set('error_message', error.message || 'An Unknown Error Occured');
           btn.button('reset');
         });
       }

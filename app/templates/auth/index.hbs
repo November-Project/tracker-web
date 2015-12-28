@@ -1,4 +1,4 @@
 <p class="text-muted btn-margin-top" style="text-align: center;">To use the workout tracker, please do one of the following:</p>
 {{#link-to 'auth.login' class="btn btn-default btn-block btn-lg"}}Log in{{/link-to}}
 {{#link-to 'auth.signup' class="btn btn-default btn-block btn-lg"}}Sign up{{/link-to}}
-<a class="btn btn-default btn-block btn-lg btn-facebook" {{action 'signInWithFacebook'}}>Sign in with Facebook</a>
+<a id="facebook-btn" class="btn btn-default btn-block btn-lg btn-facebook" {{action 'signInWithFacebook'}} data-loading-text="Signing In...">Sign in with Facebook</a>

@@ -22,8 +22,18 @@ export default Ember.Component.extend({
       const options = this.get('options');
       if (Ember.isPresent(options)) {
         const valueKey = this.get('optionValuePath');
-        const value = valueKey ? options.findBy(valueKey, this.get('value')) : this.get('value');
-        const index = options.indexOf(value);
+        var index = -1;
+
+        if (valueKey) {
+          const value = options.findBy(valueKey, this.get('value'));
+          index = options.indexOf(value);
+        } else {
+          options.find( (item, idx) => {
+            index = idx;
+            return item === this.get('value') || item === this.get('value').content;
+          });
+        }
+
         if (index >= 0) { this.$().val(index); }
       }
     });

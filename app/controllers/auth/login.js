@@ -1,13 +1,18 @@
 import Ember from 'ember';
 
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend({
   validate: function () {
     var errors = {};
 
-    errors.email = Ember.$.trim(Ember.$('#email').val()) === '';
-    errors.password = Ember.$('#password').val() === '';
+    errors.email = Ember.isBlank(this.get('email'));
+    errors.password = Ember.isBlank(this.get('password'));
 
     this.set('error', errors);
+  },
+
+  cleanup: function () {
+    this.set('email', '');
+    this.set('password', '');
   },
 
   actions: {
@@ -20,15 +25,15 @@ export default Ember.ObjectController.extend({
       }, false);
 
       if (!hasError) {
-        var self = this;
         var btn = Ember.$('button');
 
         btn.button('loading');
-        this.get('session').openWithEmailAndPassword(Ember.$('#email').val(), Ember.$('#password').val()).then( function () {
-          self.transitionToRoute('index');
-        }, function (error) {
-          self.set('error_message', error.responseJSON.message || 'An Unknown Error Occured');
-        }).finally( function () { btn.button('reset'); });
+        this.get('session').openWithEmailAndPassword(this.get('email'), this.get('password')).then( () => {
+          this.transitionToRoute('index');
+        }, (error) => {
+          const message = error.responseJSON && error.responseJSON.message ? error.responseJSON.message : 'An Unknown Error Occured';
+          this.set('error_message', message);
+        }).finally( () => { btn.button('reset'); });
       }
     }
   }

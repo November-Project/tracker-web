@@ -1,3 +1,4 @@
+/* global FB */
 import Ember from 'ember';
 import config from '../config/environment';
 
@@ -7,8 +8,8 @@ export default Ember.Object.extend({
   },
 
   hasAcceptedTerms: function () {
-    if (!this.get('user')) { return false; }
-    return this.get('user').get('acceptedTerms');
+    const user = this.get('user');
+    return Ember.isPresent(user) && user.get('acceptedTerms');
   },
 
   token: Ember.computed({
@@ -41,11 +42,13 @@ export default Ember.Object.extend({
 
   fetchUser: function () {
     return new Ember.RSVP.Promise( (resolve, reject) => {
-      if (this.get('user')) { Ember.run(resolve); }
+      if (Ember.isPresent(this.get('user'))) { Ember.run(resolve); }
 
       this.get('store').findRecord('user', 'me').then( (user) => {
         this.set('user', user);
-        if (!this.get('tribe')) { console.log('again'); this.set('tribe', user.get('tribe')); }
+        if (Ember.isNone(this.get('tribe'))) {
+          this.set('tribe', user.get('tribe'));
+        }
         Ember.run(resolve);
       }, () => {
         this.close();
@@ -54,92 +57,110 @@ export default Ember.Object.extend({
     });
   },
 
-  openWithFacebook: function (auth) {
+  initFacebook: function () {
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId      : '577189602429829',
+        xfbml      : true,
+        version    : 'v2.5'
+      });
+    };
+
+    return Ember.$.getScript('//connect.facebook.net/en_US/sdk.js');
+  },
+
+  loginWithFacebook: function () {
     return new Ember.RSVP.Promise( (resolve, reject) => {
-      Ember.$.ajax({
-        url: config.API_HOST + '/session/facebook',
-        type: 'POST',
-        data: JSON.stringify({
-          token: auth.accessToken,
-          device_info: navigator.userAgent
-        }),
-        dataType: 'json',
-        contentType: 'application/json',
-        processData: false
-      }).then( (data) => {
-        this.set('token', data.token);
-        Ember.run(resolve);
-      }, reject);
+      FB.getLoginStatus( (response) => {
+        if (response.status === 'connected') {
+          this.openWithFacebook(response.authResponse).then(resolve, reject);
+        } else {
+          FB.login( (status) => {
+            this.openWithFacebook(status.authResponse).then(resolve, reject);
+          }, { scope: 'public_profile,email' });
+        }
+      });
+    });
+  },
+
+  openWithFacebook: function (auth) {
+    return Ember.RSVP.Promise.cast(Ember.$.ajax({
+      url: config.API_HOST + '/session/facebook',
+      type: 'POST',
+      data: JSON.stringify({
+        token: auth.accessToken,
+        device_info: navigator.userAgent
+      }),
+      dataType: 'json',
+      contentType: 'application/json',
+      processData: false
+    })).then( (data) => {
+      this.set('token', data.token);
     });
   },
 
   openWithEmailAndPassword: function (email, password) {
-    return new Ember.RSVP.Promise( (resolve, reject) => {
-      Ember.$.ajax({
-        url: config.API_HOST + '/session/email',
-        type: 'POST',
-        data: JSON.stringify({
-          email: email,
-          password: password,
-          device_info: navigator.userAgent
-        }),
-        dataType: 'json',
-        contentType: 'application/json',
-        processData: false
-      }).then( (data) => {
-        this.set('token', data.token);
-        Ember.run(resolve);
-      }, reject);
+    return Ember.RSVP.Promise.cast(Ember.$.ajax({
+      url: config.API_HOST + '/session/email',
+      type: 'POST',
+      data: JSON.stringify({
+        email: email,
+        password: password,
+        device_info: navigator.userAgent
+      }),
+      dataType: 'json',
+      contentType: 'application/json',
+      processData: false
+    })).then( (data) => {
+      this.set('token', data.token);
     });
   },
 
   forgotPassword: function (email) {
-    return new Ember.RSVP.Promise( (resolve, reject) => {
-      Ember.$.ajax({
-        url: config.API_HOST + '/forgot',
-        type: 'POST',
-        data: JSON.stringify({
-          email: email
-        }),
-        contentType: 'application/json',
-        processData: false
-      }).then(resolve, reject);
-    });
+    return Ember.RSVP.Promise.cast(Ember.$.ajax({
+      url: config.API_HOST + '/forgot',
+      type: 'POST',
+      data: JSON.stringify({
+        email: email
+      }),
+      contentType: 'application/json',
+      processData: false
+    }));
   },
 
   changePassword: function (password, token) {
-    return new Ember.RSVP.Promise( (resolve, reject) => {
-      Ember.$.ajax({
-        url: config.API_HOST + '/reset',
-        type: 'POST',
-        data: JSON.stringify({
-          password: password,
-          token: token
-        }),
-        contentType: 'application/json',
-        processData: false
-      }).then(resolve, reject);
-    });
+    return Ember.RSVP.Promise.cast(Ember.$.ajax({
+      url: config.API_HOST + '/reset',
+      type: 'POST',
+      data: JSON.stringify({
+        password: password,
+        token: token
+      }),
+      contentType: 'application/json',
+      processData: false
+    }));
   },
 
   logout: function () {
-    return new Ember.RSVP.Promise( (resolve, reject) => {
-      Ember.$.ajax({
-        url: config.API_HOST + '/sessions',
-        type: 'DELETE',
-        headers: {
-          'AUTHORIZATION': this.get('token')
-        }
-      }).then( () => {
-        this.close();
-        Ember.run(resolve);
-      }, reject);
+    return Ember.RSVP.Promise.cast(Ember.$.ajax({
+      url: config.API_HOST + '/sessions',
+      type: 'DELETE',
+      headers: {
+        'AUTHORIZATION': this.get('token')
+      }
+    })).then( () => {
+      this.close();
     });
   },
 
   close: function () {
     this.set('token', null);
     this.set('user', null);
-    if (localStorage) { localStorage.removeItem('token'); }
+    this.set('_tribe', null);
+
+    if (localStorage) {
+      localStorage.removeItem('token');
+      localStorage.removeItem('tribe');
+    }
   }
 });

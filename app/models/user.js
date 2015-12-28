@@ -7,7 +7,7 @@ export default DS.Model.extend({
   password: DS.attr('string'),
   tribe: DS.belongsTo('tribe', { async: true }),
   gender: DS.attr('string'),
-  facebookId: DS.attr('number'),
+  facebookId: DS.attr('string'),
   acceptedTerms: DS.attr('boolean', { defaultValue: false }),
   isVerified: DS.attr('boolean', { defaultValue: false }),
   isAdmin: DS.attr('boolean', { defaultValue: false }),

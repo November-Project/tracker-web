@@ -1,15 +1,16 @@
 <h3>Terms and Conditions</h3>
 <form role="form">
-  <div class="form-group" class={{if error.tribe 'has-error'}}>
-    {{select-control options=controllers.tribes.model
+  <div class="form-group {{if error.tribe 'has-error'}}">
+    <label>Home Tribe</label>
+    {{select-control options=tribes
       optionTitlePath="title"
-      prompt="Select a Tribe"
-      value=tribe
+      prompt="Select a Home Tribe"
+      value=model.tribe
       classes="form-control"}}
   </div>
-  <div class="form-group" class={{if error.terms 'has-error'}}>
+  <div class="form-group {{if error.terms 'has-error'}}">
     <label class="checkbox">
-      {{input type="checkbox" id="terms" checked=acceptedTerms}} Accept <a target='_blank' href='http://november-project.com/disclaimer/'>Terms and Conditions</a>
+      {{input type="checkbox" id="terms" checked=model.acceptedTerms}} Accept <a target='_blank' href='http://november-project.com/disclaimer/'>Terms and Conditions</a>
     </label>
   </div>
   <div class="form-group">

@@ -1,12 +1,16 @@
 import Ember from 'ember';
 
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend({
   validate: function () {
     var errors = {};
 
-    errors.email = Ember.$.trim(Ember.$('#email').val()) === '';
+    errors.email = Ember.isBlank(this.get('email'));
 
     this.set('error', errors);
+  },
+
+  cleanup: function () {
+    this.set('email', '');
   },
 
   actions: {
@@ -19,16 +23,16 @@ export default Ember.ObjectController.extend({
       }, false);
 
       if (!hasError) {
-        var self = this;
         var btn = Ember.$('button');
 
         btn.button('loading');
-        this.get('session').forgotPassword(Ember.$('#email').val()).then( function () {
-          self.set('error_message', null);
-          self.set('info_message', 'Email sent!');
-        }, function (error) {
-          self.set('error_message', error.responseJSON.message || 'An Unknown Error Occured');
-        }).finally( function () { btn.button('reset'); });
+        this.get('session').forgotPassword(this.get('email')).then( () => {
+          this.set('error_message', null);
+          this.set('info_message', 'Email sent!');
+        }, (error) => {
+          const message = error.responseJSON && error.responseJSON.message ? error.responseJSON.message : 'An Unknown Error Occured';
+          this.set('error_message', message);
+        }).finally( () => { btn.button('reset'); });
       }
     }
   }

@@ -5,9 +5,7 @@ export default Ember.Route.extend({
     return this.store.createRecord('user');
   },
 
-  setupController: function (controller, model) {
-    this._super(controller, model);
-    controller.set('model', model);
-    this.controllerFor('tribes').set('model', this.store.peekAll('tribe'));
-  }
+  cleanupController: function () {
+    this.controller.cleanup();
+  }.on('deactivate')
 });
