@@ -23,6 +23,11 @@ export default AdministrationRoute.extend({
     save: function () {
       var model = this.get('controller.event');
 
+      if (model.get('isNew')) {
+        model.set('date', this.controller.get('date'));
+        model.set('tribe', this.session.get('tribe'));
+      }
+
       model.save().then( () => {
         this.transitionTo('admin.events.index');
       }, function (err) {

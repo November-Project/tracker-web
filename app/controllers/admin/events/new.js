@@ -1,6 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+  queryParams: ['date'],
+  date: null,
+
   deletable: false,
   event: Ember.computed.alias('model'),
   workout: Ember.computed.alias('model.workout'),

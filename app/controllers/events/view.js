@@ -11,7 +11,7 @@ export default Ember.Controller.extend({
 
   displayTitle: Ember.computed({
     get: function () {
-      return this.get('model.title');
+      return this.get('model.displayTitle');
     }
   }),
 

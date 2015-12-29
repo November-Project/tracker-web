@@ -6,6 +6,6 @@ export default DS.Transform.extend({
   },
 
   serialize: function (deserialized) {
-    return deserialized;
+    return deserialized.format('YYYY-MM-DD');
   }
 });
