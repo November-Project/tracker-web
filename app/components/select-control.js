@@ -20,22 +20,23 @@ export default Ember.Component.extend({
   didInsertElement: function () {
     Ember.run.scheduleOnce('afterRender', () => {
       const options = this.get('options');
-      if (Ember.isPresent(options)) {
-        const valueKey = this.get('optionValuePath');
-        var index = -1;
+      if (Ember.isEmpty(options)) { return; }
+      if (Ember.isNone(this.get('value'))) { return; }
 
-        if (valueKey) {
-          const value = options.findBy(valueKey, this.get('value'));
-          index = options.indexOf(value);
-        } else {
-          options.find( (item, idx) => {
-            index = idx;
-            return item === this.get('value') || item === this.get('value').content;
-          });
-        }
+      const valueKey = this.get('optionValuePath');
+      var index = -1;
 
-        if (index >= 0) { this.$().val(index); }
+      if (valueKey) {
+        const value = options.findBy(valueKey, this.get('value'));
+        index = options.indexOf(value);
+      } else {
+        options.find( (item, idx) => {
+          index = idx;
+          return item === this.get('value') || item === this.get('value').content;
+        });
       }
+
+      if (index >= 0) { this.$().val(index); }
     });
   }
 });
