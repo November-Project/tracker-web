@@ -4,7 +4,7 @@
   <a class="btn-link" href={{mapLink}} target="_blank">View location</a>
   <h3>@ {{displayTimes}}</h3>
 
-  {{#if isFutureEvent}}
+  {{#if model.isFutureEvent}}
     {{verbal-list verbals=model.verbals currentUser=session.user takeBackVerbal="takeBackVerbal" giveVerbal="giveVerbal"}}
   {{else}}
     <div class="btn-group btn-group-justified" style="margin-top:10px;margin-bottom:10px;" role="group">

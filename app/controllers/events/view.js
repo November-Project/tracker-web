@@ -31,18 +31,6 @@ export default Ember.Controller.extend({
     }
   }),
 
-  isFutureEvent: Ember.computed({
-    get: function () {
-      const date = this.get('model.date').format('YYYY-MM-DD');
-      const futureTimes = this.get('model.timesArray').map( function (time) {
-        return moment(date + ' ' + time, 'YYYY-MM-DD H:mm');
-      }).find( function (dateTime) {
-        return dateTime.diff(moment()) > 0;
-      });
-      return Ember.isPresent(futureTimes);
-    }
-  }),
-
   onActiveTabChange: Ember.observer('active', function () {
     const tab = this.get('active');
     Ember.$('a[data-toggle="tab"]').removeClass('active');

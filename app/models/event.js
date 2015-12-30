@@ -18,10 +18,11 @@ export default DS.Model.extend({
   results: DS.hasMany('result', { async: true }),
   verbals: DS.hasMany('verbal', { async: true }),
 
-  displayTitle: Ember.computed('workout', 'location', {
+  displayTitle: Ember.computed('workout', 'location', 'isFutureEvent', {
     get: function () {
       if (!Ember.isBlank(this.get('title'))) { return this.get('title'); }
-      if (this.get('workout')) { return this.get('workout').get('title'); }
+      if (!(this.get('isFutureEvent') && this.get('hideWorkout')) &&
+        this.get('workout')) { return this.get('workout').get('title'); }
       if (this.get('location')) { return this.get('location').get('title'); }
       return '';
     }
@@ -45,5 +46,15 @@ export default DS.Model.extend({
       this.set('days', value.join(','));
       return value;
     }
-  })
+  }),
+
+  isFutureEvent: Ember.computed('date', 'times', {
+    get: function () {
+      const date = this.get('date').format('YYYY-MM-DD');
+      const now = moment();
+      return this.get('timesArray').reduce( (accum, time) => {
+        return accum && moment(date + ' ' + time, 'YYYY-MM-DD H:mm').diff(now) > 0;
+      }, true);
+    }
+  }),
 });
