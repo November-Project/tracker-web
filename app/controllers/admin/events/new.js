@@ -43,7 +43,7 @@ export default Ember.Controller.extend({
   cleanup: function () {
     const event = this.get('event');
     if (Ember.isPresent(event)) {
-      event.rollbackAttributes();
+      event.unloadRecord();
     }
 
     this.setProperties({
@@ -67,15 +67,19 @@ export default Ember.Controller.extend({
       this.get('event._internalModel._relationships.initializedRelationships.location.canonicalState.id') !== this.get('location.id');
   },
 
-  daysOfWeek: Ember.computed.map('session.tribe.daysOfWeekArray', function (day) {
-    const letterForDay = ['S', 'M', 'Tu', 'W', 'Th', 'F', 'S'];
-    const wordForDay = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-    return Ember.Object.create({
-      value: day,
-      letter: letterForDay[day],
-      word: wordForDay[day],
-      checked: _.contains(this.get('event.daysArray'), day)
-    });
+  daysOfWeek: Ember.computed('event.daysArray', {
+    get: function () {
+      return this.get('session.tribe.daysOfWeekArray').map( (day) => {
+        const letterForDay = ['S', 'M', 'Tu', 'W', 'Th', 'F', 'S'];
+        const wordForDay = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+        return Ember.Object.create({
+          value: day,
+          letter: letterForDay[day],
+          word: wordForDay[day],
+          checked: _.contains(this.get('event.daysArray'), day)
+        });
+      });
+    }
   }),
 
   daysChanged: Ember.observer('daysOfWeek.@each.checked', function () {
@@ -120,7 +124,12 @@ export default Ember.Controller.extend({
 
     cancelWorkout: function () {
       this.set('editingWorkout', false);
-      this.get('workout').rollbackAttributes();
+      const workout = this.get('workout');
+      if (workout.get('isNew')) {
+        workout.deleteRecord();
+      } else {
+        workout.rollbackAttributes();
+      }
     },
 
     newWorkout: function () {
@@ -149,7 +158,12 @@ export default Ember.Controller.extend({
 
     cancelLocation: function () {
       this.set('editingLocation', false);
-      this.get('location').rollbackAttributes();
+      const location = this.get('location');
+      if (location.get('isNew')) {
+        location.deleteRecord();
+      } else {
+        location.rollbackAttributes();
+      }
     },
 
     newLocation: function () {

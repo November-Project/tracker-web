@@ -4,10 +4,10 @@ import DS from 'ember-data';
 export default DS.Model.extend({
   title: DS.attr('string'),
   date: DS.attr('moment-date'),
-  times: DS.attr('string-array', { defaultValue: "" }),
+  times: DS.attr('string', { defaultValue: "" }),
   recurring: DS.attr('boolean', { defaultValue: false }),
   week: DS.attr('number', { defaultValue: 0 }),
-  days: DS.attr('int-array', { defaultValue: "" }),
+  days: DS.attr('string', { defaultValue: "" }),
   hideWorkout: DS.attr('boolean', { defaultValue: true }),
   recurringEvent: DS.attr('number'),
   tribe: DS.belongsTo('tribe', { async: false }),
@@ -27,7 +27,7 @@ export default DS.Model.extend({
     }
   }),
 
-  timesArray: Ember.computed({
+  timesArray: Ember.computed('times', {
     get: function () {
       return this.get('times').split(',').filter(Ember.isPresent);
     },
@@ -37,9 +37,9 @@ export default DS.Model.extend({
     }
   }),
 
-  daysArray: Ember.computed({
+  daysArray: Ember.computed('days', {
     get: function () {
-      return _.map(this.get('days').split(',').filter(Ember.isPresent), function (v) { return parseInt(v); });
+      return this.get('days').split(',').filter(Ember.isPresent).map( function (v) { return parseInt(v); });
     },
     set: function (key, value) {
       this.set('days', value.join(','));
