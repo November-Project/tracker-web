@@ -1,11 +1,5 @@
 <form role="form" onsubmit='return false;'>
-  {{#unless isRecurringEvent}}
-    <div class="form-group">
-      <label for="recurring" class="checkbox"></label>
-      {{input type="checkbox" id="recurring" checked=event.recurring}} Recurring Event
-    </div>
-  {{/unless}}
-  {{#if event.recurring}}
+  {{#if recurring}}
     <div class="well well-sm schedule-well">
       <h4>Schedule</h4>
       <div class="form-group">

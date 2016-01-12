@@ -4,6 +4,7 @@ export default Ember.Controller.extend({
   queryParams: ['date'],
   date: null,
 
+  recurring: false,
   deletable: false,
   event: Ember.computed.alias('model'),
   workout: Ember.computed.alias('model.workout'),
@@ -21,22 +22,6 @@ export default Ember.Controller.extend({
     }
   }),
 
-  _weekOptions: [
-    { label: 'Week', value: 0 },
-    { label: 'First Week', value: 1 },
-    { label: '2nd Week', value: 2 },
-    { label: '3rd Week', value: 3 },
-    { label: '4th Week', value: 4 },
-    { label: 'Last Week', value: -1 },
-    { label: '2nd to Last Week', value: -2 },
-    { label: '3rd to Last Week', value: -3 },
-    { label: '4th to Last Week', value: -4 }
-  ],
-
-  weekOptions: Ember.computed.map('_weekOptions', function (weekOption) {
-    return Ember.Object.create({ label: weekOption.label, value: weekOption.value });
-  }),
-
   editingWorkout: false,
   editingLocation: false,
 
@@ -52,40 +37,16 @@ export default Ember.Controller.extend({
     });
   },
 
-  savable: Ember.computed('event.hasDirtyAttributes', 'event.times', 'event.recurring', 'event.days', 'event.week', 'workout', 'location', function () {
+  savable: Ember.computed('event.hasDirtyAttributes', 'event.times', 'workout', 'location', function () {
     return (this.get('event.hasDirtyAttributes') &&
-      Ember.isPresent(this.get('event.times')) &&
-      ((this.get('event.recurring') &&
-        Ember.isPresent(this.get('event.days')) &&
-        Ember.isPresent(this.get('event.week'))) ||
-       !this.get('event.recurring')
-     )) || this.hasDirtyRelationships();
+      Ember.isPresent(this.get('event.times'))
+     ) || this.hasDirtyRelationships();
   }),
 
   hasDirtyRelationships: function () {
     return this.get('event._internalModel._relationships.initializedRelationships.workout.canonicalState.id') !== this.get('workout.id') ||
       this.get('event._internalModel._relationships.initializedRelationships.location.canonicalState.id') !== this.get('location.id');
   },
-
-  daysOfWeek: Ember.computed('event.daysArray', {
-    get: function () {
-      return this.get('session.tribe.daysOfWeekArray').map( (day) => {
-        const letterForDay = ['S', 'M', 'Tu', 'W', 'Th', 'F', 'S'];
-        const wordForDay = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
-        return Ember.Object.create({
-          value: day,
-          letter: letterForDay[day],
-          word: wordForDay[day],
-          checked: _.contains(this.get('event.daysArray'), day)
-        });
-      });
-    }
-  }),
-
-  daysChanged: Ember.observer('daysOfWeek.@each.checked', function () {
-    const days = this.get('daysOfWeek').filterBy('checked', true).mapBy('value');
-    this.set('event.daysArray', days);
-  }),
 
   actions: {
     removeTime: function (index) {

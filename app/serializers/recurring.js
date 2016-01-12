@@ -9,17 +9,17 @@ export default ApplicationSerializer.extend(DS.EmbeddedRecordsMixin, {
   },
 
   normalize: function (modelName, hash, prop) {
-    hash.links = {
-      results: 'results'
-    };
     hash.times = hash.times.join(',');
+    hash.days = hash.days.join(',');
     return this._super(modelName, hash, prop);
   },
 
   serializeAttribute: function (snapshot, json, key, attributes) {
     if (key === 'times') {
       json.times = snapshot.attr('times').split(',').filter(Ember.isPresent);
-    }  else {
+    } else if (key === 'days') {
+      json.days = snapshot.attr('days').split(',').filter(Ember.isPresent).map( function (v) { return parseInt(v); });
+    } else {
       this._super(snapshot, json, key, attributes);
     }
   }

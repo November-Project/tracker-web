@@ -42,6 +42,11 @@ export default Router.map(function() {
       this.route('new');
     });
 
+    this.route('recurring', function () {
+      this.route('edit', { path: ':recurring_id' });
+      this.route('new');
+    });
+
     this.route('tribes', function () {
       this.route('edit', { path: ':tribe_id' });
       this.route('new');

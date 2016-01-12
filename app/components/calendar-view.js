@@ -7,9 +7,9 @@ export default Ember.Component.extend({
     Ember.run.scheduleOnce('afterRender', this, function () {
       Ember.$('#calendar').fullCalendar({
         header: {
-          left: 'prev,next',
+          left: 'prev,next today',
           center: 'title',
-          right: 'today'
+          right: ''
         },
 
         businessHours: true,
@@ -29,7 +29,7 @@ export default Ember.Component.extend({
             var model = 'new';
             Ember.$('#calendar').fullCalendar('clientEvents', (event) => {
               if (event.start.format().startsWith(date.format())) {
-                model = event.model;
+                model = event;
               }
             });
             this.sendAction('openEvent', model, date.format());
@@ -37,7 +37,7 @@ export default Ember.Component.extend({
         },
 
         eventClick: (event) => {
-          this.sendAction('openEvent', event.model);
+          this.sendAction('openEvent', event);
         }
       });
     });
