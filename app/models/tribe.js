@@ -1,3 +1,4 @@
+/* global _ */
 import DS from 'ember-data';
 import Ember from 'ember';
 

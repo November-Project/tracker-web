@@ -1,5 +1,4 @@
 import SuperAdministrationRoute from '../../super-administration';
-import Ember from 'ember';
 import MapLoader from '../../../helpers/map-loader';
 
 export default SuperAdministrationRoute.extend({

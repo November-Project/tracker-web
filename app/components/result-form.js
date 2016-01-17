@@ -36,7 +36,7 @@ export default Ember.Component.extend({
 
   isNotTracked: Ember.computed({
     get: function () {
-      return !this.get('allowReps') && !this.get('allowTime')
+      return !this.get('allowReps') && !this.get('allowTime');
     }
   }),
 

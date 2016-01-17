@@ -11,7 +11,7 @@ export default AdministrationRoute.extend({
       this.render('admin.events.new', { model, controller });
     },
 
-    afterModel: function (model, transition) {
+    afterModel: function () {
       return Ember.RSVP.all([
         this.store.findAll('workout'),
         this.store.findAll('location'),

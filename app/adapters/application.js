@@ -20,7 +20,7 @@ export default DS.RESTAdapter.extend({
   handleResponse: function (status, headers, payload) {
     if (this.isError(status, headers, payload)) {
       const message = payload.message || "Unknown Error Occured";
-      return new DS.AdapterError(payload, message)
+      return new DS.AdapterError(payload, message);
     } else if (this.isSqlError(status, headers, payload)) {
       const message = this.parseSqlError(payload);
       return new DS.AdapterError(payload, message);
@@ -28,7 +28,7 @@ export default DS.RESTAdapter.extend({
     return this._super(status, headers, payload);
   },
 
-  isError: function (status, headers, payload) {
+  isError: function (status) {
     return status >= 400 && status < 422;
   },
 

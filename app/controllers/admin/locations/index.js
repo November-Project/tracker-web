@@ -6,7 +6,7 @@ export default Ember.Controller.extend({
 
   filterStandard: true,
 
-  filteredContent: Ember.computed('filterStandard', {
+  filteredContent: Ember.computed('filterStandard', 'model.[]', {
     get: function () {
       return this.get('sorted').filter( (location) => {
         return location.get('standard') === this.get('filterStandard');

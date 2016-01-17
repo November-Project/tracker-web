@@ -1,5 +1,4 @@
 import AdministrationRoute from '../../administration';
-import Ember from 'ember';
 import MapLoader from '../../../helpers/map-loader';
 
 export default AdministrationRoute.extend({
