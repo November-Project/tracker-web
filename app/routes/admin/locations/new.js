@@ -20,6 +20,9 @@ export default AdministrationRoute.extend({
 
       model.save().then( () => {
         this.transitionTo('admin.locations.index');
+      }, (error) => {
+        this.controller.set('error_message', error.message || 'An Unknown Error Occured');
+        window.scrollTo(0, 0);
       });
     },
 

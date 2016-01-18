@@ -18,7 +18,7 @@
     {{google-maps latitude=model.latitude longitude=model.longitude}}
   </div>
   <div class="form-group">
-    <button type="button" class="{{unless savable 'disabled'}} btn btn-primary pull-right" {{action 'save'}}>Save</button>
+    <button type="button" id="save" class="{{unless savable 'disabled'}} btn btn-primary pull-right" {{action 'save'}} data-loading-text="Saving...">Save</button>
     <button type="button" class="btn btn-default pull-right cancel" {{action 'cancel'}}>Cancel</button>
   </div>
 </form>

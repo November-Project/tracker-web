@@ -9,7 +9,7 @@ export default DS.Model.extend({
       return Math.floor(this.get('time') / 60);
     },
     set: function (key, value, previousValue) {
-      var sec = this.get('time') - previousValue * 60;
+      const sec = this.get('time') - previousValue * 60;
       this.set('time', value * 60 + sec);
       return Math.floor(this.get('time') / 60);
     }
@@ -20,7 +20,7 @@ export default DS.Model.extend({
       return this.get('time') % 60;
     },
     set: function (key, value, previousValue) {
-      var time = this.get('time') - previousValue;
+      const time = this.get('time') - previousValue;
       this.set('time', value * 1 + time);
       return this.get('time') % 60;
     }

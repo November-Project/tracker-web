@@ -11,7 +11,7 @@ export default Ember.Component.extend({
 
   photoURL: Ember.computed({
     get: function () {
-      var url = this.get('model.userPhotoUrl');
+      const url = this.get('model.userPhotoUrl');
       if (Ember.isEmpty(url)) {
         return '/images/no_profile.gif';
       } else {

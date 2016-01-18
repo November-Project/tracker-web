@@ -12,7 +12,7 @@ export default DS.RESTSerializer.extend({
   serializeBelongsTo: function (snapshot, json, relationship) {
     // cast ids to Int for belongsTo relationships
     var key = relationship.key;
-    var belongsTo = snapshot.belongsTo(key);
+    const belongsTo = snapshot.belongsTo(key);
     key = this.keyForRelationship ? this.keyForRelationship(key, 'belongsTo', 'serialize') : key;
     json[key] = Ember.isNone(belongsTo) ? belongsTo : parseInt(belongsTo.record.id);
   },

@@ -1,3 +1,5 @@
+{{partial "alert"}}
+
 <form role="form" onsubmit='return false;'>
   {{#if recurring}}
     <div class="well well-sm schedule-well">
@@ -78,10 +80,10 @@
     </div>
   {{/if}}
   <div class="form-group">
-    <button type="button" class="{{unless savable 'disabled'}} btn btn-primary pull-right" {{action 'save'}}>Save</button>
+    <button type="button" id="save" class="{{unless savable 'disabled'}} btn btn-primary pull-right" {{action 'save'}} data-loading-text="Saving...">Save</button>
     <button type="button" class="btn btn-default pull-right cancel" {{action 'cancel'}}>Cancel</button>
     {{#if deletable}}
-      <button type="button" class="btn btn-danger pull-right cancel" {{action 'delete'}}>Delete</button>
+      <button type="button" id="delete" class="btn btn-danger pull-right cancel" {{action 'delete'}} data-loading-text="Deleting...">Delete</button>
     {{/if}}
   </div>
 </form>

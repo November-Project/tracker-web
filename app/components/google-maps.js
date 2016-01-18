@@ -16,7 +16,7 @@ export default Ember.Component.extend({
 
     this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-    var marker = new google.maps.Marker({
+    const marker = new google.maps.Marker({
       map: this.map
     });
 

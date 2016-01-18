@@ -12,12 +12,18 @@ export default SuperAdministrationRoute.extend({
 
   actions: {
     save: function () {
-      var model = this.get('controller.model');
+      const btn = Ember.$('#save');
+      btn.button('loading');
+
+      const model = this.get('controller.model');
 
       model.save().then( () => {
+        btn.button('reset');
         this.transitionTo('admin.tribes');
-      }, function (err) {
-        console.log(err);
+      }, (error) => {
+        this.controller.set('error_message', error.message || 'An Unknown Error Occured');
+        window.scrollTo(0, 0);
+        btn.button('reset');
       });
     },
 

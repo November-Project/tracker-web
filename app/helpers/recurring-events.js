@@ -37,7 +37,7 @@ export default {
   },
 
   inverseWeekDayOfMonth: function (date) {
-    var nextWeek = date.clone().add(1, 'w');
+    const nextWeek = date.clone().add(1, 'w');
     if (nextWeek.format('M') === date.format('M')) {
       return -1 + this.inverseWeekDayOfMonth(nextWeek);
     } else {

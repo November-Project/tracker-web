@@ -3,44 +3,50 @@ import AdministrationRoute from '../../administration';
 import MapLoader from '../../../helpers/map-loader';
 
 export default AdministrationRoute.extend({
-    model: function () {
-      return this.store.createRecord('recurring');
-    },
+  model: function () {
+    return this.store.createRecord('recurring');
+  },
 
-    renderTemplate: function (controller, model) {
-      this.render('admin.events.new', { model, controller });
-    },
+  renderTemplate: function (controller, model) {
+    this.render('admin.events.new', { model, controller });
+  },
 
-    afterModel: function () {
-      return Ember.RSVP.all([
-        this.store.findAll('workout'),
-        this.store.findAll('location'),
-        MapLoader.loadMapAPI()
-      ]);
-    },
+  afterModel: function () {
+    return Ember.RSVP.all([
+      this.store.findAll('workout'),
+      this.store.findAll('location'),
+      MapLoader.loadMapAPI()
+    ]);
+  },
 
-    cleanupController: function () {
-      this.controller.cleanup();
-    }.on('deactivate'),
+  cleanupController: function () {
+    this.controller.cleanup();
+  }.on('deactivate'),
 
-    actions: {
-      save: function () {
-        var model = this.get('controller.event');
+  actions: {
+    save: function () {
+      const btn = Ember.$('#save');
+      btn.button('loading');
 
-        if (model.get('isNew')) {
-          model.set('tribe', this.session.get('tribe'));
-        }
+      var model = this.get('controller.event');
 
-        model.save().then( () => {
-          this.transitionTo('admin.events.index');
-        }, function (err) {
-          console.log(err);
-        });
-      },
-
-      cancel: function () {
-        if (window.history.length > 0) { window.history.back(); }
-        else { this.transitionTo('admin.events.index'); }
+      if (model.get('isNew')) {
+        model.set('tribe', this.session.get('tribe'));
       }
+
+      model.save().then( () => {
+        btn.button('reset');
+        this.transitionTo('admin.events.index');
+      }, (error) => {
+        this.controller.set('error_message', error.message || 'An Unknown Error Occured');
+        window.scrollTo(0, 0);
+        btn.button('reset');
+      });
+    },
+
+    cancel: function () {
+      if (window.history.length > 0) { window.history.back(); }
+      else { this.transitionTo('admin.events.index'); }
     }
+  }
 });

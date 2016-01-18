@@ -17,13 +17,13 @@ export default Ember.Controller.extend({
     forgot: function () {
       this.validate();
 
-      var errors = this.get('error');
-      var hasError = Object.keys(errors).reduce( function (accum, item) {
+      const errors = this.get('error');
+      const hasError = Object.keys(errors).reduce( function (accum, item) {
         return accum || errors[item];
       }, false);
 
       if (!hasError) {
-        var btn = Ember.$('button');
+        const btn = Ember.$('button');
 
         btn.button('loading');
         this.get('session').forgotPassword(this.get('email')).then( () => {

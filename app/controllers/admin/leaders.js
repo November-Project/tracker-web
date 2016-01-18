@@ -13,7 +13,10 @@ export default Ember.Controller.extend({
 
   actions: {
     remove: function (leader) {
-      leader.destroyRecord();
+      leader.destroyRecord().catch( (error) => {
+        this.set('error_message', error.message || 'An Unknown Error Occured');
+        window.scrollTo(0, 0);
+      });
     },
 
     search: function () {
@@ -30,6 +33,9 @@ export default Ember.Controller.extend({
         email: user.get('email')
       }).save().then( () => {
         this.get('users').removeObject(user);
+      }, (error) => {
+        this.set('error_message', error.message || 'An Unknown Error Occured');
+        window.scrollTo(0, 0);
       });
     }
   }

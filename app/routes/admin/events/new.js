@@ -21,7 +21,10 @@ export default AdministrationRoute.extend({
 
   actions: {
     save: function () {
-      var model = this.get('controller.event');
+      const btn = Ember.$('#save');
+      btn.button('loading');
+
+      const model = this.get('controller.event');
 
       if (model.get('isNew')) {
         model.set('date', this.controller.get('date'));
@@ -29,9 +32,12 @@ export default AdministrationRoute.extend({
       }
 
       model.save().then( () => {
+        btn.button('reset');
         this.transitionTo('admin.events.index');
-      }, function (err) {
-        console.log(err);
+      }, (error) => {
+        this.controller.set('error_message', error.message || 'An Unknown Error Occured');
+        window.scrollTo(0, 0);
+        btn.button('reset');
       });
     },
 

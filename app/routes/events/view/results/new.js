@@ -13,9 +13,17 @@ export default AuthenticationRoute.extend({
 
   actions: {
     save: function () {
+      const btn = Ember.$('#save');
+      btn.button('loading');
+
       this.get('controller.model').save().then( () => {
         const event = this.modelFor('events.view');
+        btn.button('reset');
         this.transitionTo('events.view', event);
+      }, (error) => {
+        this.controller.set('error_message', error.message || 'An Unknown Error Occured');
+        window.scrollTo(0, 0);
+        btn.button('reset');
       });
     },
 
@@ -29,11 +37,19 @@ export default AuthenticationRoute.extend({
     },
 
     delete: function () {
+      const btn = Ember.$('#delete');
+      btn.button('loading');
+
       this.get('controller.model').destroyRecord().then( () => {
         const event = this.modelFor('events.view');
         event.get('results').reload().then( () => {
+          btn.button('reset');
           this.transitionTo('events.view', event);
         });
+      }, (error) => {
+        this.controller.set('error_message', error.message || 'An Unknown Error Occured');
+        window.scrollTo(0, 0);
+        btn.button('reset');
       });
     }
   }

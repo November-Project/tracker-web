@@ -89,7 +89,7 @@ export default Ember.Component.extend({
   geocode: function () {
     this.geocoder.geocode({ address: this.get('model.title') }, (results, status) => {
       if (status === google.maps.GeocoderStatus.OK) {
-        var latLng = results[0].geometry.location;
+        const latLng = results[0].geometry.location;
         this.set('latitude', latLng.lat());
         this.set('longitude', latLng.lng());
       }
