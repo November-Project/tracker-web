@@ -7,13 +7,12 @@
     <span class="month">{{displayMonth}} {{displayYear}}</span>
   </div>
   <div>
-    <i id="events-loading" class="fa fa-spinner fa-spin"></i>
     <button type="button" class="btn btn-link" {{action 'next'}}>Next</button>
   </div>
 </div>
 
 <div class="week">
-  {{#each weekDays as |day|}}
+  {{#each days as |day|}}
   <div class="day {{if day.today 'today'}} {{if day.hasEvent 'has-event'}} {{if day.selected 'selected'}} {{if day.secondary 'secondary'}}" {{action 'selected' day}}>
     <span class="day-of-week">{{day.dayOfWeek}}</span>
     <span class="day-of-month">{{day.dayOfMonth}}</span>

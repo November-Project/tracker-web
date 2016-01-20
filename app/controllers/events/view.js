@@ -3,19 +3,19 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   active: null,
 
-  displayDate: Ember.computed({
+  displayDate: Ember.computed('model', {
     get: function () {
       return this.get('model.date').format('ddd, MMM D YYYY');
     }
   }),
 
-  displayTitle: Ember.computed({
+  displayTitle: Ember.computed('model', {
     get: function () {
       return this.get('model.displayTitle');
     }
   }),
 
-  displayTimes: Ember.computed({
+  displayTimes: Ember.computed('model', {
     get: function () {
       return this.get('model.times').split(',').map( function (time) {
         return moment(time, 'H:mm').format('h:mm A');
@@ -23,7 +23,7 @@ export default Ember.Controller.extend({
     }
   }),
 
-  mapLink: Ember.computed({
+  mapLink: Ember.computed('model', {
     get: function () {
       const lat = this.get('model.location.latitude');
       const lng = this.get('model.location.longitude');
@@ -48,9 +48,9 @@ export default Ember.Controller.extend({
         userId: user.id,
         userName: user.get('name'),
         userPhotoUrl: user.get('photoUrl'),
-        event: this.get('model')
+        date: this.get('model.date').format('YYYY-MM-DD')
       }).save().then( () => {
-        this.get('verbals').pushObject(verbal);
+        this.send('reloadVerbals', this.get('model.date').format('YYYY-MM-DD'));
       });
     },
 

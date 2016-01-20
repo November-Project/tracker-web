@@ -5,17 +5,17 @@
   <h3>@ {{displayTimes}}</h3>
 
   {{#if model.isFutureEvent}}
-    {{verbal-list verbals=model.verbals currentUser=session.user takeBackVerbal="takeBackVerbal" giveVerbal="giveVerbal"}}
+    {{verbal-list verbals=verbals currentUser=session.user takeBackVerbal="takeBackVerbal" giveVerbal="giveVerbal"}}
   {{else}}
     <div class="btn-group btn-group-justified" style="margin-top:10px;margin-bottom:10px;" role="group">
-      <a role="button" class="btn btn-default active" role="tab" data-toggle="tab" href="#verbals" {{action "changeTab" "verbals"}}>Verbals</a>
-      <a role="button" class="btn btn-default" role="tab" data-toggle="tab" href="#results" {{action "changeTab" "results"}}>Results</a>
+      <a role="button" class="btn btn-default" role="tab" data-toggle="tab" href="#verbals" {{action "changeTab" "verbals"}}>Verbals</a>
+      <a role="button" class="btn btn-default active" role="tab" data-toggle="tab" href="#results" {{action "changeTab" "results"}}>Results</a>
     </div>
     <div class="tab-content">
-      <div role="tabpanel" class="tab-pane active" id="verbals">
-        {{verbal-list verbals=model.verbals currentUser=session.user disableActions=true}}
+      <div role="tabpanel" class="tab-pane" id="verbals">
+        {{verbal-list verbals=verbals currentUser=session.user disableActions=true}}
       </div>
-      <div role="tabpanel" class="tab-pane" id="results">
+      <div role="tabpanel" class="tab-pane active" id="results">
         {{result-list results=model.results currentUser=session.user times=model.timesArray workout=model.workout newResult="newResult"}}
       </div>
     </div>

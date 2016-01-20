@@ -2,24 +2,30 @@ import Ember from 'ember';
 import AuthenticationRoute from './authentication';
 
 export default AuthenticationRoute.extend({
-  model: function () {},
+  queryParams: {
+    date: {
+      refreshModel: true
+    }
+  },
+
+  model: function (params) {
+    var date = moment(params.date, 'YYYY-MM-DD');
+    if (!date.isValid()) { date = moment(); }
+    const start_date = date.clone().startOf('week').format('YYYY-MM-DD');
+    const end_date = date.clone().endOf('week').format('YYYY-MM-DD');
+
+    return this.get('store').query('event', { start_date, end_date });
+  },
 
   actions: {
-    getEvents: function (startDate, endDate, callback) {
-      const start_date = startDate.format('YYYY-MM-DD');
-      const end_date = endDate.format('YYYY-MM-DD');
-
-      this.get('store').query('event', { start_date, end_date }).then( (events) => {
-        callback(events, startDate, endDate);
-      });
-    },
-
-    eventSelected: function (event) {
+    eventSelected: function (selection) {
       Ember.run.next(this, function () {
-        if (Ember.isEmpty(event)) {
-          this.transitionTo('events.no_event');
+        if (selection.hasEvent) {
+          this.transitionTo('events.view', selection.event);
         } else {
-          this.transitionTo('events.view', event);
+          this.transitionTo('events.no_event').then( (newRoute) => {
+            newRoute.controller.set('date', selection.date);
+          });
         }
       });
     }

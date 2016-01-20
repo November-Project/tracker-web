@@ -4,5 +4,5 @@ export default DS.Model.extend({
   userId: DS.attr('number'),
   userName: DS.attr('string'),
   userPhotoUrl: DS.attr('string'),
-  event: DS.belongsTo('event', { async: true })
+  date: DS.attr('string')
 });

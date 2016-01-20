@@ -7,14 +7,24 @@ export default AuthenticationRoute.extend({
   },
 
   afterModel: function (model) {
-    return Ember.RSVP.all([
-      model.get('results'),
-      model.get('verbals')
-    ]);
+    return model.get('results');
   },
 
   setupController: function (controller, model) {
     this._super(controller, model);
-    this.controllerFor('events').set('date', model.get('date'));
+    this.controllerFor('events').set('_selected', model.get('date'));
+    this._reloadVerbals(model.get('date').format('YYYY-MM-DD'));
+  },
+
+  _reloadVerbals: function (date) {
+    this.store.query('verbal', { date }).then( (verbals) => {
+      this.controller.set('verbals', verbals);
+    });
+  },
+
+  actions: {
+    reloadVerbals: function (date) {
+      this._reloadVerbals(date);
+    }
   }
 });
