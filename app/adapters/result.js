@@ -8,9 +8,9 @@ export default BaseTribeAdapter.extend({
       delete data.eventId;
       return this.host + '/tribes/' + tribe + '/events/' + eventId + '/results';
     } else if (snapshot && !id) {
-      return this.host + '/tribes/' + tribe + '/events/' + snapshot.belongsTo('event').get('id') + '/results';
+      return this.host + '/tribes/' + tribe + '/events/' + snapshot.belongsTo('event').id + '/results';
     } else if (snapshot && id) {
-      return this.host + '/tribes/' + tribe + '/events/' + snapshot.belongsTo('event').get('id') + '/results/' + id;
+      return this.host + '/tribes/' + tribe + '/events/' + snapshot.belongsTo('event').id + '/results/' + id;
     } else {
       return this._super(type, id, snapshot, action, data);
     }

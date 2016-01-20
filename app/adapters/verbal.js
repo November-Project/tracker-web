@@ -1,3 +1,3 @@
 import BaseTribeAdapter from './base-tribe';
 
-export default BaseTribeAdapter.extend({ });
+export default BaseTribeAdapter.extend({});
