@@ -60,9 +60,9 @@ export default Ember.Object.extend({
   initFacebook: function () {
     window.fbAsyncInit = function () {
       FB.init({
-        appId      : '577189602429829',
+        appId      : config.FACEBOOK_APP_ID,
         xfbml      : true,
-        version    : 'v2.5'
+        version    : config.FACEBOOK_API_VERSION
       });
     };
 

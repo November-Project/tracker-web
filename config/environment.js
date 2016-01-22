@@ -19,6 +19,8 @@ module.exports = function(environment) {
     }
   };
 
+  ENV.FACEBOOK_API_VERSION = 'v2.5';
+
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     ENV.APP.LOG_ACTIVE_GENERATION = true;
@@ -26,6 +28,7 @@ module.exports = function(environment) {
     // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     ENV.APP.LOG_VIEW_LOOKUPS = true;
     ENV.API_HOST = "http://192.168.99.100:3000";
+    ENV.FACEBOOK_APP_ID = '577189602429829';
   }
 
   if (environment === 'test') {
@@ -40,8 +43,14 @@ module.exports = function(environment) {
     ENV.APP.rootElement = '#ember-testing';
   }
 
-  if (environment === 'production') {
+  if (environment === 'staging') {
+    ENV.FACEBOOK_APP_ID = '577189602429829';
+    ENV.API_HOST = "http://novproject-staging.herokuapp.com";
+  }
 
+  if (environment === 'production') {
+    ENV.FACEBOOK_APP_ID = '188733467942113';
+    ENV.API_HOST = "https://novproject-production.herokuapp.com";
   }
 
   return ENV;
