@@ -1,3 +1,4 @@
+/* global _ */
 import AdministrationRoute from '../../administration';
 import Ember from 'ember';
 import RecurringEvents from '../../../helpers/recurring-events';
@@ -32,7 +33,7 @@ export default AdministrationRoute.extend({
         }, []);
 
         // create all recurring events between start_date and end_date that are also in the future
-        let takenDates = hash.events.map( (event) => { return event.get('date').format('YYYY-MM-DD') });
+        let takenDates = hash.events.map( (event) => { return event.get('date').format('YYYY-MM-DD'); });
         let recurrings = _.sortBy(hash.recurring.toArray(), (recurring) => {
           return -1 * Math.abs(recurring.get('week'));
         }).reduce( (accum, recurring) => {
