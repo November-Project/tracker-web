@@ -45,7 +45,7 @@ module.exports = function(environment) {
 
   if (environment === 'staging') {
     ENV.FACEBOOK_APP_ID = '577189602429829';
-    ENV.API_HOST = "http://novproject-staging.herokuapp.com";
+    ENV.API_HOST = "https://novproject-staging.herokuapp.com";
   }
 
   if (environment === 'production') {
