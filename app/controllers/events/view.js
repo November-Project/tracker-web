@@ -48,7 +48,8 @@ export default Ember.Controller.extend({
         userId: user.id,
         userName: user.get('name'),
         userPhotoUrl: user.get('photoUrl'),
-        date: this.get('model.date').format('YYYY-MM-DD')
+        date: this.get('model.date').format('YYYY-MM-DD'),
+        tribe: this.get('session.tribe.id')
       }).save().then( () => {
         this.send('reloadVerbals', this.get('model.date').format('YYYY-MM-DD'));
       });
