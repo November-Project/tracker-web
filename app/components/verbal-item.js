@@ -1,9 +1,10 @@
+/* global _ */
 import Ember from 'ember';
 
 export default Ember.Component.extend({
   photoURL: Ember.computed({
     get: function () {
-      const url = this.get('model.userPhotoUrl');
+      const url = _.replace(this.get('model.userPhotoUrl'), 'http://', '//');
       if (Ember.isEmpty(url)) {
         return '/images/no_profile.gif';
       } else {

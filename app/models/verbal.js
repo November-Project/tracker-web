@@ -4,5 +4,6 @@ export default DS.Model.extend({
   userId: DS.attr('number'),
   userName: DS.attr('string'),
   userPhotoUrl: DS.attr('string'),
-  date: DS.attr('string')
+  date: DS.attr('string'),
+  tribe: DS.attr('number')
 });
