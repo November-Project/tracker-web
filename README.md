@@ -1,19 +1,18 @@
-# Novproject
+# November Project Tracker Web App
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+This is the web app frontend for the [November Project Tracker app].
 
-## Prerequisites
+[November Project Tracker app]: https://tracking.november-project.com
+
+## First Time Setup
 
 You will need the following things properly installed on your computer.
 
-* [Git](http://git-scm.com/)
 * [Node.js](http://nodejs.org/) (with NPM)
 * [Bower](http://bower.io/)
 * [Ember CLI](http://www.ember-cli.com/)
-* [PhantomJS](http://phantomjs.org/)
 
-## Installation
+Then clone this repo and install the dependencies:
 
 * `git clone <repository-url>` this repository
 * change into the new directory
@@ -22,32 +21,28 @@ You will need the following things properly installed on your computer.
 
 ## Running / Development
 
-* `ember server`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
+Run the app by executing `ember s`. Then visit [http://localhost:4200](http://localhost:4200).
+You'll also need to be locally running the [API].
 
-### Code Generators
+[API]: https://github.com/tonyd256/novproject-api
 
-Make use of the many generators for code, try `ember help generate` for more details
+## Contributing
 
-### Running Tests
+If you'd like to contribute, please look at the issues for things to do, or
+create your own issues and PRs for things you'd like fixed, improved, or added.
+Please follow the [Contributing guide] and [Code of Conduct] when contributing.
+Thank you, [contributers]!
 
-* `ember test`
-* `ember test --server`
+[Contributing guide]: CONTRIBUTING.md
+[Code of Conduct]: CODE_OF_CONDUCT.md
+[contributers]: https://github.com/tonyd256/novproject-ember/graphs/contributors
 
-### Building
+## License
 
-* `ember build` (development)
-* `ember build --environment production` (production)
+If not otherwise specified (see below), files in this repository fall under the
+following license:
 
-### Deploying
+[License](LICENSE)
 
-Specify what it takes to deploy your app.
-
-## Further Reading / Useful Links
-
-* [ember.js](http://emberjs.com/)
-* [ember-cli](http://www.ember-cli.com/)
-* Development Browser Extensions
-  * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
-  * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
-
+An exception is made for files in readable text which contain their own license
+information.
