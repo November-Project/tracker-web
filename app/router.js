@@ -12,7 +12,7 @@ export default Router.map(function() {
     this.route('logout');
     this.route('terms');
     this.route('forgot');
-    this.route('reset', { path: 'reset/:token' });
+    this.route('reset');
   });
 
   this.route('events', function () {

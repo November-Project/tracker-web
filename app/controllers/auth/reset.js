@@ -1,6 +1,9 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+  queryParams: 'reset_token',
+  reset_token: null,
+
   validate: function () {
     var errors = {};
 
@@ -26,9 +29,10 @@ export default Ember.Controller.extend({
 
       if (!hasError) {
         const btn = Ember.$('button');
+        const reset_token = decodeURIComponent(this.get('reset_token'));
 
         btn.button('loading');
-        this.get('session').changePassword(this.get('password'), this.get('model.reset_token')).then( () => {
+        this.get('session').changePassword(this.get('password'), reset_token).then( () => {
           this.transitionToRoute('index');
         }, (error) => {
           if (error.status === 404) {
