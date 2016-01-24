@@ -23,8 +23,11 @@ export default AuthenticationRoute.extend({
         if (selection.hasEvent) {
           this.transitionTo('events.view', selection.event);
         } else {
-          this.transitionTo('events.no_event').then( (newRoute) => {
-            newRoute.controller.set('date', selection.date);
+          this.transitionTo('events.no_event').then( () => {
+            const controller = this.controllerFor('events.no_event');
+            if (Ember.isPresent(controller)) {
+              controller.set('date', selection.date);
+            }
           });
         }
       });
