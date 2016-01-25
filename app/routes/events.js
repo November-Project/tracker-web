@@ -1,3 +1,4 @@
+/* global _ */
 import Ember from 'ember';
 import AuthenticationRoute from './authentication';
 import RecurringEvents from '../helpers/recurring-events';
@@ -36,7 +37,7 @@ export default AuthenticationRoute.extend({
         const rs = RecurringEvents.eventsFromRecurring(recurring, start_date, end_date, takenDates);
         const rss = _.uniqBy(rs, 'model_date').map( (item) => {
           item.date = moment(item.model_date, 'YYYY-MM-DD');
-          return item
+          return item;
         });
         return accum.pushObjects(rss);
       }, []);

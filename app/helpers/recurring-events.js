@@ -1,4 +1,4 @@
-import Ember from 'ember';
+/* global _ */
 
 export default {
   eventsFromRecurring: function (recurring, startDate, endDate, takenDates) {
@@ -21,7 +21,7 @@ export default {
       {
         return accum; // don't create a recurring event
       } else {
-        takenDates.pushObject(dayString)
+        takenDates.pushObject(dayString);
         return accum.pushObjects(this.eventFromRecurring(recurring, dayString));
       }
     }, []);

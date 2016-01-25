@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import SuperAdministrationRoute from '../../super-administration';
 import MapLoader from '../../../helpers/map-loader';
 

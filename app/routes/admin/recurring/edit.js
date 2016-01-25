@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import RecurringRouteNew from './new';
 
 export default RecurringRouteNew.extend({

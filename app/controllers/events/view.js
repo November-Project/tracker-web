@@ -54,7 +54,7 @@ export default Ember.Controller.extend({
 
     giveVerbal: function () {
       const user = this.get('session.user');
-      const verbal = this.store.createRecord('verbal', {
+      this.store.createRecord('verbal', {
         userId: user.id,
         userName: user.get('name'),
         userPhotoUrl: user.get('photoUrl'),

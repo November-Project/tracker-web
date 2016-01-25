@@ -1,4 +1,3 @@
-/* global _ */
 import Ember from 'ember';
 import EventsControllerNew from '../events/new';
 
