@@ -23,6 +23,11 @@ export default Ember.Route.extend({
   actions: {
     changeTribe: function (tribe) {
       this.set('session.tribe', tribe);
+      if (this.controller.currentRouteName.startsWith('admin')) {
+        this.transitionTo('admin.events');
+      } else {
+        this.transitionTo('events');
+      }
       window.location.reload(true);
     }
   }

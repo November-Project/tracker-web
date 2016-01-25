@@ -3,9 +3,9 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
   active: null,
 
-  displayDate: Ember.computed('model', {
+  displayDate: Ember.computed('_date', {
     get: function () {
-      return this.get('model.date').format('ddd, MMM D YYYY');
+      return this.get('_date').format('ddd, MMM D YYYY');
     }
   }),
 
@@ -17,7 +17,7 @@ export default Ember.Controller.extend({
 
   displayTimes: Ember.computed('model', {
     get: function () {
-      return this.get('model.times').split(',').map( function (time) {
+      return this.get('model.timesArray').map( function (time) {
         return moment(time, 'H:mm').format('h:mm A');
       }).join(', ');
     }
@@ -37,6 +37,16 @@ export default Ember.Controller.extend({
     Ember.$('a[href="#'+tab+'"]').addClass('active');
   }),
 
+  _date: Ember.computed('model', 'date', {
+    get: function () {
+      if (Ember.isPresent(this.get('model.date'))) {
+        return this.get('model.date');
+      } else {
+        return moment(this.get('selection'), 'YYYY-MM-DD');
+      }
+    }
+  }),
+
   actions: {
     takeBackVerbal: function (verbal) {
       verbal.destroyRecord();
@@ -48,10 +58,10 @@ export default Ember.Controller.extend({
         userId: user.id,
         userName: user.get('name'),
         userPhotoUrl: user.get('photoUrl'),
-        date: this.get('model.date').format('YYYY-MM-DD'),
+        date: this.get('_date').format('YYYY-MM-DD'),
         tribe: this.get('session.tribe.id')
       }).save().then( () => {
-        this.send('reloadVerbals', this.get('model.date').format('YYYY-MM-DD'));
+        this.send('reloadVerbals', this.get('_date').format('YYYY-MM-DD'));
       });
     },
 

@@ -50,7 +50,8 @@ export default {
       return {
         title: recurring.get('displayTitle'),
         recurring: recurring,
-        start: moment(date + ' ' + time, 'YYYY-MM-DD HH:mm')
+        start: moment(date + ' ' + time, 'YYYY-MM-DD HH:mm'),
+        model_date: date
       };
     });
   },

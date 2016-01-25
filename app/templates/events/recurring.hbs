@@ -1,0 +1,8 @@
+<div class="workout">
+  <h1>{{displayDate}}</h1>
+  <h2>{{displayTitle}}</h2>
+  <a class="btn-link" href={{mapLink}} target="_blank">View location</a>
+  <h3>@ {{displayTimes}}</h3>
+
+  {{verbal-list verbals=verbals currentUser=session.user takeBackVerbal="takeBackVerbal" giveVerbal="giveVerbal"}}
+</div>

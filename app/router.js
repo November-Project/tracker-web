@@ -16,6 +16,7 @@ export default Router.map(function() {
   });
 
   this.route('events', function () {
+    this.route('recurring', { path: 'recurring/:recurring_id' });
     this.route('no_event', { path: '/' });
 
     this.route('view', { path: ':event_id' }, function () {

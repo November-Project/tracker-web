@@ -13,12 +13,13 @@ export default Ember.Controller.extend({
       return _.range(7).map( (day) => {
         const date = sunday.clone().add(day, 'd');
         const event = this.get('model').find( (item) => {
-          return item.get('date').format('YYYY-MM-DD') === date.format('YYYY-MM-DD');
+          return item.date.format('YYYY-MM-DD') === date.format('YYYY-MM-DD');
         });
 
         return Ember.Object.create({
           date: date,
-          event: event,
+          event: Ember.isPresent(event) ? event.model : null,
+          recurring: Ember.isPresent(event) ? event.recurring : null,
           dayOfWeek: date.format('ddd'),
           dayOfMonth: date.format('D'),
           secondary: date.format('M') !== midWeek.format('M'),
@@ -59,7 +60,7 @@ export default Ember.Controller.extend({
 
   hasEvent: function (date) {
     const event = this.get('model').find( (item) => {
-      return item.get('date').format('YYYY-MM-DD') === date.format('YYYY-MM-DD');
+      return item.date.format('YYYY-MM-DD') === date.format('YYYY-MM-DD');
     });
     return Ember.isPresent(event);
   },
