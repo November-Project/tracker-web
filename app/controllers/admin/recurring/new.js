@@ -35,7 +35,7 @@ export default EventsControllerNew.extend({
           value: day,
           letter: letterForDay[day],
           word: wordForDay[day],
-          checked: _.contains(this.get('event.daysArray'), day)
+          checked: this.get('event.daysArray').indexOf(day) >= 0
         });
       });
     }

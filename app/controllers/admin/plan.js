@@ -1,5 +1,4 @@
 /* global google */
-/* global _ */
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
@@ -11,7 +10,7 @@ export default Ember.Controller.extend({
       const days = this.get('daysOfWeek').filterBy('checked', true).mapBy('value');
       return this.get('model').filterBy('recurring', false).filter( (event) => {
         const day = parseInt(moment(event.get('date'), 'YYYY-MM-DD').format('e'), 10);
-        return _.contains(days, day);
+        return days.indexOf(day) >= 0;
       }).map( (event) => {
         const lat = event.get('location.latitude');
         const lng = event.get('location.longitude');

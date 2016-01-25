@@ -46,7 +46,7 @@ export default Ember.Component.extend({
     return Ember.Object.create({
       value: day,
       letter: letterForDay[day],
-      checked: _.contains(this.get('daysArray'), day)
+      checked: this.get('daysArray').indexOf(day) >= 0
     });
   }),
 
