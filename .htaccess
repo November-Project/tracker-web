@@ -1,4 +1,12 @@
-RewriteEngine on
+Options FollowSymLinks
+
+RewriteEngine On
+RewriteCond %{SERVER_PORT} 80
+RewriteRule ^(.*)$ https://tracking.november-project.com/$1 [R,L]
+
+RewriteEngine On
+RewriteBase /
+RewriteRule ^index\.html$ - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ /index.html#$1 [L]
+RewriteRule . /index.html [L,B]
