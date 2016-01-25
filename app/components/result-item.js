@@ -23,6 +23,7 @@ export default Ember.Component.extend({
   shouldSplit: Ember.computed({
     get: function () {
       const workout = this.get('workout');
+      if (!Ember.isPresent(workout)) { return false; }
       return workout.get('allowUserReps') || workout.get('allowUserTime');
     }
   }),
@@ -30,6 +31,7 @@ export default Ember.Component.extend({
   shouldDisplayReps: Ember.computed({
     get: function () {
       const workout = this.get('workout');
+      if (!Ember.isPresent(workout)) { return false; }
       return workout.get('allowUserReps') || workout.get('reps') !== 0;
     }
   }),
@@ -37,6 +39,7 @@ export default Ember.Component.extend({
   shouldDisplayTime: Ember.computed({
     get: function () {
       const workout = this.get('workout');
+      if (!Ember.isPresent(workout)) { return false; }
       return workout.get('allowUserTime') || workout.get('time') !== 0;
     }
   }),
@@ -44,6 +47,7 @@ export default Ember.Component.extend({
   displayReps: Ember.computed({
     get: function () {
       const workout = this.get('workout');
+      if (!Ember.isPresent(workout)) { return ''; }
       if (workout.get('allowUserReps')) {
         return this.get('model.reps');
       } else {
@@ -55,6 +59,7 @@ export default Ember.Component.extend({
   displayTime: Ember.computed({
     get: function () {
       const workout = this.get('workout');
+      if (!Ember.isPresent(workout)) { return ''; }
       if (workout.get('allowUserTime')) {
         return this.calcTime(this.get('model'));
       } else {
