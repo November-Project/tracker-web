@@ -58,11 +58,15 @@ export default Ember.Object.extend({
   },
 
   initFacebook: function () {
-    window.fbAsyncInit = function () {
+    window.fbAsyncInit = () => {
       FB.init({
         appId      : config.FACEBOOK_APP_ID,
         xfbml      : true,
         version    : config.FACEBOOK_API_VERSION
+      });
+
+      FB.getLoginStatus( (response) => {
+        this.set('facebook_response', response);
       });
     };
 
@@ -71,15 +75,14 @@ export default Ember.Object.extend({
 
   loginWithFacebook: function () {
     return new Ember.RSVP.Promise( (resolve, reject) => {
-      FB.getLoginStatus( (response) => {
-        if (response.status === 'connected') {
-          this.openWithFacebook(response.authResponse).then(resolve, reject);
-        } else {
-          FB.login( (status) => {
-            this.openWithFacebook(status.authResponse).then(resolve, reject);
-          }, { scope: 'public_profile,email' });
-        }
-      });
+      const response = this.get('facebook_response');
+      if (response.status === 'connected') {
+        this.openWithFacebook(response.authResponse).then(resolve, reject);
+      } else {
+        FB.login( (status) => {
+          this.openWithFacebook(status.authResponse).then(resolve, reject);
+        }, { scope: 'public_profile,email' });
+      }
     });
   },
 
