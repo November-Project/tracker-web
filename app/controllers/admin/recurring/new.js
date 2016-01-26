@@ -18,11 +18,10 @@ export default EventsControllerNew.extend({
   }),
 
   savable: Ember.computed('event.hasDirtyAttributes', 'event.times', 'event.days', 'event.week', 'workout', 'location', function () {
-    return (this.get('event.hasDirtyAttributes') &&
+    return (this.get('event.hasDirtyAttributes') || this.hasDirtyRelationships()) &&
       Ember.isPresent(this.get('event.times')) &&
       Ember.isPresent(this.get('event.days')) &&
-      Ember.isPresent(this.get('event.week'))
-    ) || this.hasDirtyRelationships();
+      Ember.isPresent(this.get('event.week'));
   }),
 
   daysOfWeek: Ember.computed('event.daysArray', {

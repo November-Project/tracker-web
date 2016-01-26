@@ -3,4 +3,4 @@
     <button type="button" {{action 'remove' index}}>x</button>
   </span>
 {{/each}}
-{{input value=newValue insert-newline='enterPressed' autocomplete='off'}}
+{{input value=newValue insert-newline='enterPressed' focus-out='enterPressed' autocomplete='off'}}

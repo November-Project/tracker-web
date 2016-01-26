@@ -38,9 +38,8 @@ export default Ember.Controller.extend({
   },
 
   savable: Ember.computed('event.hasDirtyAttributes', 'event.times', 'workout', 'location', function () {
-    return (this.get('event.hasDirtyAttributes') &&
-      Ember.isPresent(this.get('event.times'))
-     ) || this.hasDirtyRelationships();
+    return (this.get('event.hasDirtyAttributes') || this.hasDirtyRelationships()) &&
+      Ember.isPresent(this.get('event.times'));
   }),
 
   hasDirtyRelationships: function () {
