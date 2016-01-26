@@ -64,6 +64,7 @@ export default Ember.Component.extend({
     } else {
       result.rollbackAttributes();
     }
+    this.set('error_message', null);
   }.on('willDestroyElement'),
 
   actions: {

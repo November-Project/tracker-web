@@ -16,6 +16,7 @@ export default Ember.Controller.extend({
   cleanup: function () {
     this.set('password', '');
     this.set('confirm', '');
+    this.set('error_message', null);
   },
 
   actions: {

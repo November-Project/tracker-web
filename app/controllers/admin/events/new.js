@@ -33,7 +33,8 @@ export default Ember.Controller.extend({
 
     this.setProperties({
       editingWorkout: false,
-      editingLocation: false
+      editingLocation: false,
+      error_message: null
     });
   },
 

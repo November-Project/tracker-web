@@ -73,6 +73,7 @@ export default Ember.Component.extend({
     } else {
       tribe.rollbackAttributes();
     }
+    this.set('error_message', null);
   }.on('willDestroyElement'),
 
   cityChanged: function () {

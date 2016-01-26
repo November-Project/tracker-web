@@ -11,6 +11,7 @@ export default Ember.Controller.extend({
 
   cleanup: function () {
     this.set('email', '');
+    this.set('error_message', null);
   },
 
   actions: {

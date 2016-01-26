@@ -25,6 +25,7 @@ export default Ember.Component.extend({
     } else {
       workout.rollbackAttributes();
     }
+    this.set('error_message', null);
   }.on('willDestroyElement'),
 
   actions: {
