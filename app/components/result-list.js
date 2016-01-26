@@ -18,7 +18,7 @@ export default Ember.Component.extend({
     }
   }),
 
-  filteredResults: Ember.computed('selectedTime', {
+  filteredResults: Ember.computed('selectedTime', 'results', {
     get: function () {
       const selectedTime = this.get('selectedTime');
       return this.get('results').filterBy('eventTime', selectedTime);
