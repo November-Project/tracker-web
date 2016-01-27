@@ -34,7 +34,8 @@ export default AdministrationRoute.extend({
 
         // create all recurring events between start_date and end_date that are also in the future
         let takenDates = hash.events.map( (event) => { return event.get('date').format('YYYY-MM-DD'); });
-        let recurrings = _.sortBy(hash.recurring.toArray(), (recurring) => {
+        let filtered = hash.recurring.toArray().filterBy('tribe', this.get('session.tribe'));
+        let recurrings = _.sortBy(filtered, (recurring) => {
           return -1 * Math.abs(recurring.get('week'));
         }).reduce( (accum, recurring) => {
           return accum.pushObjects(RecurringEvents.eventsFromRecurring(recurring, start_date, end_date, takenDates));
