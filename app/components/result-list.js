@@ -21,7 +21,22 @@ export default Ember.Component.extend({
   filteredResults: Ember.computed('selectedTime', 'results', {
     get: function () {
       const selectedTime = this.get('selectedTime');
-      return this.get('results').filterBy('eventTime', selectedTime);
+      return this.get('results').filterBy('eventTime', selectedTime).sort( (x, y) => {
+        const xreps = x.get('reps');
+        const yreps = y.get('reps');
+
+        if (xreps === yreps) {
+          const xtime = x.get('time');
+          const ytime = y.get('time');
+
+          if (xtime === 0) return 1;
+          if (ytime === 0) return -1;
+          if (xtime === ytime) return 0;
+          return xtime > ytime ? 1 : -1;
+        } else {
+          return xreps < yreps ? 1 : -1;
+        }
+      });
     }
   }),
 
