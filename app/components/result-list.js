@@ -7,7 +7,7 @@ export default Ember.Component.extend({
     }
   }),
 
-  selectedTime: Ember.computed('_selectedTime', {
+  selectedTime: Ember.computed('_selectedTime', 'times', {
     get: function () {
       const _selectedTime = this.get('_selectedTime');
       if (Ember.isEmpty(_selectedTime)) {
