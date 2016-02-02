@@ -28,6 +28,11 @@ export default AdministrationRoute.extend({
         'title': 'Plan',
         'icon': 'fa fa-map',
         'route': 'admin.plan'
+      },
+      {
+        'title': 'Members',
+        'icon': 'fa fa-users',
+        'route': 'admin.members'
       }
     ];
 
@@ -35,7 +40,7 @@ export default AdministrationRoute.extend({
       navItems.pushObjects([
         {
           'title': 'Tribes',
-          'icon': 'fa fa-group',
+          'icon': 'fa fa-flag',
           'route': 'admin.tribes'
         }
       ]);

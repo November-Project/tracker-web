@@ -1,0 +1,13 @@
+<div style="display: flex; justify-content: space-between; align-items: flex-end;">
+  <span>{{model.length}} Members</span>
+  <a id="export-csv" class="btn btn-default btn-sm" {{action "download" preventDefault=false}}>Export CSV</a>
+</div>
+<hr style="margin-top: 3px; margin-bottom: 10px;">
+
+<div class="list-group">
+  {{#each model as |member|}}
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading">{{member.name}}</h4>
+    </div>
+  {{/each}}
+</div>

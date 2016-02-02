@@ -55,5 +55,6 @@ export default Router.map(function() {
 
     this.route('leaders');
     this.route('plan');
+    this.route('members');
   });
 });
