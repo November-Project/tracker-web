@@ -24,18 +24,18 @@ Then clone this repo and install the dependencies:
 Run the app by executing `ember s`. Then visit [http://localhost:4200](http://localhost:4200).
 You'll also need to be locally running the [API].
 
-[API]: https://github.com/tonyd256/novproject-api
+[API]: https://github.com/november-project/tracker-api
 
 ## Contributing
 
 If you'd like to contribute, please look at the issues for things to do, or
 create your own issues and PRs for things you'd like fixed, improved, or added.
 Please follow the [Contributing guide] and [Code of Conduct] when contributing.
-Thank you, [contributers]!
+Thank you, [contributors]!
 
 [Contributing guide]: CONTRIBUTING.md
 [Code of Conduct]: CODE_OF_CONDUCT.md
-[contributers]: https://github.com/tonyd256/novproject-ember/graphs/contributors
+[contributors]: https://github.com/november-project/tracker-web/graphs/contributors
 
 ## License
 
