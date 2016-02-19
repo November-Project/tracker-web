@@ -37,7 +37,7 @@ export default Ember.Component.extend({
         },
 
         eventClick: (event) => {
-          this.sendAction('openEvent', event);
+          this.sendAction('openEvent', event, event.start.format('YYYY-MM-DD'));
         }
       });
     });
