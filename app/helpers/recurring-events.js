@@ -12,7 +12,7 @@ export default {
       let week = this.weekDayOfMonth(day);
       let inverseWeek = this.inverseWeekDayOfMonth(day);
 
-      if (now.diff(day) > 0 || // if past event or
+      if (now.diff(day, 'd', true) > 1 || // if past event or
         !days.contains(parseInt(day.format('d'))) || // if not a valid day or
         takenDates.contains(dayString) || // if day is taken or
         (recurring.get('week') !== week && // if week doesn't align and
