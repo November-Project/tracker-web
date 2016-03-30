@@ -27,6 +27,13 @@ export default Router.map(function() {
     });
   });
 
+  this.route('users', function () {
+    this.route('user', { path: ':user_id' }, function () {
+      this.route('profile');
+      this.route('edit');
+    });
+  });
+
   this.route('admin', function () {
     this.route('locations', function () {
       this.route('edit', { path: ':location_id' });

@@ -1,0 +1,20 @@
+<div class="profile user">
+  <div>
+    <img src={{photoURL}} alt="Profile Image" class="img-circle">
+  </div>
+  <div class="info">
+    <span class="name">{{model.name}}</span>
+    <div class="tribe">
+      <span>Home Tribe:&nbsp;</span>
+      <span>{{model.tribe.title}}</span>
+    </div>
+    {{#if hasSocial}}
+      <div class="social">
+        {{#if model.facebookId}}
+          <a href="https://facebook.com/{{model.facebookId}}" target="_blank"><i class="fa fa-facebook fa-lg"></i></a>
+        {{/if}}
+      </div>
+    {{/if}}
+  </div>
+</div>
+{{outlet}}

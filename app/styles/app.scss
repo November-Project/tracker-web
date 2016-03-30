@@ -15,6 +15,9 @@ a, input, button {
 
 body {
   padding-top: 50px;
+  @media (max-height: $grid-float-breakpoint) {
+    padding-top: 55px;
+  }
 }
 
 button:focus {
@@ -573,5 +576,50 @@ a.fc-day-grid-event {
 
   &:hover {
     color: white;
+  }
+}
+
+.profile {
+  &.user {
+    display: flex;
+    margin-top: 20px;
+
+    img {
+      height: 100px;
+      width: 100px;
+    }
+
+    .info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-left: 12px;
+
+      .name {
+        font-size: 1.8em;
+        font-weight: bold;
+        margin-bottom: 3px;
+      }
+
+      .tribe {
+        display: flex;
+        flex-wrap: wrap;
+
+        span {
+          font-size: 1.1em;
+        }
+      }
+
+      .social {
+        margin-top: 6px;
+      }
+    }
+  }
+
+  &.stats {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
   }
 }
