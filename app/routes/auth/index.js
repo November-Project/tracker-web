@@ -6,7 +6,7 @@ export default Ember.Route.extend({
       const btn = Ember.$('#facebook-btn');
       btn.button('loading');
 
-      this.get('session').loginWithFacebook().then( () => {
+      this.auth.loginWithFacebook().then( () => {
         this.transitionTo('index');
       }).finally( () => { btn.button('reset'); });
     }

@@ -2,10 +2,10 @@ import Ember from 'ember';
 
 export default Ember.Route.extend({
   beforeModel: function () {
-    return this.get('store').findAll('tribe').then( () => {
-      const session = this.get('session');
-      if (session.isAuthenticated()) {
-        return session.fetchUser().catch( () => {
+    return this.get('store').findAll('tribe').then( (tribes) => {
+      this.session.findTribe(tribes);
+      if (this.session.isAuthenticated()) {
+        return this.auth.fetchUser().catch( () => {
           this.transitionTo('auth');
         });
       }
@@ -17,7 +17,7 @@ export default Ember.Route.extend({
   },
 
   afterModel: function () {
-    return this.get('session').initFacebook();
+    return this.auth.initFacebook();
   },
 
   actions: {

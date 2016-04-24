@@ -254,6 +254,10 @@ p.loading-status {
       font-size: 1.2em;
       overflow-x: hidden;
       text-overflow: ellipsis;
+
+      a {
+        color: inherit;
+      }
     }
 
     .actions {
@@ -598,7 +602,7 @@ a.fc-day-grid-event {
       .name {
         font-size: 1.8em;
         font-weight: bold;
-        margin-bottom: 3px;
+        margin-bottom: -1px;
       }
 
       .tribe {

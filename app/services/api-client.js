@@ -1,0 +1,88 @@
+import Ember from 'ember';
+import config from '../config/environment';
+import User from '../objects/user';
+
+function camelize (json) {
+  if (!json) { return json; }
+  let obj = {};
+  Object.keys(json).forEach( (value) => {
+    obj[value.camelize()] = json[value];
+  });
+  return obj;
+}
+
+export default Ember.Service.extend({
+  _token: Ember.computed('session.token', {
+    get: function () {
+      return this.session.get('token');
+    }
+  }),
+
+  _headers: Ember.computed('_token', {
+    get: function () {
+      return { 'AUTHORIZATION': this.get('_token') };
+    }
+  }),
+
+  _buildURL: function (path) {
+    return config.API_HOST + '/' + path;
+  },
+
+  _get: function (path) {
+    return Ember.RSVP.Promise.cast(Ember.$.ajax({
+      url: this._buildURL(path),
+      dataType: 'json',
+      headers: this.get('_headers')
+    }));
+  },
+
+  _post: function (path, data) {
+    return Ember.RSVP.Promise.cast(Ember.$.ajax({
+      url: this._buildURL(path),
+      type: 'POST',
+      dataType: 'json',
+      data: JSON.stringify(data),
+      contentType: 'application/json',
+      headers: this.get('_headers'),
+      processData: false
+    }));
+  },
+
+  _delete: function (path) {
+    return Ember.RSVP.Promise.cast(Ember.$.ajax({
+      url: this._buildURL(path),
+      type: 'DELETE',
+      headers: this.get('_headers')
+    }));
+  },
+
+  getUserStats: function (user) {
+    return this._get('users/' + user.id + '/stats');
+  },
+
+  getCurrentUser: function () {
+    return this._get('user/me').then( (data) => {
+      return User.create(camelize(data['user']));
+    });
+  },
+
+  postFacebookSession: function (token, device_info) {
+    return this._post('session/facebook', {token, device_info});
+  },
+
+  postEmailSession: function (email, password, device_info) {
+    return this._post('session/email', {email, password, device_info});
+  },
+
+  resetPassword: function (token, password) {
+    return this._post('reset', {token, password});
+  },
+
+  forgotPassword: function (email) {
+    return this._post('reset', {email});
+  },
+
+  logout: function () {
+    return this._delete('sessions');
+  }
+});

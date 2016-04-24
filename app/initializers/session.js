@@ -1,15 +1,11 @@
-import Session from '../models/session';
-
 export function initialize (app) {
-  app.register('session:main', Session, { singleton: true });
-  app.inject('application', 'session', 'session:main');
-  app.inject('adapter', 'session', 'session:main');
-  app.inject('route', 'session', 'session:main');
-  app.inject('controller', 'session', 'session:main');
-  app.inject('session:main', 'store', 'service:store');
+  app.inject('adapter', 'session', 'service:session');
+  app.inject('route', 'session', 'service:session');
+  app.inject('controller', 'session', 'service:session');
+  app.inject('service:auth', 'session', 'service:session');
 }
 
 export default {
   name: 'session',
-  initialize: initialize
+  initialize
 };

@@ -1,14 +1,12 @@
-import Client from '../helpers/api-client';
-
-export function initialize (app) {
-  app.register('client:main', Client);
-  app.inject('application', 'client', 'client:main');
-  app.inject('adapter', 'client', 'client:main');
-  app.inject('route', 'client', 'client:main');
-  app.inject('controller', 'client', 'client:main');
+export function initialize(app) {
+  app.inject('route', 'client', 'service:apiClient');
+  app.inject('controller', 'client', 'service:apiClient');
+  app.inject('component', 'client', 'service:apiClient');
+  app.inject('service:apiClient', 'session', 'service:session');
 }
 
 export default {
-  name: 'client',
-  initialize: initialize
+  name: 'apiClient',
+  after: 'session',
+  initialize
 };

@@ -6,7 +6,7 @@
       </div>
     {{/if}}
     <div class="image">
-      <img class="img-circle img-responsive" src={{photoURL}} />
+      {{#link-to "users.user" model.userId}}<img class="img-circle img-responsive" src={{photoURL}} />{{/link-to}}
       {{#if model.pr}}
         <div class="result-pr">
           <i class="fa fa-trophy fa-lg"></i>
@@ -14,7 +14,7 @@
       {{/if}}
     </div>
     <div class="info">
-      <span class="name">{{model.userName}}</span>
+      <span class="name">{{#link-to "users.user" model.userId}}{{model.userName}}{{/link-to}}</span>
       {{#if editable}}
         <div class="actions">
           {{#link-to 'events.view.results.edit' model class="btn btn-default btn-xs"}}Edit{{/link-to}}

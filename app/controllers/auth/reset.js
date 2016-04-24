@@ -33,7 +33,7 @@ export default Ember.Controller.extend({
         const reset_token = decodeURIComponent(this.get('reset_token'));
 
         btn.button('loading');
-        this.get('session').changePassword(this.get('password'), reset_token).then( () => {
+        this.auth.changePassword(this.get('password'), reset_token).then( () => {
           this.transitionToRoute('index');
         }, (error) => {
           if (error.status === 404) {

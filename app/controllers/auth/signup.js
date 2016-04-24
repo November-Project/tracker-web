@@ -57,7 +57,7 @@ export default Ember.Controller.extend({
 
         btn.button('loading');
         model.save().then( () => {
-          this.get('session').openWithEmailAndPassword(model.get('email'), model.get('password')).then( () => {
+          this.auth.openWithEmailAndPassword(model.get('email'), model.get('password')).then( () => {
             model.set('password', null);
             this.transitionToRoute('index');
             btn.button('reset');

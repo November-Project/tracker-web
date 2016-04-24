@@ -29,7 +29,7 @@ export default Ember.Controller.extend({
         const btn = Ember.$('button');
 
         btn.button('loading');
-        this.get('session').openWithEmailAndPassword(this.get('email'), this.get('password')).then( () => {
+        this.auth.openWithEmailAndPassword(this.get('email'), this.get('password')).then( () => {
           this.transitionToRoute('index');
         }, (error) => {
           const message = error.responseJSON && error.responseJSON.message ? error.responseJSON.message : 'An Unknown Error Occured';
