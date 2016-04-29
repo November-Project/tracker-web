@@ -1,0 +1,14 @@
+<div class="pr-item">
+  <div class="info">
+    <span class="workout">{{model.workout.title}}</span>
+    <span class="location">{{model.location.title}}</span>
+  </div>
+  <div class="results">
+    {{#if shouldDisplayTime}}
+      <span class="time"><i class="fa fa-clock-o"></i> {{displayTime}}</span>
+    {{/if}}
+    {{#if shouldDisplayReps}}
+      <span class="amount">Reps: {{displayReps}}</span>
+    {{/if}}
+  </div>
+</div>

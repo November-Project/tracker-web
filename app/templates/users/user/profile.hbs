@@ -3,4 +3,10 @@
   <span>Results Submitted: {{model.stats.results}}</span>
 </div>
 
-<hr style="margin-top:2px;">
+<hr style="margin-top:2px;margin-bottom:6px;">
+
+<span class="prs-title">PRs</span>
+
+{{#each model.prs as |pr|}}
+  {{pr-item model=pr}}
+{{/each}}

@@ -1,3 +1,5 @@
+/* global _ */
+
 import Ember from 'ember';
 import config from '../config/environment';
 import User from '../objects/user';
@@ -6,7 +8,7 @@ function camelize (json) {
   if (!json) { return json; }
   let obj = {};
   Object.keys(json).forEach( (value) => {
-    obj[value.camelize()] = json[value];
+    obj[value.camelize()] = _.isPlainObject(json[value]) ? camelize(json[value]) : json[value];
   });
   return obj;
 }
@@ -57,7 +59,15 @@ export default Ember.Service.extend({
   },
 
   getUserStats: function (user) {
-    return this._get('users/' + user.id + '/stats');
+    return this._get('users/' + user.id + '/stats').then( (data) => {
+      return camelize(data['stats']);
+    });
+  },
+
+  getUserPrs: function (user) {
+    return this._get('users/' + user.id + '/prs').then( (data) => {
+      return data['prs'].map(camelize);
+    });
   },
 
   getCurrentUser: function () {
