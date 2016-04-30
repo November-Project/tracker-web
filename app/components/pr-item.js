@@ -1,21 +1,21 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  shouldDisplayReps: Ember.computed({
+  shouldDisplayReps: Ember.computed('model.result', 'model.workout', {
     get: function () {
       const model = this.get('model');
       return model.workout.allowUserReps || model.workout.reps !== 0;
     }
   }),
 
-  shouldDisplayTime: Ember.computed({
+  shouldDisplayTime: Ember.computed('model.result', 'model.workout', {
     get: function () {
       const model = this.get('model');
       return model.workout.allowUserTime || model.workout.time !== 0;
     }
   }),
 
-  displayReps: Ember.computed({
+  displayReps: Ember.computed('model.result', 'model.workout', {
     get: function () {
       const model = this.get('model');
       if (model.workout.allowUserReps) {
@@ -26,7 +26,7 @@ export default Ember.Component.extend({
     }
   }),
 
-  displayTime: Ember.computed({
+  displayTime: Ember.computed('model.result', 'model.workout', {
     get: function () {
       const model = this.get('model');
       if (model.workout.allowUserTime) {

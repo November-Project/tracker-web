@@ -9,7 +9,7 @@ export default Ember.Component.extend({
     }
   }),
 
-  photoURL: Ember.computed({
+  photoURL: Ember.computed('model', {
     get: function () {
       const url = this.get('model.userPhotoUrl');
       if (Ember.isEmpty(url)) {
@@ -20,7 +20,7 @@ export default Ember.Component.extend({
     }
   }),
 
-  shouldSplit: Ember.computed({
+  shouldSplit: Ember.computed('workout', {
     get: function () {
       const workout = this.get('workout');
       if (!Ember.isPresent(workout)) { return false; }
@@ -28,7 +28,7 @@ export default Ember.Component.extend({
     }
   }),
 
-  shouldDisplayReps: Ember.computed({
+  shouldDisplayReps: Ember.computed('workout', {
     get: function () {
       const workout = this.get('workout');
       if (!Ember.isPresent(workout)) { return false; }
@@ -36,7 +36,7 @@ export default Ember.Component.extend({
     }
   }),
 
-  shouldDisplayTime: Ember.computed({
+  shouldDisplayTime: Ember.computed('workout', {
     get: function () {
       const workout = this.get('workout');
       if (!Ember.isPresent(workout)) { return false; }
@@ -44,7 +44,7 @@ export default Ember.Component.extend({
     }
   }),
 
-  displayReps: Ember.computed({
+  displayReps: Ember.computed('model', 'workout', {
     get: function () {
       const workout = this.get('workout');
       if (!Ember.isPresent(workout)) { return ''; }
@@ -56,7 +56,7 @@ export default Ember.Component.extend({
     }
   }),
 
-  displayTime: Ember.computed({
+  displayTime: Ember.computed('model', 'workout', {
     get: function () {
       const workout = this.get('workout');
       if (!Ember.isPresent(workout)) { return ''; }
