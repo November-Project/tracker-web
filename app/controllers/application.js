@@ -20,7 +20,7 @@ export default Ember.Controller.extend({
     }
   }),
 
-  isAdmin: Ember.computed({
+  isAdmin: Ember.computed('session.user', 'session.tribe', {
     get: function () {
       return this.get('session.user').isLeaderOf(this.get('session.tribe'));
     }
