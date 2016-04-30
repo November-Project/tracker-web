@@ -31,8 +31,12 @@ export default Ember.Component.extend({
         index = options.indexOf(value);
       } else {
         options.find( (item, idx) => {
-          index = idx;
-          return item === this.get('value') || item === this.get('value').content;
+          if (item === this.get('value') || item === this.get('value').content) {
+            index = idx;
+            return true;
+          } else {
+            return false;
+          }
         });
       }
 
