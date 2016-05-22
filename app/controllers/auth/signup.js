@@ -39,6 +39,7 @@ export default Ember.Controller.extend({
         model.rollbackAttributes();
       }
     }
+    this.set('confirm', null);
     this.set('error_message', null);
   },
 
