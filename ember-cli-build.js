@@ -1,8 +1,12 @@
 /* global require, module */
 
+var nodeSass = require('node-sass');
+
 var EmberApp = require('ember-cli/lib/broccoli/ember-app');
 
 module.exports = function (defaults) {
+  if (!defaults.sassOptions) { defaults.sassOptions = {}; }
+  defaults.sassOptions.nodeSass = nodeSass;
   var app = new EmberApp(defaults);
 
   // Use `app.import` to add additional libraries to the generated
