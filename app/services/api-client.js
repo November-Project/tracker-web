@@ -89,7 +89,7 @@ export default Ember.Service.extend({
   },
 
   forgotPassword: function (email) {
-    return this._post('reset', {email});
+    return this._post('forgot', {email});
   },
 
   logout: function () {
