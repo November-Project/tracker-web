@@ -27,6 +27,7 @@ module.exports = function(deployTarget) {
     ENV.s3.bucket = process.env.STAGING_BUCKET;
     ENV.s3.region = process.env.STAGING_REGION;
     ENV.cloudfront.distribution = process.env.STAGING_DISTRIBUTION;
+    ENV.plugins = ['build', 'cloudfront', 'gzip', 's3'];
   }
 
   if (deployTarget === 'production') {
