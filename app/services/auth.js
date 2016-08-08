@@ -45,10 +45,14 @@ export default Ember.Service.extend({
     return new Ember.RSVP.Promise( (resolve, reject) => {
       const response = this.get('facebook_response');
       if (response && response.status === 'connected') {
-        this.openWithFacebook(response.authResponse).then(resolve, reject);
+        this.openWithFacebook(response.authResponse).then(resolve, reject).finally( () => {
+          this.set('facebook_response', null);
+        });
       } else {
         FB.login( (status) => {
-          this.openWithFacebook(status.authResponse).then(resolve, reject);
+          this.openWithFacebook(status.authResponse).then(resolve, reject).finally( () => {
+            this.set('facebook_response', null);
+          });
         }, { scope: 'public_profile,email' });
       }
     });
