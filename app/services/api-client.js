@@ -13,6 +13,15 @@ function camelize (json) {
   return obj;
 }
 
+function decamelize (json) {
+  if (!json) { return json; }
+  let obj = {};
+  Object.keys(json).forEach( (value) => {
+    obj[value.decamelize()] = _.isPlainObject(json[value]) ? camelize(json[value]) : json[value];
+  });
+  return obj;
+}
+
 export default Ember.Service.extend({
   _token: Ember.computed('session.token', {
     get: function () {
@@ -50,6 +59,18 @@ export default Ember.Service.extend({
     }));
   },
 
+  _put: function (path, data) {
+    return Ember.RSVP.Promise.cast(Ember.$.ajax({
+      url: this._buildURL(path),
+      type: 'PUT',
+      dataType: 'json',
+      data: JSON.stringify(data),
+      contentType: 'application/json',
+      headers: this.get('_headers'),
+      processData: false
+    }));
+  },
+
   _delete: function (path) {
     return Ember.RSVP.Promise.cast(Ember.$.ajax({
       url: this._buildURL(path),
@@ -74,6 +95,10 @@ export default Ember.Service.extend({
     return this._get('user/me').then( (data) => {
       return User.create(camelize(data['user']));
     });
+  },
+
+  saveUser: function (user) {
+    return this._put('users/' + user.id, decamelize(user));
   },
 
   postFacebookSession: function (token, device_info) {

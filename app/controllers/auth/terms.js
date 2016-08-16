@@ -11,8 +11,8 @@ export default Ember.Controller.extend({
     var errors = {};
 
     const model = this.get('model');
-    errors.tribe = model.get('tribe').content == null;
-    errors.terms = model.get('acceptedTerms') === false;
+    errors.tribe = Ember.isNone(model.get('tribe.id'));
+    errors.terms = !model.get('acceptedTerms');
 
     this.set('error', errors);
   },
@@ -30,8 +30,9 @@ export default Ember.Controller.extend({
         const btn = Ember.$('button');
 
         btn.button('loading');
-        this.model.save().then( () => {
-          this.transitionToRoute('index');
+        this.model.set('tribeId', parseInt(this.model.get('tribe.id'), 10));
+        this.client.saveUser(this.model).then( () => {
+          this.send('changeTribe', this.model.get('tribe'));
         }, (error) => {
           const message = error.responseJSON && error.responseJSON.message ? error.responseJSON.message : 'An Unknown Error Occured';
           this.set('error_message', message);

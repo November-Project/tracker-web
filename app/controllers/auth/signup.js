@@ -60,8 +60,8 @@ export default Ember.Controller.extend({
         model.save().then( () => {
           this.auth.openWithEmailAndPassword(model.get('email'), model.get('password')).then( () => {
             model.set('password', null);
-            this.transitionToRoute('index');
             btn.button('reset');
+            this.transitionToRoute('index');
           });
         }, (error) => {
           this.set('error_message', error.message || 'An Unknown Error Occured');
