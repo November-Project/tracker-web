@@ -47,11 +47,11 @@ export default Ember.Service.extend({
     }));
   },
 
-  _post: function (path, data) {
+  _post: function (path, data, type) {
     return Ember.RSVP.Promise.cast(Ember.$.ajax({
       url: this._buildURL(path),
       type: 'POST',
-      dataType: 'json',
+      dataType: type || 'json',
       data: JSON.stringify(data),
       contentType: 'application/json',
       headers: this.get('_headers'),
@@ -109,12 +109,12 @@ export default Ember.Service.extend({
     return this._post('session/email', {email, password, device_info});
   },
 
-  resetPassword: function (token, password) {
-    return this._post('reset', {token, password});
+  resetPassword: function (password, token) {
+    return this._post('reset', {token, password}, 'text');
   },
 
   forgotPassword: function (email) {
-    return this._post('forgot', {email});
+    return this._post('forgot', {email}, 'text');
   },
 
   logout: function () {
