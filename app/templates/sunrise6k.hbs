@@ -1,0 +1,47 @@
+<div class="sunrise6k">
+  <h1 class="center">Sunrise 6K</h1>
+  <div class="center">
+    <div class="btn-group" role="group">
+      <button type="button" class="btn btn-default {{if top3 "active"}}" {{action 'setFilter' 'top3'}}>Top 3</button>
+      <button type="button" class="btn btn-default {{if top3Female "active"}}" {{action 'setFilter' 'top3Female'}}>Top 3 Female</button>
+      <button type="button" class="btn btn-default {{if overall "active"}}" {{action 'setFilter' 'overall'}}>Overall</button>
+      <button type="button" class="btn btn-default {{if overallFemale "active"}}" {{action 'setFilter' 'overallFemale'}}>Overall Female</button>
+    </div>
+  </div>
+  {{#if displayTop}}
+    {{#each tribeEvents as |event|}}
+      <div class="tribe">
+        <div class="title">
+          <h3>{{event.tribe.title}} - {{event.date}}</h3>
+          {{#link-to 'events.view' event.event.id class="btn btn-default"}}Record a Result{{/link-to}}
+        </div>
+        <div class="stats">
+          <span>Participation: {{event.participcation}}</span>
+          <span>Average Time: {{event.avgMin}}:{{event.avgSec}}</span>
+        </div>
+        <hr style="margin: 0px" />
+        {{#if top3Female}}
+          {{#each event.top3female as |result index|}}
+            {{result-item model=result index=index workout=event.workout}}
+          {{/each}}
+        {{else}}
+          {{#each event.top3 as |result index|}}
+            {{result-item model=result index=index workout=event.workout}}
+          {{/each}}
+        {{/if}}
+      </div>
+    {{/each}}
+    {{else}}
+      <hr style="margin-bottom: 0px" />
+      {{#if overall}}
+        {{#each sortedResults as |result index|}}
+          {{result-item model=result.result index=index workout=result.workout}}
+        {{/each}}
+      {{/if}}
+      {{#if overallFemale}}
+        {{#each sortedFemales as |result index|}}
+          {{result-item model=result.result index=index workout=result.workout}}
+        {{/each}}
+      {{/if}}
+  {{/if}}
+</div>

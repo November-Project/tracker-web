@@ -24,6 +24,9 @@ export default Router.map(function() {
     this.route('reset');
   });
 
+  this.route('sunrise6k', function () {
+  });
+
   this.route('events', function () {
     this.route('recurring', { path: 'recurring/:recurring_id' });
     this.route('no_event', { path: '/' });

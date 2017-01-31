@@ -672,3 +672,15 @@ a.fc-day-grid-event {
     justify-content: space-around;
   }
 }
+
+.sunrise6k {
+  .tribe {
+    margin-bottom: 24px;
+
+    .stats, .title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+}

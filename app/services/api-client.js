@@ -119,5 +119,11 @@ export default Ember.Service.extend({
 
   logout: function () {
     return this._delete('sessions');
+  },
+
+  getSunrise6kData: function () {
+    return this._get('special_events/sunrise6k').then( (data) => {
+      return data['events'].map(camelize);
+    });
   }
 });
