@@ -1,7 +1,7 @@
 import AuthenticationRoute from '../../authentication';
 
 export default AuthenticationRoute.extend({
-  beforeModel: function (params) {
+  beforeModel: function () {
     let me = this.get('session.user');
     let user = this.modelFor('user.view');
 
