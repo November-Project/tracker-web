@@ -20,6 +20,7 @@
           {{#if isAdmin }}
             <li>{{#link-to 'admin'}}Admin{{/link-to}}</li>
           {{/if}}
+          <li>{{#link-to 'users.user.profile' session.user.id}}My Profile{{/link-to}}</li>
           <li><a data-toggle="modal" data-target="#tribe-modal">Change City</a></li>
           <li><a {{action 'logout'}}>Logout</a></li>
         </ul>
