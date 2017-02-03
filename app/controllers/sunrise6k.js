@@ -20,6 +20,7 @@ export default Ember.Controller.extend({
         'date': moment(event.date).format('MMM \'YY'),
         'avgMin': Math.floor(avgTime / 60),
         'avgSec': avgSec < 10 ? '0' + avgSec : avgSec,
+        'avgTime': avgTime,
         'participcation': participcation,
         'top3': sorted.slice(0, 3),
         'top3female': sorted.filterBy('userGender', 'female').slice(0, 3),
