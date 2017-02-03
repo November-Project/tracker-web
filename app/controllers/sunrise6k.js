@@ -23,9 +23,7 @@ export default Ember.Controller.extend({
         'participcation': participcation,
         'top3': sorted.slice(0, 3),
         'top3female': sorted.filterBy('user.gender', 'female').slice(0, 3),
-        'workout': Workout.create(event.workout),
-        'sortedResults': sorted,
-        'sortedFemales': sorted.filterBy('user.gender', 'female')
+        'workout': Workout.create(event.workout)
       };
     }).sortBy('avgTime');
   }),
@@ -38,11 +36,11 @@ export default Ember.Controller.extend({
           'workout': Workout.create(event.workout)
         };
       }));
-    }, []).sortBy('result.result.time');
+    }, []).sortBy('result.time');
   }),
 
   sortedFemales: Ember.computed('sortedResults', function () {
-    return this.get('sortedResults').filterBy('result.result.user.gender', 'female');
+    return this.get('sortedResults').filterBy('result.user.gender', 'female');
   }),
 
   displayTop: Ember.computed('top3', 'top3Female', function () {
