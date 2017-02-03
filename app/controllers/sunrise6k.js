@@ -12,7 +12,7 @@ export default Ember.Controller.extend({
       const participcation = event.results.length;
       const avgTime = Math.round(event.results.reduce( (accum, result) => accum + result.time, 0) / participcation);
       const avgSec = avgTime % 60;
-      const sorted = event.results.sortBy('time').map( (result) => Result.create(result) );
+      const sorted = event.results.sort(this.resultSort).map( (result) => Result.create(result) );
 
       return {
         'tribe': tribes.findBy('id', '' + event.tribeId),
@@ -37,7 +37,7 @@ export default Ember.Controller.extend({
           'workout': Workout.create(event.workout)
         };
       }));
-    }, []).sortBy('result.time');
+    }, []).sort(this.resultSort);
   }),
 
   sortedFemales: Ember.computed('sortedResults', function () {
@@ -47,6 +47,13 @@ export default Ember.Controller.extend({
   displayTop: Ember.computed('top3', 'top3Female', function () {
     return this.get('top3') || this.get('top3Female');
   }),
+
+  resultSort: function (lhs, rhs) {
+    if (lhs.time === rhs.time) { return 0; }
+    if (lhs.time === 0) { return -1; }
+    if (rhs.time === 0) { return 1; }
+    return lhs.time > rhs.time ? 1 : -1;
+  },
 
   actions: {
     setFilter: function (filter) {
