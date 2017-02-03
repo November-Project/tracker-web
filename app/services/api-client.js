@@ -8,7 +8,13 @@ function camelize (json) {
   if (!json) { return json; }
   let obj = {};
   Object.keys(json).forEach( (value) => {
-    obj[value.camelize()] = _.isPlainObject(json[value]) ? camelize(json[value]) : json[value];
+    if (_.isPlainObject(json[value])) {
+      obj[value.camelize()] = camelize(json[value]);
+    } else if (_.isArray(json[value])) {
+      obj[value.camelize()] = json[value].map(camelize);
+    } else {
+      obj[value.camelize()] = json[value];
+    }
   });
   return obj;
 }

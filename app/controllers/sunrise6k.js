@@ -22,7 +22,7 @@ export default Ember.Controller.extend({
         'avgSec': avgSec < 10 ? '0' + avgSec : avgSec,
         'participcation': participcation,
         'top3': sorted.slice(0, 3),
-        'top3female': sorted.filterBy('user.gender', 'female').slice(0, 3),
+        'top3female': sorted.filterBy('userGender', 'female').slice(0, 3),
         'workout': Workout.create(event.workout)
       };
     }).sortBy('avgTime');
@@ -40,7 +40,7 @@ export default Ember.Controller.extend({
   }),
 
   sortedFemales: Ember.computed('sortedResults', function () {
-    return this.get('sortedResults').filterBy('result.user.gender', 'female');
+    return this.get('sortedResults').filterBy('result.userGender', 'female');
   }),
 
   displayTop: Ember.computed('top3', 'top3Female', function () {
