@@ -10,7 +10,8 @@ export default Ember.Controller.extend({
 
     return this.model.map( (event) => {
       const participcation = event.results.length;
-      const avgTime = Math.round(event.results.reduce( (accum, result) => accum + result.time, 0) / participcation);
+      const participantsWithTime = event.results.filter( result => result.time !== 0 )
+      const avgTime = Math.round(participantsWithTime.reduce( (accum, result) => accum + result.time, 0) / participantsWithTime.length);
       const avgSec = avgTime % 60;
       const sorted = event.results.sort(this.resultSort).map( (result) => Result.create(result) );
 
