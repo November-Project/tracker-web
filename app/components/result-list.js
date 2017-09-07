@@ -29,9 +29,9 @@ export default Ember.Component.extend({
           const xtime = x.get('time');
           const ytime = y.get('time');
 
-          if (xtime === 0) return 1;
-          if (ytime === 0) return -1;
-          if (xtime === ytime) return 0;
+          if (xtime === 0) { return 1; }
+          if (ytime === 0) { return -1; }
+          if (xtime === ytime) { return 0; }
           return xtime > ytime ? 1 : -1;
         } else {
           return xreps < yreps ? 1 : -1;

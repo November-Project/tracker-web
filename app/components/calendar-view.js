@@ -25,15 +25,13 @@ export default Ember.Component.extend({
         },
 
         dayClick: (date) => {
-          if (this.get('greenDays').indexOf(moment(date).day()) > -1) {
-            var model = 'new';
-            Ember.$('#calendar').fullCalendar('clientEvents', (event) => {
-              if (event.start.format().startsWith(date.format())) {
-                model = event;
-              }
-            });
-            this.sendAction('openEvent', model, date.format());
-          }
+          var model = 'new';
+          Ember.$('#calendar').fullCalendar('clientEvents', (event) => {
+            if (event.start.format().startsWith(date.format())) {
+              model = event;
+            }
+          });
+          this.sendAction('openEvent', model, date.format());
         },
 
         eventClick: (event) => {
