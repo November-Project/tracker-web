@@ -27,7 +27,7 @@ export default Ember.Controller.extend({
     get: function () {
       const lat = this.get('model.location.latitude');
       const lng = this.get('model.location.longitude');
-      return 'http://maps.google.com/?q=loc:' + lat + ',' + lng + '&z=14&t=h';
+      return 'https://maps.google.com/maps?q=' + lat + ',' + lng + '&z=14&t=h';
     }
   }),
 
