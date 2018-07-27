@@ -19,7 +19,7 @@ module.exports = function(environment) {
     }
   };
 
-  ENV.FACEBOOK_API_VERSION = 'v2.5';
+  ENV.FACEBOOK_API_VERSION = 'v3.1';
 
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
